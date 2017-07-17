@@ -12,7 +12,6 @@
 
 # ******************************************************************************
 # Begin Imports
-import math
 import sys
 import numpy as np
 import numpy.matlib
