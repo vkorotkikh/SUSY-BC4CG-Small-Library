@@ -56,6 +56,7 @@ def bc4_validation_seq(pset_arg):
 
 	if pset_arg != "PALL":
 		for ps in psets_list:
+			# if ps == "P6":
 			temp_tetrad	= tetrad_setgen(ps)
 			# 	print("# ********************************")
 			# 	print("Execute Gadget calc for P set:", ps)
@@ -120,6 +121,8 @@ def bc4_validation_seq(pset_arg):
 	#
 	# print("Printing length of P lists")
 	# print(len(psets_dict))
+	# print(temp_l)
+	# matrix_calc_vijmat2.calculate_vij_matrices(temp_tetrad)
 
 # ******************************************************************************
 def tetrad_setgen(pset):
