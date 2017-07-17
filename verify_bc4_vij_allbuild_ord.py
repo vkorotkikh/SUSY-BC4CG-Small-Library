@@ -124,10 +124,11 @@ def bc4_validation_seq(pset_arg):
 	# matrix_calc_vijmat2.calculate_vij_matrices(temp_tetrad)
 
 # ******************************************************************************
-# Generates a {P#} set of tetrads via execution of pset_string_format() and
-# string_to_tetrad() functions
 def tetrad_setgen(pset):
-	# Creates a set of python numpy tetrads from string representation
+	"""	Generates a {P#} set of tetrads via execution of pset_string_format()
+		and	string_to_tetrad() function. Creates a set of python numpy tetrads
+		from string representation	"""
+
 	p_switch = 1
 	run_group = pset_string_format(pset)
 	if pset == "PALL":
@@ -143,8 +144,8 @@ def tetrad_setgen(pset):
 			x = re.sub(r"\]", ">", x)
 			print(x)
 		print("")
+		
 	tetrad_sig_perm = gen_sign_perm(4)
-	# print(len(tetrad_sig_perm))
 	tsp = tetrad_sig_perm
 	tetrad_bc4chk =[]
 

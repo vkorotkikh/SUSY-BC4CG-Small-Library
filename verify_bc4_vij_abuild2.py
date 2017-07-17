@@ -36,7 +36,7 @@ def main():
 	print("# Date:    November 2016		")
 	print("# Version: 1.0A				")
 	print("#							")
-	print("# Description: Function for verifying the BC4 space coefficient library")
+	print("# Description: Function for verifying the BC4 Small library")
 	print("#	")
 	print("# ***********************************************************************")
 	print("		")
@@ -53,8 +53,9 @@ def bc4_validation_seq(pset_arg):
 	psets_dict		= {}
 	temp_l			= []
 	for ps in psets_list:
+		temp_tetrad	= tetrad_setgen(ps)
 		if ps == "P6":
-			temp_tetrad		= tetrad_setgen(ps)
+			# temp_tetrad		= tetrad_setgen(ps)
 			print("# ********************************")
 			print("Execute Gadget calc for P set:", ps)
 			print("		")
@@ -127,8 +128,8 @@ def tetrad_setgen(pset):
 	print("# ********************************")
 	print("Starting conversion process for", pset)
 	print("Length of", pset, "tetrad set:", len(run_group))
-	print("")
 	print("Printing", pset, "tetrads string representation before conversion")
+	print("")
 	for x in run_group:
 		x = re.sub(r"\[", "<", x)
 		x = re.sub(r"\]", ">", x)
@@ -168,10 +169,10 @@ def string_to_tetrad(indx_num,tet_strrep):
 	tet_nicerep = re.sub(r"\[", "<", tet_strrep)
 	tet_nicerep2 = re.sub(r"\]", ">", tet_nicerep)
 
-	print("# ********************************")
-	print("Converting tetrad #:", indx_num)
-	print("Str Representation: ", tet_nicerep2)
-	print("")
+	# print("# ********************************")
+	# print("Converting tetrad #:", indx_num)
+	# print("Str Representation: ", tet_nicerep2)
+	# print("")
 	for i, m in enumerate(tet_rep):
 		xstr = re.sub(r"\[", "<", m)
 		xstr = re.sub(r"\]", ">", xstr)
@@ -180,7 +181,6 @@ def string_to_tetrad(indx_num,tet_strrep):
 		# print(mtemp)
 		mint_list = [int(s) for s in mtemp.split(',')]
 		tetint_list.append(mint_list)
-		# tf = any(not isinstance(x, int) for x in mint_list)
 		sign_ind = [ x / abs(x) for x in mint_list]
 		sgi = [ x / abs(x) for x in mint_list]
 		if debug_pr:
