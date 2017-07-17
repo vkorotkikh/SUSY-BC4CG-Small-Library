@@ -48,28 +48,19 @@ def main():
 # BC4 Validation function process organizer
 def bc4_validation_seq(pset_arg):
 
-	# pset_arg		= "PALL"
 	pset_arg		= "P4"
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
-
 	psets_dict		= {}
 
-	if pset_arg != "PALL":
-		for ps in psets_list:
-			# if ps == "P6":
-			temp_tetrad	= tetrad_setgen(ps)
-			# 	print("# ********************************")
-			# 	print("Execute Gadget calc for P set:", ps)
-			# 	print("		")
-			# 	matrix_calc_vijmat2.calculate_vij_matrices(temp_tetrad)
-			# else:
-			# 	pass
-			if ps not in psets_dict:
-				psets_dict['%s' % ps] = temp_tetrad
-			else:
-				print("Unknown P set -  ERROR")
+	for ps in psets_list:
+		temp_tetrad	= tetrad_setgen(ps)
+		if ps not in psets_dict:
+			psets_dict['%s' % ps] = temp_tetrad
+		else:
+			print("Unknown P set -  ERROR")
 
-	elif pset_arg == "PALL":
+	# temp_l			= []
+	if pset_arg == "PALL":
 		temp_plist	= []
 		psl 		= psets_list
 		temp_plist	= tetrad_setgen(pset_arg)
@@ -81,8 +72,7 @@ def bc4_validation_seq(pset_arg):
 		print("		")
 		matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
 
-	temp_l			= []
-	if pset_arg != "PALL":
+	elif pset_arg != "PALL":
 		for pset, tlist in psets_dict.items():
 			pint = 0
 			pint = int(pset.lstrip("P"))
@@ -164,16 +154,18 @@ def string_to_tetrad(p_str,indx_num,tet_strrep):
 
 	""" Turn debug_pr = 1 or True to turn on print output of
 	string to tetrad conversion process. Simple shortcut for now """
-	debug_pr 	= 1
+	debug_pr 	= 0
 
 	qt_temp		= []
 	dec_indx = indx_num * 4
 	tet_rep = tet_strrep.split()
-	t1 = np.array((1,0,0,0))
-	t2 = np.array((0,1,0,0))
-	t3 = np.array((0,0,1,0))
-	t4 = np.array((0,0,0,1))
-	vtl = [t1,t2,t3,t4]
+	# t1 = np.array((1,0,0,0))
+	# t2 = np.array((0,1,0,0))
+	# t3 = np.array((0,0,1,0))
+	# t4 = np.array((0,0,0,1))``
+	# vtl = [t1,t2,t3,t4]
+	onesl	= np.ones(4, int)
+	vtl		= np.diag(onesl)
 	tetint_list	= []
 	if debug_pr:
 		tet_nicerep = re.sub(r"\[", "<", tet_strrep)
@@ -183,9 +175,7 @@ def string_to_tetrad(p_str,indx_num,tet_strrep):
 		print("Str Representation: ", tet_nicerep2)
 		print("")
 	elif debug_pr == 0:
-		print("# xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-		print("Skipping output of Str conversion")
-		print("	")
+		pass
 	for i, m in enumerate(tet_rep):
 		xstr = re.sub(r"\[", "<", m)
 		xstr = re.sub(r"\]", ">", xstr)
@@ -210,17 +200,14 @@ def string_to_tetrad(p_str,indx_num,tet_strrep):
 			pass
 		# tempm = numpy.column_stack((vtl[mi[0]]*sgi[0],vtl[mi[1]]*sgi[1],vtl[mi[2]]*sgi[2],vtl[mi[3]]*sgi[3]))
 		tempm = numpy.vstack((vtl[mi[0]]*sgi[0],vtl[mi[1]]*sgi[1],vtl[mi[2]]*sgi[2],vtl[mi[3]]*sgi[3]))
-		matint = tempm.astype(int)
+		matint = np.asmatrix(tempm.astype(int))
 		matint1 = np.asmatrix(matint)
-
 		if debug_pr:
 			print("String:", xstr)
-			print("")
 			print(matint1)
-			print("")
 		else:
 			pass
-		qt_temp.append((i+dec_indx, matint1))
+		qt_temp.append((i+dec_indx, matint))
 	# qt_temp[0][1] =  np.multiply(qt_temp[0][1], -1)
 	f_temp 	= []
 	if p_str == "P1":
@@ -252,25 +239,10 @@ def klein_check(tet_lista, tet_listb):
 	print("")
 
 	for ind, itet in enumerate(tet_lista):
-		# ivt = [n for n ]
-		print("")
-		# for i in itet:
 		for i in itet:
-			# it = i[1].getT()
 			it = np.transpose(i[1])
-			print(i[1])
-			print("Transpose Matrix")
-			print(it)
-			# print(inv(i[1]).astype(int))
-			# print(i)
 		ivt = [np.transpose(xm[1]) for xm in itet]
-		# for i, k in enumerate(itet):
-		# 	ind = i - 1
-		# 	print(k)
-		# 	print("Transpose Matrix")
-		# 	print(ivt[ind])
 
-		# 	if np.array_equal(ivt[i], )
 		for jnd, jtet in enumerate(tet_listb):
 
 			print("Tetrad #: ", ind, jnd)
@@ -289,16 +261,7 @@ def klein_check(tet_lista, tet_listb):
 					else:
 						print("Duplicate Klein")
 						pass
-						# kein_flip.append((ind, jnd))
-
-			# elif ind == jnd:
-			# elif any(m for m in jtet if np.array_equal(ivt[0], m[1])) and any(m for m in jtet if np.array_equal(ivt[1], m[1])):
 			elif any( mj for im in ivt for mj in jtet if np.array_equal(im, mj[1])):
-				# if [ij for ij in jtet_is if np.array_equal(ivt[0], ij]:
-				# 	print("Self0
-				# if any(m for m in jtet if np.array_equal(ivt[2], m[1])) and any(m for m in jtet if np.array_equal(ivt[3], m[1])):
-			# if np.array_equal(ivt[0], jtet[0][1]) and np.array_equal(ivt[1], jtet[1][1]):
-				# if np.array_equal(ivt[2], jtet[2][1]) and np.array_equal(ivt[3], jtet[3][1]):
 				print("Self-Klein Flip found")
 				print(itet[0], jtet[0])
 				print("", ind, jnd)
@@ -310,7 +273,7 @@ def klein_check(tet_lista, tet_listb):
 					print("Duplicate Self-Klein")
 					pass
 			else:
-				print("Non Klein flip")
+				print("Non-Klein flip")
 				# print(ivt)
 				print("")
 				# print(jtet)
