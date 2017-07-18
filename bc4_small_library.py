@@ -41,17 +41,20 @@ def main():
 	print("# ***********************************************************************")
 	print("		")
 
-	pset_str = "PALL"
+	""" PALL seems to be broken for now due to lack of if elif logic at end
+		of string_to_tetrad() function """
+	# pset_str = "PALL"
+	pset_str = "P1"
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
 # BC4 Validation function process organizer
 def bc4_validation_seq(pset_arg):
 
-	pset_arg		= "P4"
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
 
+	""" Generate individual Library slices	"""
 	for ps in psets_list:
 		temp_tetrad	= tetrad_setgen(ps)
 		if ps not in psets_dict:
@@ -73,16 +76,24 @@ def bc4_validation_seq(pset_arg):
 		matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
 
 	elif pset_arg != "PALL":
-		for pset, tlist in psets_dict.items():
-			pint = 0
-			pint = int(pset.lstrip("P"))
-			if pset == "P6":
-				print("		")
-				print("Execute Gadget calc for P-set:", pset)
-				print("		")
-				matrix_calc_vijmat2.calculate_vij_matrices(tlist)
-				print("Gadget calc. for:", pset,"finished")
-				print("")
+		temp_plist = psets_dict[pset_arg]
+		print("		")
+		print("Execute Gadget calc for P-set:", pset_arg)
+		print("		")
+		matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
+		print("Gadget calc. for:", pset_arg,"finished")
+		print("")
+		# for pset, tlist in psets_dict.items():
+		# 	pint = 0
+		# 	pint = int(pset.lstrip("P"))
+		# 	if pset == "P6":
+		# 		print("		")
+		# 		print("Execute Gadget calc for P-set:", pset)
+		# 		print("		")
+		# 		matrix_calc_vijmat2.calculate_vij_matrices(tlist)
+		# 		print("Gadget calc. for:", pset,"finished")
+		# 		print("")
+		""" Forgot what this code was for - doing Gadget calc for Pairs? """
 			# for pxset, txlist in psets_dict.items():
 			# 	pxint = 0
 			# 	pxint = int(pxset.lstrip("P"))
@@ -154,18 +165,18 @@ def string_to_tetrad(p_str,indx_num,tet_strrep):
 
 	""" Turn debug_pr = 1 or True to turn on print output of
 	string to tetrad conversion process. Simple shortcut for now """
-	debug_pr 	= 0
+	debug_pr 	= 1
 
 	qt_temp		= []
 	dec_indx = indx_num * 4
 	tet_rep = tet_strrep.split()
-	# t1 = np.array((1,0,0,0))
-	# t2 = np.array((0,1,0,0))
-	# t3 = np.array((0,0,1,0))
-	# t4 = np.array((0,0,0,1))``
-	# vtl = [t1,t2,t3,t4]
-	onesl	= np.ones(4, int)
-	vtl		= np.diag(onesl)
+	t1 = np.array((1,0,0,0))
+	t2 = np.array((0,1,0,0))
+	t3 = np.array((0,0,1,0))
+	t4 = np.array((0,0,0,1))
+	vtl = [t1,t2,t3,t4]
+	# onesl	= np.ones(4, int)
+	# vtl		= np.diag(onesl)
 	tetint_list	= []
 	if debug_pr:
 		tet_nicerep = re.sub(r"\[", "<", tet_strrep)
@@ -200,14 +211,14 @@ def string_to_tetrad(p_str,indx_num,tet_strrep):
 			pass
 		# tempm = numpy.column_stack((vtl[mi[0]]*sgi[0],vtl[mi[1]]*sgi[1],vtl[mi[2]]*sgi[2],vtl[mi[3]]*sgi[3]))
 		tempm = numpy.vstack((vtl[mi[0]]*sgi[0],vtl[mi[1]]*sgi[1],vtl[mi[2]]*sgi[2],vtl[mi[3]]*sgi[3]))
-		matint = np.asmatrix(tempm.astype(int))
+		matint = tempm.astype(int)
 		matint1 = np.asmatrix(matint)
 		if debug_pr:
 			print("String:", xstr)
 			print(matint1)
 		else:
 			pass
-		qt_temp.append((i+dec_indx, matint))
+		qt_temp.append((i+dec_indx, matint1))
 	# qt_temp[0][1] =  np.multiply(qt_temp[0][1], -1)
 	f_temp 	= []
 	if p_str == "P1":
