@@ -51,21 +51,14 @@ def alphas_betas():
 	return [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
 
 
-vij_possibilities 	= alphas_betas()
-
 # ******************************************************************************
 # Do the final Vij calculation
-def calculate_vij_matrices(main_tetrad_list):
+def calc_holoraumy_mats(main_tetrad_list):
 
 	""" Remember that the main_tetrad_ark is a list of lists,
 		with each list containing four tuples, with tuples being
 		matrix number and the matrices itself. """
 
-
-	# vij_possibilities 	= alphas_betas()
-
-	anomaly_switch  = 0
-	debug			= 0
 
 	for ti, teti in enumerate(main_tetrad_list):
 		if debug:
@@ -101,11 +94,35 @@ def fermionic_holomats(adinkra):
 		rimat		= np.transpose(limat)
 		rjmat		= np.transpose(ljmat)
 		""" Vij eq from 1601.00 (3.2) """
+		""" Probably needs 1/2	"""
 		holo_mat	= np.dot(rimat, ljmat) - np.dot(rjmat, limat)
 		# temp_mat	= np.dot(tr_limat, ljmat) - np.dot(tr_ljmat, limat)
 		vij_fermi.append(holomat)
 
 	return vij_fermi, r_matrices
+
+# ******************************************************************************
+# Calculating Bosonic holoraumy matrices for given Adinkra
+def bosonic_holomats(adinkra):
+
+	""" Store n Vij bosonic matrices in vij_bosonic	"""
+	vij_bosonic	= []
+	r_matrices	= [np.transpose(mat) for mat in adinkra]
+
+	ij_indices = list(itertools.combinations([0,1,2,3], 2))
+
+	for ijtup in ij_indices:
+
+		limat	= adinkra[ijtup[0]]
+		ljmat	= adinkra[ijtup[1]]
+		rimat	= np.transpose(limat)
+		rjmat	= np.transpose(ljmat)
+
+		""" Vij bosonic eq	1501.00101 3.5	"""
+		holo_mat = np.dot(limat, rjmat) - np.dot(ljmat, rimat)
+		vij_bosonic.append(holo_mat)
+
+	return vij_bosonic, r_matrices
 
 """ This needs work. Probably later	"""
 def gadgetizing(holomats):

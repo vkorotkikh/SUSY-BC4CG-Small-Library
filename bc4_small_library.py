@@ -24,6 +24,7 @@ from numpy.linalg import inv
 # Function Imports
 # import matrix_outerprod_calc
 import matrix_calc_vijmat2
+import vij_holoraumy_calc
 
 # ******************************************************************************
 # Main() function.
