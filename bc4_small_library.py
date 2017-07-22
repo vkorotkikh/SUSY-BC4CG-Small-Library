@@ -24,6 +24,7 @@ from numpy.linalg import inv
 # Function Imports
 # import matrix_outerprod_calc
 import matrix_calc_vijmat2
+import matrix_calc_vijmat_nopr
 import vij_holoraumy_calc
 
 # ******************************************************************************
@@ -44,8 +45,12 @@ def main():
 
 	""" PALL seems to be broken for now due to lack of if elif logic at end
 		of string_to_tetrad() function """
+	""" Options for BC4 Library:
+		ALL - Entire small library, one big chunk.
+		PALL - Entire small library, one at a time.
+		P1, P2, P3, P4, P5, P6 - Only one section. 	"""
 	# pset_str = "PALL"
-	pset_str = "P1"
+	pset_str = "PALL"
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
@@ -64,7 +69,8 @@ def bc4_validation_seq(pset_arg):
 			print("Unknown P set -  ERROR")
 
 	# temp_l			= []
-	if pset_arg == "PALL":
+	""" Changing PALL to ALL to calculate for one big chunk	"""
+	if pset_arg == "ALL":
 		temp_plist	= []
 		psl 		= psets_list
 		temp_plist	= tetrad_setgen(pset_arg)
@@ -76,7 +82,8 @@ def bc4_validation_seq(pset_arg):
 		print("		")
 		matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
 
-	elif pset_arg != "PALL":
+	elif pset_arg in psets_list:
+	# elif pset_arg != "PALL":
 		temp_plist = psets_dict[pset_arg]
 		print("		")
 		print("Execute Gadget calc for P-set:", pset_arg)
@@ -84,17 +91,17 @@ def bc4_validation_seq(pset_arg):
 		matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
 		print("Gadget calc. for:", pset_arg,"finished")
 		print("")
-		# for pset, tlist in psets_dict.items():
-		# 	pint = 0
-		# 	pint = int(pset.lstrip("P"))
-		# 	if pset == "P6":
-		# 		print("		")
-		# 		print("Execute Gadget calc for P-set:", pset)
-		# 		print("		")
-		# 		matrix_calc_vijmat2.calculate_vij_matrices(tlist)
-		# 		print("Gadget calc. for:", pset,"finished")
-		# 		print("")
-		""" Forgot what this code was for - doing Gadget calc for Pairs? """
+	elif pset_arg == "PALL":
+		for pset, plist in sorted(psets_dict.items()):
+			pint = 0
+			pint = int(pset.lstrip("P"))
+			print("		")
+			print("Execute Gadget calc for P-set:", pset)
+			print("		")
+			matrix_calc_vijmat_nopr.calculate_vij_matrices(plist)
+			print("Gadget calc. for:", pset,"finished")
+			print("")
+		""" Code for doing Gadget value calc for P - Pairs 	"""
 			# for pxset, txlist in psets_dict.items():
 			# 	pxint = 0
 			# 	pxint = int(pxset.lstrip("P"))
@@ -126,13 +133,158 @@ def bc4_validation_seq(pset_arg):
 	# print(temp_l)
 	# matrix_calc_vijmat2.calculate_vij_matrices(temp_tetrad)
 
+
+##************************************
+# Defining the elle binary representations for the Vierergruppe
+def flip_ellebin(flip_set):
+
+	vgrp_elle			= {}
+
+	vgrp_elle['()']		= [[14,8,2,4], [2,4,14,8], [4,2,8,14],[8,14,4,2],
+							[6,0,10,12], [10,12,6,0], [12,10,0,6], [0,6,12,10]]
+
+	vgrp_elle['(12)'] 	= [[14,4,2,8], [2,8,14,4], [4,14,8,2], [8,2,4,14],
+							[6,12,10,0], [10,0,6,12], [12,6,0,10], [0,10,12,6]]
+
+	vgrp_elle['(13)'] 	= [[14,2,8,4], [2,14,4,8], [4,8,2,14], [8,4,14,2],
+							[6,10,0,12], [10,6,12,0], [12,0,10,6], [0,12,6,10]]
+
+	vgrp_elle['(23)'] 	= [[2,4,8,14], [14,8,4,2], [8,14,2,4], [4,2,14,8],
+							[10,12,0,6], [6,0,12,10], [0,6,10,12], [12,10,6,0]]
+
+	vgrp_elle['(123)']	= [[14,4,8,2], [2,8,4,14], [4,14,2,8], [8,2,14,4],
+							[6,12,0,10], [10,0,12,6], [12,6,10,0], [0,10,6,12]]
+
+	vgrp_elle['(132)']	= [[14,2,4,8], [2,14,8,4], [4,8,14,2], [8,4,2,14],
+							[6,10,12,0], [10,6,0,12], [12,0,6,10], [0,12,10,6]]
+
+	return vgrp_elle[flip_set]
+
+##************************************
+# Compiling the tetrads from predfined Adinkras
+def assemble_tetrads():
+
+	"""Vierergrupe dictionaries with binary quadsets for ells and tilde-ells
+	"""
+
+	main_tetrad			= []
+
+	vgruppe_sets		= vierergruppe_sets()
+	vierergruppe_elle	= flip_ellebin()
+	vierergruppe_tilde	= flip_tildebin()
+
+	for vgrp, binaries_list in vierergruppe_elle.items():
+		vbasis	= vgruppe_sets[vgrp]
+		print("")
+		print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
+		print("Calculating Vij elle coefficients")
+		print("							")
+		print("Vierergruppe flop: ",vgrp)
+		temp 	= lmat_flipping(vbasis, binaries_list)
+		# print("Flip sets:", binaries_list)
+		# vij_holoraumy_prime.calculate_vij_matrices(temp)
+		calculate_vgruppe_sets(temp, binaries_list)
+
+		print("<<<>>>")
+		main_tetrad.extend(temp)
+
+##************************************
+# Defining the six Vierergruppe representations
+def vierergruppe_sets():
+
+	vp1 	= np.matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+	vp2 	= np.matrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]])
+	vp3 	= np.matrix([[0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0]])
+	vp4 	= np.matrix([[0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]])
+	vprime 	= [vp1, vp2, vp3, vp4]
+
+	"""Elements for flopping bosonic fields"""
+	b12 	= np.matrix([[0,1,0,0], [1,0,0,0], [0,0,1,0], [0,0,0,1]])
+	b13 	= np.matrix([[0,0,1,0], [0,1,0,0], [1,0,0,0], [0,0,0,1]])
+	b23 	= np.matrix([[1,0,0,0], [0,0,1,0], [0,1,0,0], [0,0,0,1]])
+	b123	= np.matrix([[0,0,1,0], [1,0,0,0], [0,1,0,0], [0,0,0,1]])
+	b132	= np.matrix([[0,1,0,0], [0,0,1,0], [1,0,0,0], [0,0,0,1]])
+
+	vgruppe	= 	{'()': vprime,
+				'(12)': [np.dot(b12, i) for i in vprime],
+				'(13)': [np.dot(b13, i) for i in vprime],
+				'(23)': [np.dot(b23, i) for i in vprime],
+				'(123)':[np.dot(b123, i) for i in vprime],
+				'(132)':[np.dot(b132, i) for i in vprime]
+				}
+
+	return vgruppe
+
+##************************************
+# Function for calling calculate_vij_matrices
+def calculate_vgruppe_sets(gruppe_adinkras, gruppe_binaries):
+	"""
+	Function for printing out the details of each Adinkra - Vij matrix
+	sixset calculation, including the binary representation and the
+	corresponding resulting Vij matrices and their elles/tilde elles
+	Coefficients.
+	"""
+
+	for i in range(0, len(gruppe_adinkras)):
+
+		print("")
+		print("Calculating for binary flip:", gruppe_binaries[i])
+
+		vijset = vij_holoraumy_4x4.calculate_vijmatset(gruppe_adinkras[i])
+		for i in vijset:
+			print(i)
+	# for vgrp, binaries_list in vierergruppe_tilde.items():
+	# 	vbasis	= vgruppe_sets[vgrp]
+	# 	temp 	= lmat_flipping(vbasis, binaries_list)
+	# 	# for i, tet in enumerate(temp):
+	# 	# 	print("Length of tet:", len(tet), "Type", type(tet))
+	# 	# print("Length lmat_flipping", len(temp), vgrp, binaries_list)
+	# 	main_tetrad.extend(temp)
+
+
+##************************************
+# Use the binary representation info to perform flips on L mats in each tetrad
+def lmat_flipping(vbasis, binaries_list):
+
+	lmat_list		= []
+
+	for xbin in binaries_list:
+		print("Flip:", xbin)
+		binmats = [binaries(b) for b in xbin]
+		temp	= [np.dot(binmats[i], vbasis[i]) for i in range(0, len(binmats))]
+		lmat_list.append(temp)
+
+	return lmat_list
+
+
+# ********************************
+# Alpha and Beta matrices hardcoded
+def alphas_betas():
+
+	""" These are the alpha and beta matrices multiplied by 2i
+		alpha and beta are tensor products of Pauli spin matrices
+ 		Identity matrix They are defined in equtions (4.5)
+		in Isaac Chappell II, S. James Gates, Jr - 2012
+	"""
+
+	alpha1i = np.matrix([[0, 0, 0, 2], [0, 0, 2, 0], [0, -2, 0, 0], [-2, 0, 0, 0]])
+	alpha2i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, 2], [0, 0, -2, 0]])
+	alpha3i = np.matrix([[0, 0, 2, 0], [0, 0, 0, -2], [-2, 0, 0, 0], [0, 2, 0, 0]])
+
+	# Betas
+	beta1i = np.matrix([[0, 0, 0, 2], [0, 0, -2, 0], [0, 2, 0, 0], [-2, 0, 0, 0]])
+	beta2i = np.matrix([[0, 0, 2, 0], [0, 0, 0, 2], [-2, 0, 0, 0], [0, -2, 0, 0]])
+	beta3i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, -2], [0, 0, 2, 0]])
+
+	return [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
+
 # ******************************************************************************
 def tetrad_setgen(pset):
 	"""	Generates a {P#} set of tetrads via execution of pset_string_format()
 		and	string_to_tetrad() function. Creates a set of python numpy tetrads
 		from string representation	"""
 
-	p_switch = 1
+	p_switch = 0
 	run_group = pset_string_format(pset)
 	if pset == "PALL":
 		pset = "P1, P2, P3, P4, P5, P6"
@@ -166,7 +318,7 @@ def string_to_tetrad(p_str,indx_num,tet_strrep):
 
 	""" Turn debug_pr = 1 or True to turn on print output of
 	string to tetrad conversion process. Simple shortcut for now """
-	debug_pr 	= 1
+	debug_pr 	= 0
 
 	qt_temp		= []
 	dec_indx = indx_num * 4
@@ -225,19 +377,21 @@ def string_to_tetrad(p_str,indx_num,tet_strrep):
 	if p_str == "P1":
 		f_temp = qt_temp
 	elif p_str == "P2":
-		f_temp = [qt_temp[1], qt_temp[0], qt_temp[3], qt_temp[2]]
-	elif p_str == "P3":
 		f_temp = qt_temp
+	elif p_str == "P3":
+		f_temp = [qt_temp[1], qt_temp[0], qt_temp[3], qt_temp[2]]
 	elif p_str == "P4":
-		f_temp = [qt_temp[3], qt_temp[0], qt_temp[1], qt_temp[2]]
+		# f_temp = [qt_temp[3], qt_temp[0], qt_temp[1], qt_temp[2]]
+		f_temp = qt_temp
 	elif p_str == "P5":
-		f_temp = [qt_temp[2], qt_temp[3], qt_temp[1], qt_temp[0]]
+		# f_temp = [qt_temp[2], qt_temp[3], qt_temp[1], qt_temp[0]]
+		f_temp = qt_temp
 	elif p_str == "P6":
 		# f_temp = [qt_temp[2], qt_temp[3], qt_temp[0], qt_temp[1]]
 		# f_temp = [qt_temp[2], qt_temp[3], qt_temp[1], qt_temp[0]]
 		f_temp = qt_temp
-
 	return f_temp
+	# return qt_temp
 
 # ******************************************************************************
 # Find all patterns within the list of tetrads.
@@ -336,28 +490,8 @@ def pset_string_format(req_pgroup):
 		"[1,-4,-2,-3], [2,-3,1,4], [3,2,-4,1], [4,1,3,-2]"	# 16 count
           ]
 
-	""" {VM} L-matrix tetrad set - P2 Gadget values """
+	""" {TM} L-matrix tetrad set - P2 Gadget values """
 	pq_set['P2'] 	= [
-		"[1,3,2,4], [2,-4,-1,3], [3,-1,4,-2], [4,2,-3,-1]",
-		"[1,3,2,4], [2,4,-1,-3], [3,-1,-4,2], [4,-2,3,-1]",
-		"[1,3,2,-4], [2,4,-1,3], [3,-1,-4,-2], [4,-2,3,1]",
-		"[1,3,2,-4], [2,-4,-1,-3], [3,-1,4,2], [4,2,-3,1]",
-		"[1,-3,2,4], [2,4,-1,3], [3,1,4,-2], [4,-2,-3,-1]",
-		"[1,-3,2,4], [2,-4,-1,-3], [3,1,-4,2], [4,2,3,-1]",
-		"[1,-3,2,-4], [2,-4,-1,3], [3,1,-4,-2], [4,2,3,1]",
-		"[1,-3,2,-4], [2,4,-1,-3], [3,1,4,2], [4,-2,-3,1]",
-		"[1,3,-2,4], [2,-4,1,3], [3,-1,-4,-2], [4,2,3,-1]",
-		"[1,3,-2,4], [2,4,1,-3], [3,-1,4,2], [4,-2,-3,-1]",
-		"[1,3,-2,-4], [2,4,1,3], [3,-1,4,-2], [4,-2,-3,1]",
-		"[1,3,-2,-4], [2,-4,1,-3], [3,-1,-4,2], [4,2,3,1]",
-		"[1,-3,-2,4], [2,4,1,3], [3,1,-4,-2], [4,-2,3,-1]",
-		"[1,-3,-2,4], [2,-4,1,-3], [3,1,4,2], [4,2,-3,-1]",
-		"[1,-3,-2,-4], [2,-4,1,3], [3,1,4,-2], [4,2,-3,1]",
-		"[1,-3,-2,-4], [2,4,1,-3], [3,1,-4,2], [4,-2,3,1]"
-		]
-
-	""" {TM} L-matrix tetrad set - P3  Gadget values """
-	pq_set['P3']	= [
 		"[1,3,4,2], [2,-4,3,-1], [3,-1,-2,4], [4,2,-1,-3]",
 		"[1,3,4,2], [2,4,-3,-1], [3,-1,2,-4], [4,-2,-1,3]",
 		"[1,3,-4,2], [2,4,3,-1], [3,-1,-2,-4], [4,-2,1,3]",
@@ -374,6 +508,44 @@ def pset_string_format(req_pgroup):
 		"[1,-3,4,-2], [2,-4,-3,1], [3,1,2,4], [4,2,-1,-3]",
 		"[1,-3,-4,-2], [2,-4,3,1], [3,1,-2,4], [4,2,1,-3]",
 		"[1,-3,-4,-2], [2,4,-3,1], [3,1,2,-4], [4,-2,1,3]"
+		]
+	# pq_set['P2'] 	= [
+	# 	"[1,3,2,4], [2,-4,-1,3], [3,-1,4,-2], [4,2,-3,-1]",
+	# 	"[1,3,2,4], [2,4,-1,-3], [3,-1,-4,2], [4,-2,3,-1]",
+	# 	"[1,3,2,-4], [2,4,-1,3], [3,-1,-4,-2], [4,-2,3,1]",
+	# 	"[1,3,2,-4], [2,-4,-1,-3], [3,-1,4,2], [4,2,-3,1]",
+	# 	"[1,-3,2,4], [2,4,-1,3], [3,1,4,-2], [4,-2,-3,-1]",
+	# 	"[1,-3,2,4], [2,-4,-1,-3], [3,1,-4,2], [4,2,3,-1]",
+	# 	"[1,-3,2,-4], [2,-4,-1,3], [3,1,-4,-2], [4,2,3,1]",
+	# 	"[1,-3,2,-4], [2,4,-1,-3], [3,1,4,2], [4,-2,-3,1]",
+	# 	"[1,3,-2,4], [2,-4,1,3], [3,-1,-4,-2], [4,2,3,-1]",
+	# 	"[1,3,-2,4], [2,4,1,-3], [3,-1,4,2], [4,-2,-3,-1]",
+	# 	"[1,3,-2,-4], [2,4,1,3], [3,-1,4,-2], [4,-2,-3,1]",
+	# 	"[1,3,-2,-4], [2,-4,1,-3], [3,-1,-4,2], [4,2,3,1]",
+	# 	"[1,-3,-2,4], [2,4,1,3], [3,1,-4,-2], [4,-2,3,-1]",
+	# 	"[1,-3,-2,4], [2,-4,1,-3], [3,1,4,2], [4,2,-3,-1]",
+	# 	"[1,-3,-2,-4], [2,-4,1,3], [3,1,4,-2], [4,2,-3,1]",
+	# 	"[1,-3,-2,-4], [2,4,1,-3], [3,1,-4,2], [4,-2,3,1]"
+	# 	]
+
+	""" {VM} L-matrix tetrad set - P3  Gadget values """
+	pq_set['P3']	= [
+		"[1,3,2,4], [2,-4,-1,3], [3,-1,4,-2], [4,2,-3,-1]",
+		"[1,3,2,4], [2,4,-1,-3], [3,-1,-4,2], [4,-2,3,-1]",
+		"[1,3,2,-4], [2,4,-1,3], [3,-1,-4,-2], [4,-2,3,1]",
+		"[1,3,2,-4], [2,-4,-1,-3], [3,-1,4,2], [4,2,-3,1]",
+		"[1,-3,2,4], [2,4,-1,3], [3,1,4,-2], [4,-2,-3,-1]",
+		"[1,-3,2,4], [2,-4,-1,-3], [3,1,-4,2], [4,2,3,-1]",
+		"[1,-3,2,-4], [2,-4,-1,3], [3,1,-4,-2], [4,2,3,1]",
+		"[1,-3,2,-4], [2,4,-1,-3], [3,1,4,2], [4,-2,-3,1]",
+		"[1,3,-2,4], [2,-4,1,3], [3,-1,-4,-2], [4,2,3,-1]",
+		"[1,3,-2,4], [2,4,1,-3], [3,-1,4,2], [4,-2,-3,-1]",
+		"[1,3,-2,-4], [2,4,1,3], [3,-1,4,-2], [4,-2,-3,1]",
+		"[1,3,-2,-4], [2,-4,1,-3], [3,-1,-4,2], [4,2,3,1]",
+		"[1,-3,-2,4], [2,4,1,3], [3,1,-4,-2], [4,-2,3,-1]",
+		"[1,-3,-2,4], [2,-4,1,-3], [3,1,4,2], [4,2,-3,-1]",
+		"[1,-3,-2,-4], [2,-4,1,3], [3,1,4,-2], [4,2,-3,1]",
+		"[1,-3,-2,-4], [2,4,1,-3], [3,1,-4,2], [4,-2,3,1]"
 		]
 
 	""" {VM1} L-matrix tetrad set - P4 Gadget values """
@@ -417,45 +589,45 @@ def pset_string_format(req_pgroup):
 		]
 
 	""" {VM3} L-matrix tetrad set - P6 Gadget values """
-	# pq_set['P6']	 = [
-	# 	"[1,2,3,4], [2,-1,-4,3], [3,4,-1,-2], [4,-3,2,-1]",
-	# 	"[1,2,3,4], [2,-1,4,-3], [3,-4,-1,2], [4,3,-2,-1]",
-	# 	"[1,2,3,-4], [2,-1,4,3], [3,-4,-1,-2], [4,3,-2,1]",
-	# 	"[1,2,3,-4], [2,-1,-4,-3], [3,4,-1,2], [4,-3,2,1]",
-	# 	"[1,2,-3,4], [2,-1,4,3], [3,4,1,-2], [4,-3,-2,-1]",
-	# 	"[1,2,-3,4], [2,-1,-4,-3], [3,-4,1,2], [4,3,2,-1]",
-	# 	"[1,2,-3,-4], [2,-1,-4,3], [3,-4,1,-2], [4,3,2,1]",
-	# 	"[1,2,-3,-4], [2,-1,4,-3], [3,4,1,2], [4,-3,-2,1]",
-	# 	"[1,-2,3,4], [2,1,-4,3], [3,-4,-1,-2], [4,3,2,-1]",
-	# 	"[1,-2,3,4], [2,1,4,-3], [3,4,-1,2], [4,-3,-2,-1]",
-	# 	"[1,-2,3,-4], [2,1,4,3], [3,4,-1,-2], [4,-3,-2,1]",
-	# 	"[1,-2,3,-4], [2,1,-4,-3], [3,-4,-1,2], [4,3,2,1]",
-	# 	"[1,-2,-3,4], [2,1,4,3], [3,-4,1,-2], [4,3,-2,-1]",
-	# 	"[1,-2,-3,4], [2,1,-4,-3], [3,4,1,2], [4,-3,2,-1]",
-	# 	"[1,-2,-3,-4], [2,1,-4,3], [3,4,1,-2], [4,-3,2,1]",
-	# 	"[1,-2,-3,-4], [2,1,4,-3], [3,-4,1,2], [4,3,-2,1]"
-	# 	]
-	""" {VM3} L-matrix tetrad set - P6 Gadget values """
 	pq_set['P6']	 = [
-		"[3,4,1,2], [4,-3,-2,1], [1,2,-3,-4], [2,-1,4,-3]",
-		"[3,4,1,2], [4,-3,2,-1], [1,-2,-3,4], [2,1,-4,-3]",
-		"[3,-4,1,2], [4,3,-2,1], [1,-2,-3,-4], [2,1,4,-3]",
-		"[3,-4,1,2], [4,3,2,-1], [1,2,-3,4], [2,-1,-4,-3]",
-		"[3,4,-1,2], [4,-3,2,1], [1,2,3,-4], [2,-1,-4,-3]",
-		"[3,4,-1,2], [4,-3,-2,-1], [1,-2,3,4], [2,1,4,-3]",
-		"[3,-4,-1,2], [4,3,2,1], [1,-2,3,-4], [2,1,-4,-3]",
-		"[3,-4,-1,2], [4,3,-2,-1], [1,2,3,4], [2,-1,4,-3]",
-		"[3,4,1,-2], [4,-3,2,1], [1,-2,-3,-4], [2,1,-4,3]",
-		"[3,4,1,-2], [4,-3,-2,-1], [1,2,-3,4], [2,-1,4,3]",
-		"[3,-4,1,-2], [4,3,2,1], [1,2,-3,-4], [2,-1,-4,3]",
-		"[3,-4,1,-2], [4,3,-2,-1], [1,-2,-3,4], [2,1,4,3]",
-		"[3,4,-1,-2], [4,-3,-2,1], [1,-2,3,-4], [2,1,4,3]",
-		"[3,4,-1,-2], [4,-3,2,-1], [1,2,3,4], [2,-1,-4,3]",
-		"[3,-4,-1,-2], [4,3,-2,1], [1,2,3,-4], [2,-1,4,3]",
-		"[3,-4,-1,-2], [4,3,2,-1], [1,-2,3,4], [2,1,-4,3]"
+		"[1,2,3,4], [2,-1,-4,3], [3,4,-1,-2], [4,-3,2,-1]",
+		"[1,2,3,4], [2,-1,4,-3], [3,-4,-1,2], [4,3,-2,-1]",
+		"[1,2,3,-4], [2,-1,4,3], [3,-4,-1,-2], [4,3,-2,1]",
+		"[1,2,3,-4], [2,-1,-4,-3], [3,4,-1,2], [4,-3,2,1]",
+		"[1,2,-3,4], [2,-1,4,3], [3,4,1,-2], [4,-3,-2,-1]",
+		"[1,2,-3,4], [2,-1,-4,-3], [3,-4,1,2], [4,3,2,-1]",
+		"[1,2,-3,-4], [2,-1,-4,3], [3,-4,1,-2], [4,3,2,1]",
+		"[1,2,-3,-4], [2,-1,4,-3], [3,4,1,2], [4,-3,-2,1]",
+		"[1,-2,3,4], [2,1,-4,3], [3,-4,-1,-2], [4,3,2,-1]",
+		"[1,-2,3,4], [2,1,4,-3], [3,4,-1,2], [4,-3,-2,-1]",
+		"[1,-2,3,-4], [2,1,4,3], [3,4,-1,-2], [4,-3,-2,1]",
+		"[1,-2,3,-4], [2,1,-4,-3], [3,-4,-1,2], [4,3,2,1]",
+		"[1,-2,-3,4], [2,1,4,3], [3,-4,1,-2], [4,3,-2,-1]",
+		"[1,-2,-3,4], [2,1,-4,-3], [3,4,1,2], [4,-3,2,-1]",
+		"[1,-2,-3,-4], [2,1,-4,3], [3,4,1,-2], [4,-3,2,1]",
+		"[1,-2,-3,-4], [2,1,4,-3], [3,-4,1,2], [4,3,-2,1]"
 		]
+	""" {VM3} L-matrix tetrad set - P6 Gadget values """
+	# pq_set['P6']	 = [
+	# 	"[3,4,1,2], [4,-3,-2,1], [1,2,-3,-4], [2,-1,4,-3]",
+	# 	"[3,4,1,2], [4,-3,2,-1], [1,-2,-3,4], [2,1,-4,-3]",
+	# 	"[3,-4,1,2], [4,3,-2,1], [1,-2,-3,-4], [2,1,4,-3]",
+	# 	"[3,-4,1,2], [4,3,2,-1], [1,2,-3,4], [2,-1,-4,-3]",
+	# 	"[3,4,-1,2], [4,-3,2,1], [1,2,3,-4], [2,-1,-4,-3]",
+	# 	"[3,4,-1,2], [4,-3,-2,-1], [1,-2,3,4], [2,1,4,-3]",
+	# 	"[3,-4,-1,2], [4,3,2,1], [1,-2,3,-4], [2,1,-4,-3]",
+	# 	"[3,-4,-1,2], [4,3,-2,-1], [1,2,3,4], [2,-1,4,-3]",
+	# 	"[3,4,1,-2], [4,-3,2,1], [1,-2,-3,-4], [2,1,-4,3]",
+	# 	"[3,4,1,-2], [4,-3,-2,-1], [1,2,-3,4], [2,-1,4,3]",
+	# 	"[3,-4,1,-2], [4,3,2,1], [1,2,-3,-4], [2,-1,-4,3]",
+	# 	"[3,-4,1,-2], [4,3,-2,-1], [1,-2,-3,4], [2,1,4,3]",
+	# 	"[3,4,-1,-2], [4,-3,-2,1], [1,-2,3,-4], [2,1,4,3]",
+	# 	"[3,4,-1,-2], [4,-3,2,-1], [1,2,3,4], [2,-1,-4,3]",
+	# 	"[3,-4,-1,-2], [4,3,-2,1], [1,2,3,-4], [2,-1,4,3]",
+	# 	"[3,-4,-1,-2], [4,3,2,-1], [1,-2,3,4], [2,1,-4,3]"
+	# 	]
 
-	pq_set['PALL']	 = [
+	pq_set['ALL']	 = [
 		"[1,4,2,3], [2,3,-1,-4], [3,-2,4,-1], [4,-1,-3,2]",
 		"[1,4,2,3], [2,-3,-1,4], [3,2,-4,-1], [4,-1,3,-2]",
 		"[1,-4,2,3], [2,3,-1,4], [3,-2,-4,-1], [4,1,3,-2]",

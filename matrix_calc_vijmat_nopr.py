@@ -45,20 +45,22 @@ def calculate_vij_matrices(main_tetrad_list):
 	# vij_possibilities = [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
 	vij_sixset 		= []
 
-	print("							")
-	print("	Calculating Vij matrices")
+	print("Calculating Fermionic Holoraumy Vij matrices")
 	print("							")
 	vij_alphas 		= []
 	vij_betas  		= []
 	calc_check		= []
 
 	anomaly_switch = 0
+	""" Print out everything for debug on/off """
+	pr_sw	= 0
 
 	for ti, teti in enumerate(main_tetrad_list):
-		print("# ********************************")
-		print("								     ")
-		print("Tetrad i: ", ti)
-		print("								     ")
+		if pr_sw:
+			print("# ********************************")
+			print("								     ")
+			print("Tetrad i: ", ti)
+			print("								     ")
 		temp_combos = []
 		alpha_temp	= []
 		beta_temp   = []
@@ -83,7 +85,8 @@ def calculate_vij_matrices(main_tetrad_list):
 				ijstr = str(ir) + str(jr)
 				if ij_temp not in temp_combos and i != j:
 					# print("Vij matrix i-j vals:", ij_temp)
-					print("Vij matrix i-j vals:", ijstr)
+					if pr_sw:
+						print("Vij matrix i-j vals:", ijstr)
 					temp_combos.append(ij_temp)
 					tr_biglj = np.transpose(biglj)
 					# temp_mat = np.dot(tr_bigli, biglj) - np.dot(tr_biglj, bigli)
@@ -98,9 +101,10 @@ def calculate_vij_matrices(main_tetrad_list):
 						# tf_bool = 0
 						if np.array_equal(temp_mat, ijx):
 							tf_bool = 1
-							print("*************$$$$$$$$$$$$$$$$$$ ")
-							print("l-solution found:")
-							print(ijx)
+							if pr_sw:
+								print("*************$$$$$$$$$$$$$$$$$$ ")
+								print("l-solution found:")
+								print(ijx)
 							tmint = np.int(1)
 							if xi < 3:
 								tmp_str = "alpha" + str((xi + 1))
@@ -116,9 +120,10 @@ def calculate_vij_matrices(main_tetrad_list):
 								beta_temp.append([tmp_str, ijstr, tmint])
 						elif np.array_equal(temp_mat, ijx_neg):
 							tf_bool = 1
-							print("*************$$$$$$$$$$$$$$$$$$ ")
-							print("l-solution found:")
-							print(ijx_neg)
+							if pr_sw:
+								print("*************$$$$$$$$$$$$$$$$$$ ")
+								print("l-solution found:")
+								print(ijx_neg)
 							# xint = (xi + 1) * ( -1)
 							# vij_temp.append(xint)
 							tmint = np.int(-1)
@@ -159,39 +164,36 @@ def calculate_vij_matrices(main_tetrad_list):
 			vij_betas.append(beta_temp)
 		beta_temp 	= []
 		alpha_temp 	= []
-	checka = [['alpha2', '12', -1], ['alpha3', '13', -1], ['alpha1', '14', 1], ['alpha1', '23', 1], ['alpha3', '24', 1], ['alpha2', '34', -1]]
-	checkb = [['beta3', '12', -1], ['beta2', '13', 1], ['beta1', '14', -1], ['beta1', '23', 1], ['beta2', '24', 1], ['beta3', '34', 1]]
-		# vij_vals.append((vij_temp, ti))
-		# vij_sixset.append(vij_temp)
-	# if checka in calc_check and checkb in calc_check:
-	if checka in calc_check:
-		if checkb in calc_check:
-			print("")
-			print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ")
-			print("P3 set Alpha match found")
-			print("P3 set match=true")
-		else:
-			print("")
-			print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
-			print("NO MATCHES FOUND")
-			print("P3 LIBRARY NOT VALIDATED")
-	elif checkb in calc_check:
-		if checka in calc_check:
-			print("")
-			print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ")
-			print("P3 set Beta match found")
-			print("P3 set match=true")
-		else:
-			print("")
-			print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
-			print("NO MATCHES FOUND")
-			print("P3 LIBRARY NOT VALIDATED")
-	else:
-		print("")
-		print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
-		print("NO MATCHES FOUND")
-		print("P3 LIBRARY NOT VALIDATED")
-		print("")
+	# checka = [['alpha2', '12', -1], ['alpha3', '13', -1], ['alpha1', '14', 1], ['alpha1', '23', 1], ['alpha3', '24', 1], ['alpha2', '34', -1]]
+	# checkb = [['beta3', '12', -1], ['beta2', '13', 1], ['beta1', '14', -1], ['beta1', '23', 1], ['beta2', '24', 1], ['beta3', '34', 1]]
+	# if checka in calc_check:
+	# 	if checkb in calc_check:
+	# 		print("")
+	# 		print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ")
+	# 		print("P3 set Alpha match found")
+	# 		print("P3 set match=true")
+	# 	else:
+	# 		print("")
+	# 		print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
+	# 		print("NO MATCHES FOUND")
+	# 		print("P3 LIBRARY NOT VALIDATED")
+	# elif checkb in calc_check:
+	# 	if checka in calc_check:
+	# 		print("")
+	# 		print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ")
+	# 		print("P3 set Beta match found")
+	# 		print("P3 set match=true")
+	# 	else:
+	# 		print("")
+	# 		print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
+	# 		print("NO MATCHES FOUND")
+	# 		print("P3 LIBRARY NOT VALIDATED")
+	# else:
+	# 	print("")
+	# 	print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
+	# 	print("NO MATCHES FOUND")
+	# 	print("P3 LIBRARY NOT VALIDATED")
+	# 	print("")
 	print("*************$$$$$$$$$$$$$$$$$$ ")
 	print("Vij Matrix Coefficients Results:")
 	print("")
