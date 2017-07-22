@@ -101,38 +101,247 @@ def bc4_validation_seq(pset_arg):
 			matrix_calc_vijmat_nopr.calculate_vij_matrices(plist)
 			print("Gadget calc. for:", pset,"finished")
 			print("")
-		""" Code for doing Gadget value calc for P - Pairs 	"""
-			# for pxset, txlist in psets_dict.items():
-			# 	pxint = 0
-			# 	pxint = int(pxset.lstrip("P"))
-			#
-			# 	combonum = [pint, pxint]
-			# 	# combonum.sort()
-			# 	if combonum not in temp_l:
-			# 	# if combonum == [2,1]:
-			# 		temp_l.append(combonum)
-			# 		# print(combonum)
-			# 		print("		")
-			# 		print("Execute Gadget calc for pair:", pset, pxset)
-			# 		print("		")
-			# 		temp_pspx = []
-			# 		temp_pspx.extend(tlist)
-			# 		temp_pspx.extend(txlist)
-			# 		print("Print length of Pi-Pj set", len(temp_pspx))
-			# 		# klein_check(tlist, txlist)
-			# 		# print("Klein check finished for:", pset,"-",pxset)
-			# 		matrix_calc_vijmat2.calculate_vij_matrices(temp_pspx)
-			# 		print("Gadget calc. for:", pset,"-",pxset, "finished")
-			# 		print("")
-			# 	else:
-			# 		pass
-	# temp_l.sort()
-	#
-	# print("Printing length of P lists")
-	# print(len(psets_dict))
-	# print(temp_l)
-	# matrix_calc_vijmat2.calculate_vij_matrices(temp_tetrad)
 
+
+##************************************
+# Defining the Vierergruppe representations for flop operations
+def vierergruppe_flops():
+
+	vprime 	= [ "()", "(12)(34)", "(13)(24)", "(14)(23)" ]
+	# vprime	= [ "1234", "2143", "3412", "4321"]
+	vprime	= [ [1,2,3,4], [2,1,4,3], [3,4,1,2], [4,3,2,1] ]
+
+
+	vgrpv 		= [ ("()", [1,2,3,4]), ("(12)(34)", [2,1,4,3]),
+					("13)(24)", [3,4,1,2]), ("(14)(23)", [4,3,2,1])]
+
+	vgrp12v		= [ ("(12)", [2,1,3,4]), ("(34)", [1,2,4,3]),
+					# ("(1324)", [3,4,2,1]), ("(1423)", [4,3,1,2]) ]
+					("(1324)", [4,3,1,2]), ("(1423)", [3,4,2,1]) ]
+
+	vgrp13v		= [ ("(13)", [3,2,1,4]), ("(1234)", [4,1,2,3]),
+					("(24)", [1,4,3,2]), ("(1432)", [2,3,4,1])	]
+
+	vgrp23v		= [ ("(23)", [1,3,2,4]), ("(1342)", [2,4,1,3]),
+					("(1243)", [3,1,4,2]), ("(14)", [4,2,3,1])	]
+
+	vgrp123v	= [ ("(132)", [3,1,2,4]), ("(132)", [4,2,1,3]),
+					("(243)", [1,3,4,2]), ("(142)", [2,4,3,1])	]
+
+	vgrp132v	= [ ("(132)", [2,3,1,4]), ("(234)", [1,4,2,3]),
+					("(124)", [4,1,3,2]), ("(143)", [3,2,4,1])	]
+
+
+	# vgruppe 	= [ ('()', vgrpv), ('(12)',vgrp12v), ('(13)', vgrp13v) ]
+	# vgruppe	   = [ ('()', vgrpv) ]
+
+	vgruppe	   = [ ('()', vgrpv), ('(12)',vgrp12v), ('(13)', vgrp13v),
+				('(23)', vgrp23v), ('(123)', vgrp123v), ('(132)', vgrp132v) ]
+
+	return vgruppe
+
+##************************************
+# cis seed pie slices - elle coefficients
+def cis_seed_pies(pie_index):
+
+	""" Defining the words (aka collection of four boolean factors) that
+		when applied to corresponding Pie slices "promote" the Pie slice
+		to Adinkras
+	"""
+	p1plus	= 	[	[0,12,10,6], [2,14,8,4], [4,8,14,2], [6,10,12,0],
+					[8,4,2,14], [10,6,0,12], [12,0,6,10], [14,2,4,8]
+				]
+	p2plus	=	[	[0,6,12,10], [2,4,14,8], [4,2,8,14], [6,0,10,12],
+					[8,14,4,2], [10,12,6,0], [12,10,0,6], [14,8,2,4]
+				]
+	p3plus	=	[	[12,0,10,6], [14,2,8,4], [8,4,14,2], [10,6,12,0],
+					[4,8,2,14],	[6,10,0,12], [0,12,6,10], [2,14,4,8]
+				]
+	p4plus	=	[	[0,10,12,6], [2,8,14,4], [4,14,8,2], [6,12,10,0],
+					[8,2,4,14], [10,0,6,12], [12,6,0,10], [14,4,2,8]
+				]
+	p5plus	=	[	[0,6,10,12], [2,4,8,14], [4,2,14,8], [6,0,12,10],
+					[8,14,2,4], [10,12,0,6], [12,10,6,0], [14,8,4,2]
+				]
+	p6plus	=	[	[0,10,6,12], [2,8,4,14], [4,14,2,8], [6,12,0,10],
+					[8,2,14,4], [10,0,12,6], [12,6,10,0], [14,4,8,2]
+				]
+
+	cis_promotions	=	[p1plus, p2plus, p3plus, p4plus, p5plus, p6plus]
+
+	""" Import pie slice definitions before applying the binaries	"""
+	# pie_slices	=	pieslices()
+
+	# for i in range(0, len(cis_promotions)):
+
+	pslice			=	pieslices(pie_index)
+	pslice_words	=	cis_promotions[pie_index]
+
+	""" List to hold all the promoted Pie slice Adinkras using corresponding
+		words """
+	pie_adinkras	=	[]
+	for word in pslice_words:
+		temp_adinkra	=	[]
+		bool_list		=	[]
+		for bins in word:
+			bin_list 	= binaries(bins)
+			temp		= np.array(bin_list)
+			bool_mat	= np.diag(temp)
+			bool_list.append(bool_mat)
+		temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
+		# pie_adinkras.append(temp_adinkra)
+		pie_adinkras.append(temp_adinkra)
+
+	return pie_adinkras
+
+##************************************
+# trans seed pie slices - tilde~elle coefficients
+def trans_seed_pies(pie_index):
+
+	""" Defining the words (aka collection of four boolean factors) that
+		when applied to corresponding Pie slices "promote" the Pie slice
+		to Adinkras
+	"""
+	p1neg	=	[	[0,10,6,12], [2,8,4,14], [4,14,2,8], [6,12,0,10],
+					[8,2,14,4], [10,0,12,6], [12,6,10,0], [14,4,8,2]
+				]
+
+	p2neg	=	[	[0,12,10,6], [2,14,8,4], [4,8,14,2], [6,10,12,0],
+					[8,4,2,14], [10,6,0,12], [12,0,6,10], [14,2,4,8]
+				]
+
+	p3neg	=	[	[6,0,12,10], [4,2,14,8], [2,4,8,14], [0,6,10,12],
+					[14,8,4,2], [12,10,6,0], [10,12,0,6], [8,14,2,4]
+				]
+
+	p4neg	=	[	[0,12,6,10], [2,14,4,8], [4,8,2,14], [6,10,0,12],
+					[8,4,14,2],	[10,6,12,0], [12,0,10,6], [14,2,8,4]
+				]
+
+	p5neg	=	[	[0,10,12,6], [2,8,14,4], [4,14,8,2], [6,12,10,0],
+					[8,2,4,14], [10,0,6,12], [12,6,0,10], [14,4,2,8]
+				]
+
+	p6neg	=	[	[0,6,12,10], [2,4,14,8], [4,2,8,14], [6,0,10,12],
+					[8,14,4,2], [10,12,6,0], [12,10,0,6], [14,8,2,4]
+				]
+
+	trans_promotions	=	[p1neg, p2neg, p3neg, p4neg, p5neg, p6neg]
+
+	""" Import pie slice definitions before applying the binaries	"""
+	pslice			=	pieslices(pie_index)
+	pslice_words	=	trans_promotions[pie_index]
+
+	""" List to hold all the promoted Pie slice Adinkras using corresponding
+		words """
+	pie_adinkras	=	[]
+	for word in pslice_words:
+		temp_adinkra	=	[]
+		bool_list		=	[]
+		for bins in word:
+			bin_list 	= binaries(bins)
+			temp		= np.array(bin_list)
+			bool_mat	= np.diag(temp)
+			bool_list.append(bool_mat)
+		temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
+		pie_adinkras.append(temp_adinkra)
+
+	return pie_adinkras
+
+
+##************************************
+# Defining the Pizza slices
+def pieslices(pie_index):
+
+	p1	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
+			np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0]]),
+			np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]]),
+			np.matrix([[0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]])
+			]
+
+	p2	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]]),
+			np.matrix([[0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]]),
+			np.matrix([[0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0]]),
+			np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0]])
+			]
+
+	p3	=	[np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]),
+			np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0]]),
+			np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
+			np.matrix([[0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0]])
+			]
+
+	p4	=	[np.matrix([[1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0]]),
+			np.matrix([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0]]),
+			np.matrix([[0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1]]),
+			np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]])
+			]
+
+	p5	=	[np.matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]]),
+			np.matrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
+			np.matrix([[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0]]),
+			np.matrix([[0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0]])
+			]
+
+	p6	=	[np.matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
+			np.matrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]]),
+			np.matrix([[0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0]]),
+			np.matrix([[0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]])
+			]
+
+	pie_complete = [ p1, p2, p3, p4, p5, p6 ]
+
+	return pie_complete[pie_index]
+
+
+##************************************
+# Perform flop operation over Adinkra color space
+def colorspace_flop(adinkra, flop_op):
+	# print("Executing colorspace_flip", flop_op)
+	# print("Adinkra")
+	# print(adinkra)
+	# print("")
+	new_adinkra	= [ adinkra[(ind - 1)] for ind in flop_op]
+
+	return new_adinkra
+
+
+##************************************
+# Perform flip operation over Adinkra color space
+def colorspace_flip(adinkra, flip_op):
+
+	# print("Executing colorspace_flip", flip_op)
+	""" Weird bug here if you do the algorith this way """
+	# new_adinkra	= []
+	# for i in range(0, len(adinkra)):
+	# 	tmat 		= adinkra[i]
+	# 	tmat[1:]	= tmat[1:] * flip_op[i]
+	# 	new_adinkra.append(tmat)
+	""" Normal algorithm """
+	new_adinkra	= []
+	for i in range(0, len(flip_op)):
+		# new_adinkra[i][1:]	= new_adinkra[i][1:] * flip_op[i]
+		temp_mat	= adinkra[i] * flip_op[i]
+		new_adinkra.append(temp_mat)
+	# print("Flipped Adinkra")
+	# print(new_adinkra)
+	# print("")
+	return new_adinkra
+
+
+##************************************
+# Defining the binary multiplication arrays
+def binaries(bin_code):
+
+	binaries_lt	= [(0, [1,1,1,1]), (2, [1,-1,1,1]), (4, [1,1,-1,1]),
+					(6, [1,-1,-1,1]), (8, [1,1,1,-1]), (10, [1,-1,1,-1]),
+					(12, [1,1,-1,-1]), (14, [1,-1,-1,-1])]
+
+	for btuple in binaries_lt:
+		if bin_code == btuple[0]:
+			# tarray = np.array(btuple[1])
+			# temp   = np.diag(tarray)
+			return btuple[1]
 
 ##************************************
 # Defining the elle binary representations for the Vierergruppe
@@ -159,6 +368,45 @@ def flip_ellebin(flip_set):
 							[6,10,12,0], [10,6,0,12], [12,0,6,10], [0,12,10,6]]
 
 	return vgrp_elle[flip_set]
+
+
+##************************************
+# Defining the tilde-elle binary representations for the Vierergruppe
+def flip_tildebin(flip_set):
+
+	vgrp_tilde			= {}
+
+	vgrp_tilde['()']	= [[14,4,8,2], [2,8,4,14], [4,14,2,8], [8,2,14,4],
+							[6,12,0,10], [10,0,12,6], [12,6,10,0], [0,10,6,12]]
+							# [[14,8,2,4], [2,4,14,8], [4,2,8,14], [8,14,4,2],
+							# [6,0,10,12], [10,12,6,0], [12,10,0,6], [0,6,12,10]]
+
+	vgrp_tilde['(12)']	= [[14,8,4,2], [2,4,8,14], [4,2,14,8], [8,14,2,4],
+							[6,0,12,10], [10,12,0,6], [12,10,6,0], [0,6,10,12]]
+							# [[14,4,2,8], [2,8,14,4], [4,14,8,2], [8,2,4,14],
+							# [6,12,10,0], [10,0,6,12], [12,6,0,10], [0,10,12,6]]
+
+	vgrp_tilde['(13)']	= [[14,4,2,8], [2,8,14,4], [4,14,8,2], [8,2,4,14],
+							[6,12,10,0], [10,0,6,12], [12,6,0,10], [0,10,12,6]]
+
+	vgrp_tilde['(23)']	= [[4,8,2,14], [8,4,14,2], [14,2,8,4], [2,14,4,8],
+							[12,0,10,6], [0,12,6,10], [6,10,0,12], [10,6,12,0]]
+							# [[2,4,8,14], [14,8,4,2], [8,14,2,4], [4,2,14,8],
+							# [10,12,0,6], [6,0,12,10], [0,6,10,12], [12,10,6,0]]
+
+	vgrp_tilde['(123)']	= [[14,2,4,8], [2,14,8,4], [4,8,14,2], [8,4,2,14],
+							[6,10,12,0], [10,6,0,12], [12,0,6,10], [0,12,10,6]]
+							# [[14,4,8,2], [2,8,4,14], [4,14,2,8], [8,2,14,4],
+							# [6,12,0,10], [10,0,12,6], [12,6,10,0], [0,10,6,12]]
+
+	vgrp_tilde['(132)'] = [[14,8,2,4], [2,4,14,8], [4,2,8,14], [8,14,4,2],
+							[6,0,10,12], [10,12,6,0], [12,10,0,6], [0,6,12,10]]
+
+							# [[14,2,4,8], [2,14,8,4], [4,8,14,2], [8,4,2,14],
+							# [6,10,12,0], [10,6,0,12], [12,0,6,10], [0,12,10,6]]
+
+	return vgrp_tilde[flip_set]
+
 
 ##************************************
 # Compiling the tetrads from predfined Adinkras
@@ -279,135 +527,6 @@ def alphas_betas():
 	beta3i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, -2], [0, 0, 2, 0]])
 
 	return [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
-
-# ******************************************************************************
-def tetrad_setgen(pset):
-	"""	Generates a {P#} set of tetrads via execution of pset_string_format()
-		and	string_to_tetrad() function. Creates a set of python numpy tetrads
-		from string representation	"""
-
-	p_switch = 0
-	run_group = pset_string_format(pset)
-	if pset == "PALL":
-		pset = "P1, P2, P3, P4, P5, P6"
-	if p_switch:
-		print("# ********************************")
-		print("Starting conversion process for", pset)
-		print("Length of", pset, "tetrad set:", len(run_group))
-		print("")
-		print("Printing", pset, "tetrads string representation before conversion")
-		for x in run_group:
-			x = re.sub(r"\[", "<", x)
-			x = re.sub(r"\]", ">", x)
-			print(x)
-		print("")
-
-	tetrad_sig_perm = gen_sign_perm(4)
-	tsp = tetrad_sig_perm
-	tetrad_bc4chk =[]
-
-	for ind, itet in enumerate(run_group):
-		# print("IND DEBUG:", ind)
-		tempt = string_to_tetrad(pset, ind, itet)
-		tetrad_bc4chk.append(tempt)
-
-	return tetrad_bc4chk
-
-
-# ******************************************************************************
-# Transform a tetrad string representation into tetrad of matrices
-def string_to_tetrad(p_str,indx_num,tet_strrep):
-
-	""" Turn debug_pr = 1 or True to turn on print output of
-	string to tetrad conversion process. Simple shortcut for now """
-	debug_pr 	= 0
-
-	qt_temp		= []
-	dec_indx = indx_num * 4
-	tet_rep = tet_strrep.split()
-	t1 = np.array((1,0,0,0))
-	t2 = np.array((0,1,0,0))
-	t3 = np.array((0,0,1,0))
-	t4 = np.array((0,0,0,1))
-	vtl = [t1,t2,t3,t4]
-	# onesl	= np.ones(4, int)
-	# vtl		= np.diag(onesl)
-	tetint_list	= []
-	if debug_pr:
-		tet_nicerep = re.sub(r"\[", "<", tet_strrep)
-		tet_nicerep2 = re.sub(r"\]", ">", tet_nicerep)
-		print("# ********************************")
-		print("Converting tetrad #:", indx_num)
-		print("Str Representation: ", tet_nicerep2)
-		print("")
-	elif debug_pr == 0:
-		pass
-	for i, m in enumerate(tet_rep):
-		xstr = re.sub(r"\[", "<", m)
-		xstr = re.sub(r"\]", ">", xstr)
-		xstr = xstr.strip(",")
-		mtemp = m[m.index("[") + 1:m.rindex("]")]
-		# print(mtemp)
-		mint_list = [int(s) for s in mtemp.split(',')]
-		tetint_list.append(mint_list)
-		# tf = any(not isinstance(x, int) for x in mint_list)
-		sign_ind = [ x / abs(x) for x in mint_list]
-		sgi = [ x / abs(x) for x in mint_list]
-		if debug_pr:
-			print(mint_list)
-			print(sign_ind)
-		else:
-			pass
-		mi = [abs(x) - 1 for x in mint_list]
-		if debug_pr:
-			print(mi)
-			print("")
-		else:
-			pass
-		# tempm = numpy.column_stack((vtl[mi[0]]*sgi[0],vtl[mi[1]]*sgi[1],vtl[mi[2]]*sgi[2],vtl[mi[3]]*sgi[3]))
-		tempm = numpy.vstack((vtl[mi[0]]*sgi[0],vtl[mi[1]]*sgi[1],vtl[mi[2]]*sgi[2],vtl[mi[3]]*sgi[3]))
-		matint = tempm.astype(int)
-		matint1 = np.asmatrix(matint)
-		if debug_pr:
-			print("String:", xstr)
-			print(matint1)
-		else:
-			pass
-		qt_temp.append((i+dec_indx, matint1))
-	# qt_temp[0][1] =  np.multiply(qt_temp[0][1], -1)
-	f_temp 	= []
-	if p_str == "P1":
-		f_temp = qt_temp
-	elif p_str == "P2":
-		f_temp = qt_temp
-	elif p_str == "P3":
-		f_temp = [qt_temp[1], qt_temp[0], qt_temp[3], qt_temp[2]]
-	elif p_str == "P4":
-		# f_temp = [qt_temp[3], qt_temp[0], qt_temp[1], qt_temp[2]]
-		f_temp = qt_temp
-	elif p_str == "P5":
-		# f_temp = [qt_temp[2], qt_temp[3], qt_temp[1], qt_temp[0]]
-		f_temp = qt_temp
-	elif p_str == "P6":
-		# f_temp = [qt_temp[2], qt_temp[3], qt_temp[0], qt_temp[1]]
-		# f_temp = [qt_temp[2], qt_temp[3], qt_temp[1], qt_temp[0]]
-		f_temp = qt_temp
-	return f_temp
-	# return qt_temp
-
-
-# ******************************************************************************
-# Generate all sign permutations of an nxn Identity Matrix
-def gen_sign_perm(n):
-
-	n 			= int(n)
-	items		= [1] * n
-	ptemp = []
-
-	for signs in itertools.product([-1,1], repeat=len(items)):
-		temp = np.array([a*sign for a,sign in zip(items,signs)],dtype=int)
-		ptemp.append(temp)
-	return ptemp
 
 
 # **************************************************************************
