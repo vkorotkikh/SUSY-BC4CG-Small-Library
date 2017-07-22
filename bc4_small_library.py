@@ -192,19 +192,21 @@ def assemble_tetrads():
 # Defining the six Vierergruppe representations
 def vierergruppe_sets():
 
+	""" Defining V and the rest. These are elements for flopping bosonic fields
+	"""
 	vp1 	= np.matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
 	vp2 	= np.matrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]])
 	vp3 	= np.matrix([[0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0]])
 	vp4 	= np.matrix([[0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]])
 	vprime 	= [vp1, vp2, vp3, vp4]
 
-	"""Elements for flopping bosonic fields"""
 	b12 	= np.matrix([[0,1,0,0], [1,0,0,0], [0,0,1,0], [0,0,0,1]])
 	b13 	= np.matrix([[0,0,1,0], [0,1,0,0], [1,0,0,0], [0,0,0,1]])
 	b23 	= np.matrix([[1,0,0,0], [0,0,1,0], [0,1,0,0], [0,0,0,1]])
 	b123	= np.matrix([[0,0,1,0], [1,0,0,0], [0,1,0,0], [0,0,0,1]])
 	b132	= np.matrix([[0,1,0,0], [0,0,1,0], [1,0,0,0], [0,0,0,1]])
 
+	""" Vierergrupe via S3 left cosets """
 	vgruppe	= 	{'()': vprime,
 				'(12)': [np.dot(b12, i) for i in vprime],
 				'(13)': [np.dot(b13, i) for i in vprime],
@@ -393,63 +395,6 @@ def string_to_tetrad(p_str,indx_num,tet_strrep):
 	return f_temp
 	# return qt_temp
 
-# ******************************************************************************
-# Find all patterns within the list of tetrads.
-def klein_check(tet_lista, tet_listb):
-
-	self_kein	= []
-	kein_flip	= []
-
-	pair_match	= []
-	print("Printing Tetrads plugged into klein_check")
-	print("")
-
-	for ind, itet in enumerate(tet_lista):
-		for i in itet:
-			it = np.transpose(i[1])
-		ivt = [np.transpose(xm[1]) for xm in itet]
-
-		for jnd, jtet in enumerate(tet_listb):
-
-			print("Tetrad #: ", ind, jnd)
-			jtet_is = [jm[1] for jm in jtet]
-			# if ind != jnd:
-			# print(ivt[0], jtet[0][1])
-			print("")
-			if np.array_equal(ivt[0], jtet[0][1]) and np.array_equal(ivt[1], jtet[1][1]):
-				if np.array_equal(ivt[2], jtet[2][1]) and np.array_equal(ivt[3], jtet[3][1]):
-					print("Klein Flip found")
-					print("", ind, jnd)
-					demp = [ind, jnd]
-					demp.sort()
-					if demp not in kein_flip:
-						kein_flip.append(demp)
-					else:
-						print("Duplicate Klein")
-						pass
-			elif any( mj for im in ivt for mj in jtet if np.array_equal(im, mj[1])):
-				print("Self-Klein Flip found")
-				print(itet[0], jtet[0])
-				print("", ind, jnd)
-				demp = [ind, jnd]
-				demp.sort()
-				if demp not in self_kein:
-					self_kein.append(demp)
-				else:
-					print("Duplicate Self-Klein")
-					pass
-			else:
-				print("Non-Klein flip")
-				# print(ivt)
-				print("")
-				# print(jtet)
-	print("")
-	print("Length of Kein Flip list:", len(kein_flip))
-	print("")
-	print("Length of Self Kein Flip:", len(self_kein))
-	print("")
-	for isk in self_kein:
-		print(isk)
 
 # ******************************************************************************
 # Generate all sign permutations of an nxn Identity Matrix
@@ -769,22 +714,7 @@ def pset_string_format(req_pgroup):
 
 	if req_pgroup in pq_set:
 		return pq_set[req_pgroup]
-	# if req_pgroup == 'pl1':
-	# 	return pl1
-	# elif req_pgroup == 'pl2':
-	# 	return pl2
-	# elif req_pgroup == 'pl3':
-	# 	return pl3
-	# elif req_pgroup == 'pl4':
-	# 	return pl4
-	# elif req_pgroup == "pl5":
-	# 	return pl5
-	# elif req_pgroup == "pl6":
-	# 	return pl6
-	# elif req_pgroup == "plall":
-	# 	return plall
-	# elif req_pgroup == "pl13":
-	# 	return pl13
+
 
 # **************************************************************************
 # Execute main()

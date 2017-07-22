@@ -41,6 +41,10 @@ def main():
 	print("# ***********************************************************************")
 	print("		")
 
+	""" Options for BC4 Library:
+		ALL - Entire small library, one big chunk.
+		PALL - Entire small library, one at a time.
+		P1, P2, P3, P4, P5, P6 - Only one section. 	"""
 	pset_str = "PALL"
 	bc4_validation_seq(pset_str)
 
