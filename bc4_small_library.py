@@ -344,6 +344,17 @@ def binaries(bin_code):
 			return btuple[1]
 
 ##************************************
+# Defining the flips used in original CG BC4 Library
+def flips_org_lib(flip_set):
+
+	p_slice 	= {}
+
+	p_slice['P1']	= [[0,6,12,10], [0,12,10,6], [2,4,14,8], [2,14,8,4],
+						[4,2,8,14], [4,8,14,2], [6,0,10,12], [6,10,12,0],
+						[8,4,2,14], [8,14,4,2], [10,6,0,12], [10,12,6,0],
+						[12,0,6,10], [12,10,0,6], [14,2,4,8], [14,8,2,4]]
+
+##************************************
 # Defining the elle binary representations for the Vierergruppe
 def flip_ellebin(flip_set):
 
