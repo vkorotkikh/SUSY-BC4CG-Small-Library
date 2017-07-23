@@ -125,61 +125,60 @@ def bosonic_holomats(adinkra):
 	return vij_bosonic, r_matrices
 
 """ This needs work. Probably later	"""
-def gadgetizing(holomats):
-		# """ Compare against the 6 possible matrix solutions """
-
-		tf_bool = 0
-		for xi, ijx in enumerate(vij_possibilities):
-			ijx_neg = np.multiply(ijx, -1)
-			# print(xi)
-			if np.array_equal(temp_mat, ijx):
-				tf_bool = 1
-				if debug:
-					print("*************$$$$$$$$$$$$$$$$$$ ")
-					print("l-solution found:")
-					print(ijx)
-				tmint = np.int(1)
-				if xi < 3:
-					tmp_str = "alpha^" + str((xi + 1))
-					# print(tmp_str)
-					# vij_tempset.append([tmp_str, ijstr, tmint])
-					res_str	= ijstr + " = " + "1 * " + tmp_str
-					# vij_tempset.append([tmint, ijstr, tmp_str])
-					vij_tempset.append(res_str)
-				elif xi >= 3:
-					tmp_str = "beta^" + str((xi - 2))
-					res_str	= ijstr + " = " + "1 * " + tmp_str
-					# vij_tempset.append([tmint, ijstr, tmp_str])
-					vij_tempset.append(res_str)
-			elif np.array_equal(temp_mat, ijx_neg):
-				tf_bool = 1
-				if debug:
-					print("*************$$$$$$$$$$$$$$$$$$ ")
-					print("l-solution found:")
-					print(ijx_neg)
-				# xint = (xi + 1) * ( -1)
-				tmint = np.int(-1)
-				if xi < 3:
-					tmp_str = "alpha^" + str((xi + 1))
-					res_str	= ijstr + " = " + "-1 * " + tmp_str
-					# print(tmp_str)
-					# vij_tempset.append([tmint, ijstr, tmp_str])
-					vij_tempset.append(res_str)
-				elif xi >= 3:
-					tmp_str = "beta^" + str((xi - 2))
-					res_str	= ijstr + " = " + "-1 * " + tmp_str
-					# vij_tempset.append([tmint, ijstr, tmp_str])
-					vij_tempset.append(res_str)
-			else:
-				if tf_bool == 0 and xi >= 5:
-					if not(np.array_equal(temp_mat, ijx)) or not np.array_equal(temp_mat, ijx_neg):
-						print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
-						print("Anomaly found:",ijstr)
-						print(temp_mat)
-						anomaly_switch = 1
-		tf_bool = 0
-
-	return vij_tempset
+# def gadgetizing(holomats):
+# 		# """ Compare against the 6 possible matrix solutions """
+#
+# 		tf_bool = 0
+# 		for xi, ijx in enumerate(vij_possibilities):
+# 			ijx_neg = np.multiply(ijx, -1)
+# 			# print(xi)
+# 			if np.array_equal(temp_mat, ijx):
+# 				tf_bool = 1
+# 				if debug:
+# 					print("*************$$$$$$$$$$$$$$$$$$ ")
+# 					print("l-solution found:")
+# 					print(ijx)
+# 				tmint = np.int(1)
+# 				if xi < 3:
+# 					tmp_str = "alpha^" + str((xi + 1))
+# 					# print(tmp_str)
+# 					# vij_tempset.append([tmp_str, ijstr, tmint])
+# 					res_str	= ijstr + " = " + "1 * " + tmp_str
+# 					# vij_tempset.append([tmint, ijstr, tmp_str])
+# 					vij_tempset.append(res_str)
+# 				elif xi >= 3:
+# 					tmp_str = "beta^" + str((xi - 2))
+# 					res_str	= ijstr + " = " + "1 * " + tmp_str
+# 					# vij_tempset.append([tmint, ijstr, tmp_str])
+# 					vij_tempset.append(res_str)
+# 			elif np.array_equal(temp_mat, ijx_neg):
+# 				tf_bool = 1
+# 				if debug:
+# 					print("*************$$$$$$$$$$$$$$$$$$ ")
+# 					print("l-solution found:")
+# 					print(ijx_neg)
+# 				# xint = (xi + 1) * ( -1)
+# 				tmint = np.int(-1)
+# 				if xi < 3:
+# 					tmp_str = "alpha^" + str((xi + 1))
+# 					res_str	= ijstr + " = " + "-1 * " + tmp_str
+# 					# print(tmp_str)
+# 					# vij_tempset.append([tmint, ijstr, tmp_str])
+# 					vij_tempset.append(res_str)
+# 				elif xi >= 3:
+# 					tmp_str = "beta^" + str((xi - 2))
+# 					res_str	= ijstr + " = " + "-1 * " + tmp_str
+# 					# vij_tempset.append([tmint, ijstr, tmp_str])
+# 					vij_tempset.append(res_str)
+# 			else:
+# 				if tf_bool == 0 and xi >= 5:
+# 					if not(np.array_equal(temp_mat, ijx)) or not np.array_equal(temp_mat, ijx_neg):
+# 						print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
+# 						print("Anomaly found:",ijstr)
+# 						print(temp_mat)
+# 						anomaly_switch = 1
+# 		tf_bool = 0
+# 	return vij_tempset
 
 	# print("*************$$$$$$$$$$$$$$$$$$ ")
 	# print("Vij Matrix Coefficients Results:")

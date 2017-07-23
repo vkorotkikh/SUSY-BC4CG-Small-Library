@@ -50,7 +50,7 @@ def main():
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. 	"""
 	# pset_str = "PALL"
-	pset_str = "PALL"
+	pset_str = "P1"
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
@@ -102,43 +102,46 @@ def bc4_validation_seq(pset_arg):
 			print("Gadget calc. for:", pset,"finished")
 			print("")
 
+# ******************************************************************************
+def tetrad_setgen(pset):
+	"""	Generates a {P#} set of tetrads via execution of pset_string_format()
+		and	string_to_tetrad() function. Creates a set of python numpy tetrads
+		from string representation	"""
+	p_switch	= 1
 
-##************************************
-# Defining the Vierergruppe representations for flop operations
-def vierergruppe_flops():
+	pset_boold 	= []
+	""" Transform P# slices into list index by getting the # """
+	pint 	= 0
+	pint 	= int(pset.lstrip("P")) - 1
+	print(pint)
+	pslice 	= lib_pslices(pint)
+	if p_switch:
+		print("# ********************************")
+		print("Starting conversion process for P slice:", pset)
+		# print("Length of", pset, "tetrad set:", len(run_group))
+		print("")
+	""" Perform boolean calculations """
+	pbools	= flips_org_lib(pset)
+	print(pbools)
 
-	vprime 	= [ "()", "(12)(34)", "(13)(24)", "(14)(23)" ]
-	# vprime	= [ "1234", "2143", "3412", "4321"]
-	vprime	= [ [1,2,3,4], [2,1,4,3], [3,4,1,2], [4,3,2,1] ]
+	for boolset in pbools:
 
+		bool_list = []
+		for bins in boolset:
+			bins_list 	= binaries(bins)
+			temp		= np.array(bins_list)
+			bool_mat	= np.diag(temp)
+			bool_list.append(bool_mat)
 
-	vgrpv 		= [ ("()", [1,2,3,4]), ("(12)(34)", [2,1,4,3]),
-					("13)(24)", [3,4,1,2]), ("(14)(23)", [4,3,2,1])]
+		# booled_adinkra 	= [(np.dot(pslice[x], bool_list[x])) for x in range(0, len(pslice))]
+		booled_adinkra	= [(np.dot(bool_list[x], pslice[x])) for x in range(0, len(pslice))]
+		pset_boold.append(booled_adinkra)
 
-	vgrp12v		= [ ("(12)", [2,1,3,4]), ("(34)", [1,2,4,3]),
-					# ("(1324)", [3,4,2,1]), ("(1423)", [4,3,1,2]) ]
-					("(1324)", [4,3,1,2]), ("(1423)", [3,4,2,1]) ]
+		# temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
+	# for ix in pset_boold:
+	# 	print(ix)
+	return pset_boold
 
-	vgrp13v		= [ ("(13)", [3,2,1,4]), ("(1234)", [4,1,2,3]),
-					("(24)", [1,4,3,2]), ("(1432)", [2,3,4,1])	]
-
-	vgrp23v		= [ ("(23)", [1,3,2,4]), ("(1342)", [2,4,1,3]),
-					("(1243)", [3,1,4,2]), ("(14)", [4,2,3,1])	]
-
-	vgrp123v	= [ ("(132)", [3,1,2,4]), ("(132)", [4,2,1,3]),
-					("(243)", [1,3,4,2]), ("(142)", [2,4,3,1])	]
-
-	vgrp132v	= [ ("(132)", [2,3,1,4]), ("(234)", [1,4,2,3]),
-					("(124)", [4,1,3,2]), ("(143)", [3,2,4,1])	]
-
-
-	# vgruppe 	= [ ('()', vgrpv), ('(12)',vgrp12v), ('(13)', vgrp13v) ]
-	# vgruppe	   = [ ('()', vgrpv) ]
-
-	vgruppe	   = [ ('()', vgrpv), ('(12)',vgrp12v), ('(13)', vgrp13v),
-				('(23)', vgrp23v), ('(123)', vgrp123v), ('(132)', vgrp132v) ]
-
-	return vgruppe
 
 ##************************************
 # cis seed pie slices - elle coefficients
@@ -184,8 +187,8 @@ def cis_seed_pies(pie_index):
 		temp_adinkra	=	[]
 		bool_list		=	[]
 		for bins in word:
-			bin_list 	= binaries(bins)
-			temp		= np.array(bin_list)
+			sign_list 	= binaries(bins)
+			temp		= np.array(sign_list)
 			bool_mat	= np.diag(temp)
 			bool_list.append(bool_mat)
 		temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
@@ -194,63 +197,10 @@ def cis_seed_pies(pie_index):
 
 	return pie_adinkras
 
-##************************************
-# trans seed pie slices - tilde~elle coefficients
-def trans_seed_pies(pie_index):
-
-	""" Defining the words (aka collection of four boolean factors) that
-		when applied to corresponding Pie slices "promote" the Pie slice
-		to Adinkras
-	"""
-	p1neg	=	[	[0,10,6,12], [2,8,4,14], [4,14,2,8], [6,12,0,10],
-					[8,2,14,4], [10,0,12,6], [12,6,10,0], [14,4,8,2]
-				]
-
-	p2neg	=	[	[0,12,10,6], [2,14,8,4], [4,8,14,2], [6,10,12,0],
-					[8,4,2,14], [10,6,0,12], [12,0,6,10], [14,2,4,8]
-				]
-
-	p3neg	=	[	[6,0,12,10], [4,2,14,8], [2,4,8,14], [0,6,10,12],
-					[14,8,4,2], [12,10,6,0], [10,12,0,6], [8,14,2,4]
-				]
-
-	p4neg	=	[	[0,12,6,10], [2,14,4,8], [4,8,2,14], [6,10,0,12],
-					[8,4,14,2],	[10,6,12,0], [12,0,10,6], [14,2,8,4]
-				]
-
-	p5neg	=	[	[0,10,12,6], [2,8,14,4], [4,14,8,2], [6,12,10,0],
-					[8,2,4,14], [10,0,6,12], [12,6,0,10], [14,4,2,8]
-				]
-
-	p6neg	=	[	[0,6,12,10], [2,4,14,8], [4,2,8,14], [6,0,10,12],
-					[8,14,4,2], [10,12,6,0], [12,10,0,6], [14,8,2,4]
-				]
-
-	trans_promotions	=	[p1neg, p2neg, p3neg, p4neg, p5neg, p6neg]
-
-	""" Import pie slice definitions before applying the binaries	"""
-	pslice			=	pieslices(pie_index)
-	pslice_words	=	trans_promotions[pie_index]
-
-	""" List to hold all the promoted Pie slice Adinkras using corresponding
-		words """
-	pie_adinkras	=	[]
-	for word in pslice_words:
-		temp_adinkra	=	[]
-		bool_list		=	[]
-		for bins in word:
-			bin_list 	= binaries(bins)
-			temp		= np.array(bin_list)
-			bool_mat	= np.diag(temp)
-			bool_list.append(bool_mat)
-		temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
-		pie_adinkras.append(temp_adinkra)
-
-	return pie_adinkras
 
 ##************************************
 # Defining the P slices of original BC4 CG library
-def bc4lib_slices(pie_index):
+def lib_pslices(pie_index):
 
 	""" {P1} = { (243), (123), (134), (142) }	"""
 	p1	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
@@ -342,9 +292,7 @@ def pieslices(pie_index):
 # Perform flop operation over Adinkra color space
 def colorspace_flop(adinkra, flop_op):
 	# print("Executing colorspace_flip", flop_op)
-	# print("Adinkra")
-	# print(adinkra)
-	# print("")
+	""" Moving around the Lmatrices in the Adinkra	"""
 	new_adinkra	= [ adinkra[(ind - 1)] for ind in flop_op]
 
 	return new_adinkra
@@ -367,9 +315,6 @@ def colorspace_flip(adinkra, flip_op):
 		# new_adinkra[i][1:]	= new_adinkra[i][1:] * flip_op[i]
 		temp_mat	= adinkra[i] * flip_op[i]
 		new_adinkra.append(temp_mat)
-	# print("Flipped Adinkra")
-	# print(new_adinkra)
-	# print("")
 	return new_adinkra
 
 
@@ -453,43 +398,6 @@ def flip_ellebin(flip_set):
 	return vgrp_elle[flip_set]
 
 
-##************************************
-# Defining the tilde-elle binary representations for the Vierergruppe
-def flip_tildebin(flip_set):
-
-	vgrp_tilde			= {}
-
-	vgrp_tilde['()']	= [[14,4,8,2], [2,8,4,14], [4,14,2,8], [8,2,14,4],
-							[6,12,0,10], [10,0,12,6], [12,6,10,0], [0,10,6,12]]
-							# [[14,8,2,4], [2,4,14,8], [4,2,8,14], [8,14,4,2],
-							# [6,0,10,12], [10,12,6,0], [12,10,0,6], [0,6,12,10]]
-
-	vgrp_tilde['(12)']	= [[14,8,4,2], [2,4,8,14], [4,2,14,8], [8,14,2,4],
-							[6,0,12,10], [10,12,0,6], [12,10,6,0], [0,6,10,12]]
-							# [[14,4,2,8], [2,8,14,4], [4,14,8,2], [8,2,4,14],
-							# [6,12,10,0], [10,0,6,12], [12,6,0,10], [0,10,12,6]]
-
-	vgrp_tilde['(13)']	= [[14,4,2,8], [2,8,14,4], [4,14,8,2], [8,2,4,14],
-							[6,12,10,0], [10,0,6,12], [12,6,0,10], [0,10,12,6]]
-
-	vgrp_tilde['(23)']	= [[4,8,2,14], [8,4,14,2], [14,2,8,4], [2,14,4,8],
-							[12,0,10,6], [0,12,6,10], [6,10,0,12], [10,6,12,0]]
-							# [[2,4,8,14], [14,8,4,2], [8,14,2,4], [4,2,14,8],
-							# [10,12,0,6], [6,0,12,10], [0,6,10,12], [12,10,6,0]]
-
-	vgrp_tilde['(123)']	= [[14,2,4,8], [2,14,8,4], [4,8,14,2], [8,4,2,14],
-							[6,10,12,0], [10,6,0,12], [12,0,6,10], [0,12,10,6]]
-							# [[14,4,8,2], [2,8,4,14], [4,14,2,8], [8,2,14,4],
-							# [6,12,0,10], [10,0,12,6], [12,6,10,0], [0,10,6,12]]
-
-	vgrp_tilde['(132)'] = [[14,8,2,4], [2,4,14,8], [4,2,8,14], [8,14,4,2],
-							[6,0,10,12], [10,12,6,0], [12,10,0,6], [0,6,12,10]]
-
-							# [[14,2,4,8], [2,14,8,4], [4,8,14,2], [8,4,2,14],
-							# [6,10,12,0], [10,6,0,12], [12,0,6,10], [0,12,10,6]]
-
-	return vgrp_tilde[flip_set]
-
 
 ##************************************
 # Compiling the tetrads from predfined Adinkras
@@ -547,6 +455,45 @@ def vierergruppe_sets():
 				}
 
 	return vgruppe
+
+
+##************************************
+# Defining the Vierergruppe representations for flop operations
+def vierergruppe_flops():
+
+	vprime 	= [ "()", "(12)(34)", "(13)(24)", "(14)(23)" ]
+	# vprime	= [ "1234", "2143", "3412", "4321"]
+	vprime	= [ [1,2,3,4], [2,1,4,3], [3,4,1,2], [4,3,2,1] ]
+
+
+	vgrpv 		= [ ("()", [1,2,3,4]), ("(12)(34)", [2,1,4,3]),
+					("13)(24)", [3,4,1,2]), ("(14)(23)", [4,3,2,1])]
+
+	vgrp12v		= [ ("(12)", [2,1,3,4]), ("(34)", [1,2,4,3]),
+					# ("(1324)", [3,4,2,1]), ("(1423)", [4,3,1,2]) ]
+					("(1324)", [4,3,1,2]), ("(1423)", [3,4,2,1]) ]
+
+	vgrp13v		= [ ("(13)", [3,2,1,4]), ("(1234)", [4,1,2,3]),
+					("(24)", [1,4,3,2]), ("(1432)", [2,3,4,1])	]
+
+	vgrp23v		= [ ("(23)", [1,3,2,4]), ("(1342)", [2,4,1,3]),
+					("(1243)", [3,1,4,2]), ("(14)", [4,2,3,1])	]
+
+	vgrp123v	= [ ("(132)", [3,1,2,4]), ("(132)", [4,2,1,3]),
+					("(243)", [1,3,4,2]), ("(142)", [2,4,3,1])	]
+
+	vgrp132v	= [ ("(132)", [2,3,1,4]), ("(234)", [1,4,2,3]),
+					("(124)", [4,1,3,2]), ("(143)", [3,2,4,1])	]
+
+
+	# vgruppe 	= [ ('()', vgrpv), ('(12)',vgrp12v), ('(13)', vgrp13v) ]
+	# vgruppe	   = [ ('()', vgrpv) ]
+
+	vgruppe	   = [ ('()', vgrpv), ('(12)',vgrp12v), ('(13)', vgrp13v),
+				('(23)', vgrp23v), ('(123)', vgrp123v), ('(132)', vgrp132v) ]
+
+	return vgruppe
+
 
 ##************************************
 # Function for calling calculate_vij_matrices
