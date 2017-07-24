@@ -50,7 +50,7 @@ def main():
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. 	"""
 	# pset_str = "PALL"
-	pset_str = "P1"
+	pset_str = "PALL"
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
@@ -107,7 +107,7 @@ def tetrad_setgen(pset):
 	"""	Generates a {P#} set of tetrads via execution of pset_string_format()
 		and	string_to_tetrad() function. Creates a set of python numpy tetrads
 		from string representation	"""
-	p_switch	= 1
+	p_switch	= 0
 
 	pset_boold 	= []
 	""" Transform P# slices into list index by getting the # """
@@ -122,115 +122,70 @@ def tetrad_setgen(pset):
 		print("")
 	""" Perform boolean calculations """
 	pbools	= flips_org_lib(pset)
-	print(pbools)
+	# print(pbools)
+	# print("pbools type", type(pbools))
 
-	for boolset in pbools:
-
+	for ind, booleans in enumerate(pbools):
+		# print("")
+		# print(booleans)
 		bool_list = []
-		for bins in boolset:
+		for bins in booleans:
 			bins_list 	= binaries(bins)
-			temp		= np.array(bins_list)
-			bool_mat	= np.diag(temp)
+			# temp		= np.array(bins_list)
+			bool_mat	= np.asmatrix(np.diag(bins_list))
 			bool_list.append(bool_mat)
-
+		# print(bool_list)
 		# booled_adinkra 	= [(np.dot(pslice[x], bool_list[x])) for x in range(0, len(pslice))]
 		booled_adinkra	= [(np.dot(bool_list[x], pslice[x])) for x in range(0, len(pslice))]
+		if p_switch:
+			print("Boolean Factor for: ", booleans)
+			for i in booled_adinkra:
+				print(i)
 		pset_boold.append(booled_adinkra)
 
 		# temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
-	# for ix in pset_boold:
-	# 	print(ix)
 	return pset_boold
-
-
-##************************************
-# cis seed pie slices - elle coefficients
-def cis_seed_pies(pie_index):
-
-	""" Defining the words (aka collection of four boolean factors) that
-		when applied to corresponding Pie slices "promote" the Pie slice
-		to Adinkras
-	"""
-	p1plus	= 	[	[0,12,10,6], [2,14,8,4], [4,8,14,2], [6,10,12,0],
-					[8,4,2,14], [10,6,0,12], [12,0,6,10], [14,2,4,8]
-				]
-	p2plus	=	[	[0,6,12,10], [2,4,14,8], [4,2,8,14], [6,0,10,12],
-					[8,14,4,2], [10,12,6,0], [12,10,0,6], [14,8,2,4]
-				]
-	p3plus	=	[	[12,0,10,6], [14,2,8,4], [8,4,14,2], [10,6,12,0],
-					[4,8,2,14],	[6,10,0,12], [0,12,6,10], [2,14,4,8]
-				]
-	p4plus	=	[	[0,10,12,6], [2,8,14,4], [4,14,8,2], [6,12,10,0],
-					[8,2,4,14], [10,0,6,12], [12,6,0,10], [14,4,2,8]
-				]
-	p5plus	=	[	[0,6,10,12], [2,4,8,14], [4,2,14,8], [6,0,12,10],
-					[8,14,2,4], [10,12,0,6], [12,10,6,0], [14,8,4,2]
-				]
-	p6plus	=	[	[0,10,6,12], [2,8,4,14], [4,14,2,8], [6,12,0,10],
-					[8,2,14,4], [10,0,12,6], [12,6,10,0], [14,4,8,2]
-				]
-
-	cis_promotions	=	[p1plus, p2plus, p3plus, p4plus, p5plus, p6plus]
-
-	""" Import pie slice definitions before applying the binaries	"""
-	# pie_slices	=	pieslices()
-
-	# for i in range(0, len(cis_promotions)):
-
-	pslice			=	pieslices(pie_index)
-	pslice_words	=	cis_promotions[pie_index]
-
-	""" List to hold all the promoted Pie slice Adinkras using corresponding
-		words """
-	pie_adinkras	=	[]
-	for word in pslice_words:
-		temp_adinkra	=	[]
-		bool_list		=	[]
-		for bins in word:
-			sign_list 	= binaries(bins)
-			temp		= np.array(sign_list)
-			bool_mat	= np.diag(temp)
-			bool_list.append(bool_mat)
-		temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
-		# pie_adinkras.append(temp_adinkra)
-		pie_adinkras.append(temp_adinkra)
-
-	return pie_adinkras
-
 
 ##************************************
 # Defining the P slices of original BC4 CG library
 def lib_pslices(pie_index):
 
 	""" {P1} = { (243), (123), (134), (142) }	"""
-	p1	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
-			np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]]),
-			np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0]])
-			]
-	""" {P2} = { (234), (124), (132), (143) }	"""
-	p2	=	[np.matrix([[1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]]),
-			np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0]]),
+	p1	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]]),
 			np.matrix([[0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0]])
+			np.matrix([[0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0]]),
+			np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0]])
+			]
+	# """ {P1} = { (123), (134), (142), (243) }	"""
+	# p1	= 	[np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]]),
+	# 		np.matrix([[0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]]),
+	# 		np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0]]),
+	# 		np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]])
+	# 		]
+	""" {P2} = { (234), (124), (132), (143) }	"""
+	p2	=	[np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
+			# np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0]]),
+			np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0]]),
+			np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]]),
+			np.matrix([[0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]])
 			]
 	""" {P3} = { (1243), (23), (14), (1342) } 	"""
-	p3	=	[np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
+	p3	=	[np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0]]),
 			np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]),
 			np.matrix([[0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0]]),
-			np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0]])
+			np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0]])
 			]
 	""" {P4} = { (24), (1234), (13), (1432) } 	"""
 	p4	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0]]),
-			np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]]),
-			np.matrix([[0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0]])
+			 np.matrix([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0]]),
+			 np.matrix([[0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1]]),
+			 np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]])
 			]
 	""" {P5} = { (34), (12), (1324), (1423) }	"""
 	p5	=	[np.matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]]),
-			np.matrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0]]),
-			np.matrix([[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0]])
+			 np.matrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
+		 	 np.matrix([[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0]]),
+			 np.matrix([[0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0]])
 			]
 	""" {P6} = { (), (12)(34), (13)(24), (14)(23) }	"""
 	p6	=	[np.matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
@@ -338,6 +293,8 @@ def flips_org_lib(flip_set):
 
 	p_slice 	= {}
 
+	# p_slice['P1']	= [[0,12,10,6], [0,6,12,10], [2,4,14,8], [2,14,8,4],
+	# 					[8,4,2,14], [8,14,4,2], [10,12,6,0], [10,6,0,12]]
 	p_slice['P1']	= [[0,6,12,10], [0,12,10,6], [2,4,14,8], [2,14,8,4],
 						[4,2,8,14], [4,8,14,2], [6,0,10,12], [6,10,12,0],
 						[8,4,2,14], [8,14,4,2], [10,6,0,12], [10,12,6,0],

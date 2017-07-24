@@ -73,11 +73,11 @@ def calculate_vij_matrices(main_tetrad_list):
 		"""
 		for i, li in enumerate(teti):
 			# print(li[1])
-			bigli = li[1]
+			bigli = li
 			tr_bigli = np.transpose(bigli)
 
 			for j, lj in enumerate(teti):
-				biglj = lj[1]
+				biglj = lj
 				ij_temp = [i, j]
 				ij_temp.sort()
 				ir = i + 1
