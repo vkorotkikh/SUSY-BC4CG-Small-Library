@@ -50,7 +50,7 @@ def main():
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. 	"""
 	# pset_str = "PALL"
-	pset_str = "PALL"
+	pset_str = "P1"
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
@@ -88,7 +88,8 @@ def bc4_validation_seq(pset_arg):
 		print("		")
 		print("Execute Gadget calc for P-set:", pset_arg)
 		print("		")
-		matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
+		# matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
+		vij_holoraumy_calc.calc_holoraumy_mats(temp_plist)
 		print("Gadget calc. for:", pset_arg,"finished")
 		print("")
 	elif pset_arg == "PALL":
@@ -98,7 +99,8 @@ def bc4_validation_seq(pset_arg):
 			print("		")
 			print("Execute Gadget calc for P-set:", pset)
 			print("		")
-			matrix_calc_vijmat_nopr.calculate_vij_matrices(plist)
+			# matrix_calc_vijmat_nopr.calculate_vij_matrices(plist)
+			vij_holoraumy_calc.calc_holoraumy_mats(plist)
 			print("Gadget calc. for:", pset,"finished")
 			print("")
 

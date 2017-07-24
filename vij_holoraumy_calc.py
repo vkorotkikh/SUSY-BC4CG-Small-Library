@@ -23,6 +23,8 @@ import numpy as np
 from numpy import array
 from numpy.linalg import inv
 
+pr_sw	= 1
+
 # ******************************************************************************
 # Main() function.
 def main():
@@ -59,21 +61,30 @@ def calc_holoraumy_mats(main_tetrad_list):
 		with each list containing four tuples, with tuples being
 		matrix number and the matrices itself. """
 
+	holo_mats	= []
+	r_matrices	= []
 
 	for ti, teti in enumerate(main_tetrad_list):
-		if debug:
+		if pr_sw:
 			print("# ********************************")
 			print("								     ")
 			print("Tetrad i: ", ti)
 			# calculate_vijmatset(teti)
-			fermionic_holomats(teti)
+		# fermionic_holomats(teti)
+		holomat, rmat = bosonic_holomats(teti)
+		holo_mats.append(holomat)
+		r_matrices.append(rmat)
+
+	nice_print(holo_mats, r_matrices)
+	print("Length holo_mats: ", len(holo_mats))
+	print("Length r_matrices: ", len(r_matrices))
+
 
 # ******************************************************************************
 # Calculating Fermionic holoraumy matrices for given Adinkra
 def fermionic_holomats(adinkra):
 
 	# vij_possibilities 	= alphas_betas()
-	debug			= 0
 
 	""" Store Fermionic Holoraumy matrices """
 	vij_fermi	= []
@@ -123,6 +134,25 @@ def bosonic_holomats(adinkra):
 		vij_bosonic.append(holo_mat)
 
 	return vij_bosonic, r_matrices
+
+
+# ******************************************************************************
+# Calculating Bosonic holoraumy matrices for given Adinkra
+def nice_print(holos, rmats):
+
+	lenh, lenr = len(holo_mats), len(r_matrices)
+	# print("Length holo_mats: ", len(holo_mats))
+	print("Length holo_mats: ", lenh)
+	# print("Length r_matrices: ", len(r_matrices))
+	print("Length r_matrices: ", lenr)
+
+	setlen = 0
+	if len(holo_mats) == len(r_matrices):
+		setlen = len(holo_mats)
+	else:
+		print("LENGTH MISMATCH ERROR")
+	for zi in range(0, len(neh)):
+		
 
 """ This needs work. Probably later	"""
 # def gadgetizing(holomats):
