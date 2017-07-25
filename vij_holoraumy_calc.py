@@ -22,8 +22,9 @@ import itertools
 import numpy as np
 from numpy import array
 from numpy.linalg import inv
+from pprint import pprint
 
-pr_sw	= 1
+pr_sw	= 0
 
 # ******************************************************************************
 # Main() function.
@@ -55,7 +56,7 @@ def alphas_betas():
 
 # ******************************************************************************
 # Do the final Vij calculation
-def calc_holoraumy_mats(main_tetrad_list):
+def calc_holoraumy_mats(main_tetrad_list, pset_arg):
 
 	""" Remember that the main_tetrad_ark is a list of lists,
 		with each list containing four tuples, with tuples being
@@ -75,9 +76,7 @@ def calc_holoraumy_mats(main_tetrad_list):
 		holo_mats.append(holomat)
 		r_matrices.append(rmat)
 
-	nice_print(holo_mats, r_matrices)
-	print("Length holo_mats: ", len(holo_mats))
-	print("Length r_matrices: ", len(r_matrices))
+	nicely_print(holo_mats, r_matrices, pset_arg)
 
 
 # ******************************************************************************
@@ -118,7 +117,7 @@ def bosonic_holomats(adinkra):
 
 	""" Store n Vij bosonic matrices in vij_bosonic	"""
 	vij_bosonic	= []
-	r_matrices	= [np.transpose(mat) for mat in adinkra]
+	r_matrices	= [np.asarray(np.transpose(mat)) for mat in adinkra]
 
 	ij_indices = list(itertools.combinations([0,1,2,3], 2))
 
@@ -138,22 +137,79 @@ def bosonic_holomats(adinkra):
 
 # ******************************************************************************
 # Calculating Bosonic holoraumy matrices for given Adinkra
-def nice_print(holos, rmats):
+def nicely_print(holo_mats, rmats, pset_arg):
 
-	lenh, lenr = len(holo_mats), len(r_matrices)
+	holos	= []
+	holos = [np.asarray(x) for x in holo_mats]
+
+	print("# ********************************")
+	print("Calculated matrices for: ", pset_arg)
+	# print("Bosonic or Fermionic....")
+	print("")
+	lenh, lenr = len(holos), len(rmats)
 	# print("Length holo_mats: ", len(holo_mats))
 	print("Length holo_mats: ", lenh)
 	# print("Length r_matrices: ", len(r_matrices))
 	print("Length r_matrices: ", lenr)
+	print("")
 
+	np.set_printoptions(precision=2, suppress=True, linewidth=100)
+	ij_ind	= list(itertools.combinations([0,1,2,3], 2))
 	setlen = 0
-	if len(holo_mats) == len(r_matrices):
-		setlen = len(holo_mats)
+	if len(holos) == len(rmats):
+		setlen = len(holos)
 	else:
 		print("LENGTH MISMATCH ERROR")
-	for zi in range(0, len(neh)):
-		
 
+	for zi in range(0, lenh):
+		temph = holos[zi]
+		tempr = rmats[zi]
+		print("#********************************")
+		print("Adinkra #", zi, "Bosonic Holoraumy Matrices")
+		vij_strings	= []
+		for ijtup in ij_ind:
+			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
+			ijstr		= "~V_{" + ij_temp + "}"
+			vij_strings.append(ijstr)
+		v13strings = " \t" + vij_strings[0] + " \t \t \t" + vij_strings[1] + \
+		" \t \t \t" + vij_strings[2]
+		v46strings = " \t" + vij_strings[3] + " \t \t \t" + vij_strings[4] + \
+		" \t \t \t" + vij_strings[5]
+
+		""" Convoluted way of printing out numpy matrices	"""
+		mat13 		= temph[0:3]
+		mat13str 	= [np.array_str(y)[1:-1] for y in mat13]
+		tm13		= []
+		for matstr in mat13str:
+			# onemat = [ix.lstrip() for ix in matstr.split('\n')]
+			tm13.append([ix.lstrip() for ix in matstr.split('\n')])
+		print(v13strings)
+		for ix in range(0,4):
+			pstr = tm13[0][ix] + "\t\t" + tm13[1][ix] + "\t\t" + tm13[2][ix]
+			print(pstr)
+
+		mat46		= temph[3:6]
+		mat46str	= [np.array_str(y)[1:-1] for y in mat46]
+		tm46		= []
+		for matstr in mat46str:
+			tm46.append([ix.lstrip() for ix in matstr.split('\n')])
+		print(v46strings)
+		for ix in range(0,4):
+			pstr = tm46[0][ix] + "\t\t" + tm46[1][ix] + "\t\t" + tm46[2][ix]
+			print(pstr)
+		print("")
+
+		# tempr = rmats[zi]
+		print("Adinkra #", zi, "R matrices")
+		for rl in [ tempr[:2], tempr[2:]]:
+			rltostr = [np.array_str(y)[1:-1] for y in rl]
+			rtm	= []
+			for matstr in rltostr:
+				rtm.append([ix.lstrip() for ix in matstr.split('\n')])
+			for ix in range(0,4):
+				pstr = rtm[0][ix] + "\t\t" + rtm[1][ix]
+				print(pstr)
+			print("")
 """ This needs work. Probably later	"""
 # def gadgetizing(holomats):
 # 		# """ Compare against the 6 possible matrix solutions """
