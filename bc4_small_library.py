@@ -32,23 +32,22 @@ import vij_holoraumy_calc
 def main():
 
 	print("# ***********************************************************************")
-	print("# Name:    Verifying BC4 Space Vij coefficient")
+	print("# Name:    Calculating BC4 CG Small Library")
 	print("# Author:  Vadim Korotkikh	")
 	print("# Email:   va.korotki@gmail.com")
-	print("# Date:    November 2016		")
-	print("# Version: 1.0A				")
+	print("# Date:    June 2017	")
+	print("# Version: N/A")
 	print("#							")
-	print("# Description: Function for verifying the BC4 space coefficient library")
-	print("#	")
+	# print("# Description: Function for verifying the BC4 space coefficient library")
+	# print("#	")
 	print("# ***********************************************************************")
 	print("		")
 
 	""" PALL seems to be broken for now due to lack of if elif logic at end
 		of string_to_tetrad() function """
 	""" Options for BC4 Library:
-		ALL - Entire small library, one big chunk.
 		PALL - Entire small library, one at a time.
-		P1, P2, P3, P4, P5, P6 - Only one section. 	"""
+		P1, P2, P3, P4, P5, P6 - Only one section. """
 	# pset_str = "PALL"
 	pset_str = "P1"
 	bc4_validation_seq(pset_str)
@@ -86,7 +85,7 @@ def bc4_validation_seq(pset_arg):
 	# elif pset_arg != "PALL":
 		temp_plist = psets_dict[pset_arg]
 		print("		")
-		print("Execute Holoraumy calc for P-set:", pset_arg)
+		print("Execute Bosonic Holoraumy Calc for", pset_arg)
 		print("		")
 		# matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
 		vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg)
@@ -97,7 +96,7 @@ def bc4_validation_seq(pset_arg):
 			pint = 0
 			pint = int(pset.lstrip("P"))
 			print("		")
-			print("Execute Holoraumy calc for P-set:", pset)
+			print("Execute Bosonic Holoraumy Calc for", pset)
 			print("		")
 			# matrix_calc_vijmat_nopr.calculate_vij_matrices(plist)
 			vij_holoraumy_calc.calc_holoraumy_mats(plist, pset_arg)
@@ -115,7 +114,6 @@ def tetrad_setgen(pset):
 	""" Transform P# slices into list index by getting the # """
 	pint 	= 0
 	pint 	= int(pset.lstrip("P")) - 1
-	print(pint)
 	pslice 	= lib_pslices(pint)
 	if p_switch:
 		print("# ********************************")
@@ -202,6 +200,7 @@ def lib_pslices(pie_index):
 
 ##************************************
 # Defining the Pizza slices
+""" Definitions used in Adinkra Condense paper """
 def pieslices(pie_index):
 
 	p1	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
@@ -278,15 +277,13 @@ def colorspace_flip(adinkra, flip_op):
 ##************************************
 # Defining the binary multiplication arrays
 def binaries(bin_code):
-
+	bin_code = int(bin_code)
 	binaries_lt	= [(0, [1,1,1,1]), (2, [1,-1,1,1]), (4, [1,1,-1,1]),
 					(6, [1,-1,-1,1]), (8, [1,1,1,-1]), (10, [1,-1,1,-1]),
 					(12, [1,1,-1,-1]), (14, [1,-1,-1,-1])]
 
 	for btuple in binaries_lt:
 		if bin_code == btuple[0]:
-			# tarray = np.array(btuple[1])
-			# temp   = np.diag(tarray)
 			return btuple[1]
 
 ##************************************
@@ -361,7 +358,6 @@ def flip_ellebin(flip_set):
 ##************************************
 # Compiling the tetrads from predfined Adinkras
 def assemble_tetrads():
-
 	"""Vierergrupe dictionaries with binary quadsets for ells and tilde-ells
 	"""
 
@@ -444,9 +440,6 @@ def vierergruppe_flops():
 	vgrp132v	= [ ("(132)", [2,3,1,4]), ("(234)", [1,4,2,3]),
 					("(124)", [4,1,3,2]), ("(143)", [3,2,4,1])	]
 
-
-	# vgruppe 	= [ ('()', vgrpv), ('(12)',vgrp12v), ('(13)', vgrp13v) ]
-	# vgruppe	   = [ ('()', vgrpv) ]
 
 	vgruppe	   = [ ('()', vgrpv), ('(12)',vgrp12v), ('(13)', vgrp13v),
 				('(23)', vgrp23v), ('(123)', vgrp123v), ('(132)', vgrp132v) ]

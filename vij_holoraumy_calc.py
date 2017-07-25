@@ -207,19 +207,26 @@ def nicely_print(holo_mats, rmats, pset_arg):
 			rtm	= []
 			for matstr in rltostr:
 				rtm.append([ix.lstrip() for ix in matstr.split('\n')])
+
 			if ind == 0:
 				# print("Length: ", len(rtm[0
 				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
-				lbl_str		= "  R1" + len2*" " + " R2"
+				lbl_str	= ""
+				if len2 > len1:
+					lbl_str	= (len1//3)*" " + "R1" + len2*" " + "R2"
+				elif len1 > len2:
+					lbl_str	= (len1//2)*" " + "R1" + len2*" " + " R2"
+				elif len1 == len2:
+					lbl_str = (len1//2)*" " + "R1" + len2*" " + "R2"
 				print(lbl_str)
 			elif ind == 1:
 				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
+				# print(len1, len2)
 				lbl_str		= "  R3" + len2*" " + " R4"
 				print(lbl_str)
 			for ix in range(0,4):
 				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
 				print(pstr)
-			print("")
 """ This needs work. Probably later	"""
 # def gadgetizing(holomats):
 # 		# """ Compare against the 6 possible matrix solutions """
