@@ -96,18 +96,12 @@ def fermionic_holomats(adinkra):
 	for ijtup in ij_indices:
 		limat 		= adinkra[ijtup[0]]
 		ljmat 		= adinkra[ijtup[1]]
-		ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
-		""" Enhance appearance of ijstr - V_{ ij } """
-		ijstr		= "~V_{" + ij_temp + "}"
-		# tr_limat	= np.transpose(limat)
-		# tr_ljmat	= np.transpose(ljmat)
 		rimat		= np.transpose(limat)
 		rjmat		= np.transpose(ljmat)
 		""" Vij eq from 1601.00 (3.2) """
 		""" Probably needs 1/2	"""
 		holo_mat	= np.dot(rimat, ljmat) - np.dot(rjmat, limat)
-		# temp_mat	= np.dot(tr_limat, ljmat) - np.dot(tr_ljmat, limat)
-		vij_fermi.append(holomat)
+		vij_fermi.append(holo_mat)
 
 	return vij_fermi, r_matrices
 
@@ -138,7 +132,10 @@ def bosonic_holomats(adinkra):
 # ******************************************************************************
 # Calculating Bosonic holoraumy matrices for given Adinkra
 def nicely_print_boson(holo_mats, rmats, pset_arg):
-
+	""" holo_mats - List of lists w/ each containg 6 Bosnic Holoraumy matrices
+		rmats 	  -	List w/ lists, each containing 4 R matrices
+		pset_arg  - String specifying P slices of library, ie P1 or P6
+	"""
 	holos	= []
 	holos = [np.asarray(x) for x in holo_mats]
 
@@ -241,7 +238,7 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg):
 	print("Bosonic Holoraumy matrices for: ", pset_arg)
 	# print("Bosonic or Fermionic....")
 	print("")
-	lenh, lenr = len(holos), len(rmats)
+	lenh, lenr = len(fermis), len(rmats)
 	# print("Length holo_mats: ", len(holo_mats))
 	print("Length holo_mats: ", lenh)
 	# print("Length r_matrices: ", len(r_matrices))
@@ -251,13 +248,13 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg):
 	np.set_printoptions(precision=2, suppress=True, linewidth=100)
 	ij_ind	= list(itertools.combinations([0,1,2,3], 2))
 	setlen = 0
-	if len(holos) == len(rmats):
-		setlen = len(holos)
+	if len(fermis) == len(rmats):
+		setlen = len(fermis)
 	else:
 		print("LENGTH MISMATCH ERROR")
 
 	for zi in range(0, lenh):
-		temph = holos[zi]
+		temph = fermis[zi]
 		tempr = rmats[zi]
 		print("#********************************")
 		print("Adinkra #", zi)
@@ -272,7 +269,7 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg):
 		v46strings = " \t" + vij_strings[3] + " \t \t \t" + vij_strings[4] + \
 		" \t \t \t" + vij_strings[5]
 
-		""" Convoluted way of printing out numpy matrices	"""
+		""" Obtuse way of nicely printing out n>1 numpy matrices per row	"""
 		mat13 		= temph[0:3]
 		mat13str 	= [np.array_str(y)[1:-1] for y in mat13]
 		tm13		= []
@@ -323,75 +320,6 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg):
 				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
 				print(pstr)
 
-
-""" This needs work. Probably later	"""
-# def gadgetizing(holomats):
-# 		# """ Compare against the 6 possible matrix solutions """
-#
-# 		tf_bool = 0
-# 		for xi, ijx in enumerate(vij_possibilities):
-# 			ijx_neg = np.multiply(ijx, -1)
-# 			# print(xi)
-# 			if np.array_equal(temp_mat, ijx):
-# 				tf_bool = 1
-# 				if debug:
-# 					print("*************$$$$$$$$$$$$$$$$$$ ")
-# 					print("l-solution found:")
-# 					print(ijx)
-# 				tmint = np.int(1)
-# 				if xi < 3:
-# 					tmp_str = "alpha^" + str((xi + 1))
-# 					# print(tmp_str)
-# 					# vij_tempset.append([tmp_str, ijstr, tmint])
-# 					res_str	= ijstr + " = " + "1 * " + tmp_str
-# 					# vij_tempset.append([tmint, ijstr, tmp_str])
-# 					vij_tempset.append(res_str)
-# 				elif xi >= 3:
-# 					tmp_str = "beta^" + str((xi - 2))
-# 					res_str	= ijstr + " = " + "1 * " + tmp_str
-# 					# vij_tempset.append([tmint, ijstr, tmp_str])
-# 					vij_tempset.append(res_str)
-# 			elif np.array_equal(temp_mat, ijx_neg):
-# 				tf_bool = 1
-# 				if debug:
-# 					print("*************$$$$$$$$$$$$$$$$$$ ")
-# 					print("l-solution found:")
-# 					print(ijx_neg)
-# 				# xint = (xi + 1) * ( -1)
-# 				tmint = np.int(-1)
-# 				if xi < 3:
-# 					tmp_str = "alpha^" + str((xi + 1))
-# 					res_str	= ijstr + " = " + "-1 * " + tmp_str
-# 					# print(tmp_str)
-# 					# vij_tempset.append([tmint, ijstr, tmp_str])
-# 					vij_tempset.append(res_str)
-# 				elif xi >= 3:
-# 					tmp_str = "beta^" + str((xi - 2))
-# 					res_str	= ijstr + " = " + "-1 * " + tmp_str
-# 					# vij_tempset.append([tmint, ijstr, tmp_str])
-# 					vij_tempset.append(res_str)
-# 			else:
-# 				if tf_bool == 0 and xi >= 5:
-# 					if not(np.array_equal(temp_mat, ijx)) or not np.array_equal(temp_mat, ijx_neg):
-# 						print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
-# 						print("Anomaly found:",ijstr)
-# 						print(temp_mat)
-# 						anomaly_switch = 1
-# 		tf_bool = 0
-# 	return vij_tempset
-
-	# print("*************$$$$$$$$$$$$$$$$$$ ")
-	# print("Vij Matrix Coefficients Results:")
-	# print("")
-	# for mvals in calc_check:
-	# 	if any(x for x in mvals if x[0].startswith('alpha')) and any(x for x in mvals if x[0].startswith('beta')):
-	# 		print("MIXED ALPHA_BETA ERROR")
-	# 		print(mvals)
-	# 	else:
-	# 		print(mvals)
-	#
-	# print("Length Vij alphas adinkras:", len(vij_alphas))
-	# print("Length Vij beta adikras:", len(vij_betas))
 
 # ******************************************************************************
 # Creating an abstract Adinkra handler
