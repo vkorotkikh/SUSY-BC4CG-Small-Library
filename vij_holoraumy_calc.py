@@ -200,14 +200,19 @@ def nicely_print(holo_mats, rmats, pset_arg):
 		print("")
 
 		# tempr = rmats[zi]
-		print("Adinkra #", zi, "R matrices")
-		for rl in [ tempr[:2], tempr[2:]]:
+		# print("Adinkra #", zi, "R matrices")
+		print("R matrices")
+		for ind, rl in enumerate([ tempr[:2], tempr[2:]]):
 			rltostr = [np.array_str(y)[1:-1] for y in rl]
 			rtm	= []
 			for matstr in rltostr:
 				rtm.append([ix.lstrip() for ix in matstr.split('\n')])
+			if ind == 0:
+				print("\t R1 \t  R2 ")
+			elif ind == 1:
+				print("\t R3 \t  R4 ")
 			for ix in range(0,4):
-				pstr = rtm[0][ix] + "\t\t" + rtm[1][ix]
+				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
 				print(pstr)
 			print("")
 """ This needs work. Probably later	"""
