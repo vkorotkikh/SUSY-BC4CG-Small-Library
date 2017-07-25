@@ -78,7 +78,7 @@ def bc4_validation_seq(pset_arg):
 		# 	temp_plist.extend(plist)
 
 		print("# ********************************")
-		print("Execute Gadget calc for P sets:", psl[0], psl[1], psl[2], psl[3], psl[4], psl[5])
+		print("Execute Holoraumy calc for P sets:", psl[0], psl[1], psl[2], psl[3], psl[4], psl[5])
 		print("		")
 		matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
 
@@ -86,22 +86,22 @@ def bc4_validation_seq(pset_arg):
 	# elif pset_arg != "PALL":
 		temp_plist = psets_dict[pset_arg]
 		print("		")
-		print("Execute Gadget calc for P-set:", pset_arg)
+		print("Execute Holoraumy calc for P-set:", pset_arg)
 		print("		")
 		# matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
-		vij_holoraumy_calc.calc_holoraumy_mats(temp_plist)
-		print("Gadget calc. for:", pset_arg,"finished")
+		vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg)
+		print("Holoraumy calc. for:", pset_arg,"finished")
 		print("")
 	elif pset_arg == "PALL":
 		for pset, plist in sorted(psets_dict.items()):
 			pint = 0
 			pint = int(pset.lstrip("P"))
 			print("		")
-			print("Execute Gadget calc for P-set:", pset)
+			print("Execute Holoraumy calc for P-set:", pset)
 			print("		")
 			# matrix_calc_vijmat_nopr.calculate_vij_matrices(plist)
-			vij_holoraumy_calc.calc_holoraumy_mats(plist)
-			print("Gadget calc. for:", pset,"finished")
+			vij_holoraumy_calc.calc_holoraumy_mats(plist, pset_arg)
+			print("Holoraumy calc. for:", pset,"finished")
 			print("")
 
 # ******************************************************************************
