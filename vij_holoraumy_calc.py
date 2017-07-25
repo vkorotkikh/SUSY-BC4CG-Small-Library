@@ -76,7 +76,7 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg):
 		holo_mats.append(holomat)
 		r_matrices.append(rmat)
 
-	nicely_print(holo_mats, r_matrices, pset_arg)
+	nicely_print_boson(holo_mats, r_matrices, pset_arg)
 
 
 # ******************************************************************************
@@ -137,7 +137,7 @@ def bosonic_holomats(adinkra):
 
 # ******************************************************************************
 # Calculating Bosonic holoraumy matrices for given Adinkra
-def nicely_print(holo_mats, rmats, pset_arg):
+def nicely_print_boson(holo_mats, rmats, pset_arg):
 
 	holos	= []
 	holos = [np.asarray(x) for x in holo_mats]
@@ -227,6 +227,103 @@ def nicely_print(holo_mats, rmats, pset_arg):
 			for ix in range(0,4):
 				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
 				print(pstr)
+
+# ******************************************************************************
+# Calculating Fermionic Holoraumy matrices for given Adinkra
+def nicely_print_fermi(fermi_mats, rmats, pset_arg):
+
+	""" ***CHECK THIS*** I'm not sure this is even correct to do,
+		since every x in fermi_mats is a list of 6 numpy.matrices
+	"""
+	fermis = [np.asarray(x) for x in fermi_mats]
+
+	print("# ********************************")
+	print("Bosonic Holoraumy matrices for: ", pset_arg)
+	# print("Bosonic or Fermionic....")
+	print("")
+	lenh, lenr = len(holos), len(rmats)
+	# print("Length holo_mats: ", len(holo_mats))
+	print("Length holo_mats: ", lenh)
+	# print("Length r_matrices: ", len(r_matrices))
+	print("Length r_matrices: ", lenr)
+	print("")
+
+	np.set_printoptions(precision=2, suppress=True, linewidth=100)
+	ij_ind	= list(itertools.combinations([0,1,2,3], 2))
+	setlen = 0
+	if len(holos) == len(rmats):
+		setlen = len(holos)
+	else:
+		print("LENGTH MISMATCH ERROR")
+
+	for zi in range(0, lenh):
+		temph = holos[zi]
+		tempr = rmats[zi]
+		print("#********************************")
+		print("Adinkra #", zi)
+		print("Bosonic Holoraumy Matrices")
+		vij_strings	= []
+		for ijtup in ij_ind:
+			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
+			ijstr		= "~V_{" + ij_temp + "}"
+			vij_strings.append(ijstr)
+		v13strings = " \t" + vij_strings[0] + " \t \t \t" + vij_strings[1] + \
+		" \t \t \t" + vij_strings[2]
+		v46strings = " \t" + vij_strings[3] + " \t \t \t" + vij_strings[4] + \
+		" \t \t \t" + vij_strings[5]
+
+		""" Convoluted way of printing out numpy matrices	"""
+		mat13 		= temph[0:3]
+		mat13str 	= [np.array_str(y)[1:-1] for y in mat13]
+		tm13		= []
+		for matstr in mat13str:
+			# onemat = [ix.lstrip() for ix in matstr.split('\n')]
+			tm13.append([ix.lstrip() for ix in matstr.split('\n')])
+		print(v13strings)
+		for ix in range(0,4):
+			pstr = tm13[0][ix] + "\t\t" + tm13[1][ix] + "\t\t" + tm13[2][ix]
+			print(pstr)
+
+		mat46		= temph[3:6]
+		mat46str	= [np.array_str(y)[1:-1] for y in mat46]
+		tm46		= []
+		for matstr in mat46str:
+			tm46.append([ix.lstrip() for ix in matstr.split('\n')])
+		print(v46strings)
+		for ix in range(0,4):
+			pstr = tm46[0][ix] + "\t\t" + tm46[1][ix] + "\t\t" + tm46[2][ix]
+			print(pstr)
+		print("")
+
+		"""	Printing R matrices """
+		print("R matrices")
+		for ind, rl in enumerate([ tempr[:2], tempr[2:]]):
+			rltostr = [np.array_str(y)[1:-1] for y in rl]
+			rtm	= []
+			for matstr in rltostr:
+				rtm.append([ix.lstrip() for ix in matstr.split('\n')])
+
+			if ind == 0:
+				# print("Length: ", len(rtm[0
+				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
+				lbl_str	= ""
+				if len2 > len1:
+					lbl_str	= (len1//3)*" " + "R1" + len2*" " + "R2"
+				elif len1 > len2:
+					lbl_str	= (len1//2)*" " + "R1" + len2*" " + " R2"
+				elif len1 == len2:
+					lbl_str = (len1//2)*" " + "R1" + len2*" " + "R2"
+				print(lbl_str)
+			elif ind == 1:
+				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
+				# print(len1, len2)
+				lbl_str		= "  R3" + len2*" " + " R4"
+				print(lbl_str)
+			for ix in range(0,4):
+				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
+				print(pstr)
+
+
 """ This needs work. Probably later	"""
 # def gadgetizing(holomats):
 # 		# """ Compare against the 6 possible matrix solutions """
