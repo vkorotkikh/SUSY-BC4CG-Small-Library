@@ -143,7 +143,7 @@ def nicely_print(holo_mats, rmats, pset_arg):
 	holos = [np.asarray(x) for x in holo_mats]
 
 	print("# ********************************")
-	print("Calculated matrices for: ", pset_arg)
+	print("Bosonic Holoraumy matrices for: ", pset_arg)
 	# print("Bosonic or Fermionic....")
 	print("")
 	lenh, lenr = len(holos), len(rmats)
@@ -165,7 +165,8 @@ def nicely_print(holo_mats, rmats, pset_arg):
 		temph = holos[zi]
 		tempr = rmats[zi]
 		print("#********************************")
-		print("Adinkra #", zi, "Bosonic Holoraumy Matrices")
+		print("Adinkra #", zi)
+		print("Bosonic Holoraumy Matrices")
 		vij_strings	= []
 		for ijtup in ij_ind:
 			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
@@ -199,8 +200,7 @@ def nicely_print(holo_mats, rmats, pset_arg):
 			print(pstr)
 		print("")
 
-		# tempr = rmats[zi]
-		# print("Adinkra #", zi, "R matrices")
+		"""	Printing R matrices """
 		print("R matrices")
 		for ind, rl in enumerate([ tempr[:2], tempr[2:]]):
 			rltostr = [np.array_str(y)[1:-1] for y in rl]
@@ -208,9 +208,14 @@ def nicely_print(holo_mats, rmats, pset_arg):
 			for matstr in rltostr:
 				rtm.append([ix.lstrip() for ix in matstr.split('\n')])
 			if ind == 0:
-				print("\t R1 \t  R2 ")
+				# print("Length: ", len(rtm[0
+				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
+				lbl_str		= "  R1" + len2*" " + " R2"
+				print(lbl_str)
 			elif ind == 1:
-				print("\t R3 \t  R4 ")
+				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
+				lbl_str		= "  R3" + len2*" " + " R4"
+				print(lbl_str)
 			for ix in range(0,4):
 				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
 				print(pstr)
