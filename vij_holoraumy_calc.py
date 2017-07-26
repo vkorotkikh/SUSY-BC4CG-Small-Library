@@ -78,6 +78,41 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg):
 
 	nicely_print_boson(holo_mats, r_matrices, pset_arg)
 
+# ******************************************************************************
+# Do the final Vij calculation
+def calc_holomats(main_tetrad_list, pset_arg, holotype):
+
+	""" Remember that the main_tetrad_ark is a list of lists,
+		with each list containing four tuples, with tuples being
+		matrix number and the matrices itself. """
+
+	holotype	= "bosonic"
+	holo_mats	= []
+	r_matrices	= []
+
+	if holotype.startswith('boson'):
+		for ti, teti in enumerate(main_tetrad_list):
+			if pr_sw:
+				print("# ********************************")
+				print("								     ")
+				print("Tetrad i: ", ti)
+				# calculate_vijmatset(teti)
+			# fermionic_holomats(teti)
+			holomat, rmat = bosonic_holomats(teti)
+			holo_mats.append(holomat)
+			r_matrices.append(rmat)
+	elif holotype.startswith('fermi'):
+		for ti, teti in enumerate(main_tetrad_list):
+			if pr_sw:
+				print("# ********************************")
+				print("								     ")
+				print("Tetrad i: ", ti)
+			holomat, rmat = fermionic_holomats(teti)
+			holo_mats.append(holomat)
+			r_matrices.append(rmat)
+
+	nicely_print_boson(holo_mats, r_matrices, pset_arg)
+
 
 # ******************************************************************************
 # Calculating Fermionic holoraumy matrices for given Adinkra
