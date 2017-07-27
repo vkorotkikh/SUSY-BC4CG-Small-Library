@@ -107,6 +107,7 @@ def calc_holomats(main_tetrad_list, pset_arg, holotype):
 				print("# ********************************")
 				print("								     ")
 				print("Tetrad i: ", ti)
+
 			holomat, rmat = fermionic_holomats(teti)
 			holo_mats.append(holomat)
 			r_matrices.append(rmat)
@@ -135,7 +136,7 @@ def fermionic_holomats(adinkra):
 		rjmat		= np.transpose(ljmat)
 		""" Vij eq from 1601.00 (3.2) """
 		""" Probably needs 1/2	"""
-		holo_mat	= np.dot(rimat, ljmat) - np.dot(rjmat, limat)
+		holo_mat	= np.divide((np.dot(rimat, ljmat) - np.dot(rjmat, limat)),2)
 		vij_fermi.append(holo_mat)
 
 	return vij_fermi, r_matrices
@@ -158,7 +159,8 @@ def bosonic_holomats(adinkra):
 		rjmat	= np.transpose(ljmat)
 
 		""" Vij bosonic eq	1501.00101 3.5	"""
-		holo_mat = np.dot(limat, rjmat) - np.dot(ljmat, rimat)
+		holo_mat = np.divide((np.dot(limat, rjmat) - np.dot(ljmat, rimat)),2)
+		# holo_mat = np.dot(limat, rjmat) - np.dot(ljmat, rimat)
 		vij_bosonic.append(holo_mat)
 
 	return vij_bosonic, r_matrices
@@ -202,12 +204,16 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 		vij_strings	= []
 		for ijtup in ij_ind:
 			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
-			ijstr		= "~V_{" + ij_temp + "}"
+			ijstr		= "V_{" + ij_temp + "}"
 			vij_strings.append(ijstr)
-		v13strings = " \t" + vij_strings[0] + " \t \t \t" + vij_strings[1] + \
-		" \t \t \t" + vij_strings[2]
-		v46strings = " \t" + vij_strings[3] + " \t \t \t" + vij_strings[4] + \
-		" \t \t \t" + vij_strings[5]
+		# v13strings = " \t" + vij_strings[0] + " \t \t \t" + vij_strings[1] + \
+		# " \t \t \t" + vij_strings[2]
+		v13strings = "\t" + vij_strings[0] + "\t\t   " + vij_strings[1] + \
+		"\t\t   " + vij_strings[2]
+		# v46strings = " \t" + vij_strings[3] + " \t \t \t" + vij_strings[4] + \
+		# " \t \t \t" + vij_strings[5]
+		v46strings = "\t" + vij_strings[3] + "\t\t   " + vij_strings[4] + \
+		"\t\t   " + vij_strings[5]
 
 		""" Convoluted way of printing out numpy matrices	"""
 		mat13 		= temph[0:3]
@@ -218,7 +224,7 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 			tm13.append([ix.lstrip() for ix in matstr.split('\n')])
 		print(v13strings)
 		for ix in range(0,4):
-			pstr = tm13[0][ix] + "\t\t" + tm13[1][ix] + "\t\t" + tm13[2][ix]
+			pstr = tm13[0][ix] + " \t" + tm13[1][ix] + " \t" + tm13[2][ix]
 			print(pstr)
 
 		mat46		= temph[3:6]
@@ -228,7 +234,7 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 			tm46.append([ix.lstrip() for ix in matstr.split('\n')])
 		print(v46strings)
 		for ix in range(0,4):
-			pstr = tm46[0][ix] + "\t\t" + tm46[1][ix] + "\t\t" + tm46[2][ix]
+			pstr = tm46[0][ix] + " \t" + tm46[1][ix] + " \t" + tm46[2][ix]
 			print(pstr)
 		print("")
 
