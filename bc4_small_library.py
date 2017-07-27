@@ -22,11 +22,11 @@ from numpy.linalg import inv
 
 # ******************************************************************************
 # Function Imports
-# import matrix_outerprod_calc
-import matrix_calc_vijmat2
-import matrix_calc_vijmat_nopr
+# import matrix_calc_vijmat2
+# import matrix_calc_vijmat_nopr
 import vij_holoraumy_calc
 
+p_switch	= 0
 # ******************************************************************************
 # Main() function.
 def main():
@@ -37,7 +37,7 @@ def main():
 	print("# Email:   va.korotki@gmail.com")
 	print("# Date:    June 2017	")
 	print("# Version: N/A")
-	print("#							")
+	print("#	")
 	# print("# Description: Function for verifying the BC4 space coefficient library")
 	# print("#	")
 	print("# ***********************************************************************")
@@ -108,7 +108,6 @@ def tetrad_setgen(pset):
 	"""	Generates a {P#} set of tetrads via execution of pset_string_format()
 		and	string_to_tetrad() function. Creates a set of python numpy tetrads
 		from string representation	"""
-	p_switch	= 0
 
 	pset_boold 	= []
 	""" Transform P# slices into list index by getting the # """
@@ -156,12 +155,7 @@ def lib_pslices(pie_index):
 			np.matrix([[0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0]]),
 			np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0]])
 			]
-	# """ {P1} = { (123), (134), (142), (243) }	"""
-	# p1	= 	[np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]]),
-	# 		np.matrix([[0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]]),
-	# 		np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0]]),
-	# 		np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]])
-	# 		]
+
 	""" {P2} = { (234), (124), (132), (143) }	"""
 	p2	=	[np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
 			# np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0]]),
@@ -353,34 +347,6 @@ def flip_ellebin(flip_set):
 
 	return vgrp_elle[flip_set]
 
-
-
-##************************************
-# Compiling the tetrads from predfined Adinkras
-def assemble_tetrads():
-	"""Vierergrupe dictionaries with binary quadsets for ells and tilde-ells
-	"""
-
-	main_tetrad			= []
-
-	vgruppe_sets		= vierergruppe_sets()
-	vierergruppe_elle	= flip_ellebin()
-	vierergruppe_tilde	= flip_tildebin()
-
-	for vgrp, binaries_list in vierergruppe_elle.items():
-		vbasis	= vgruppe_sets[vgrp]
-		print("")
-		print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ")
-		print("Calculating Vij elle coefficients")
-		print("							")
-		print("Vierergruppe flop: ",vgrp)
-		temp 	= lmat_flipping(vbasis, binaries_list)
-		# print("Flip sets:", binaries_list)
-		# vij_holoraumy_prime.calculate_vij_matrices(temp)
-		calculate_vgruppe_sets(temp, binaries_list)
-
-		print("<<<>>>")
-		main_tetrad.extend(temp)
 
 ##************************************
 # Defining the six Vierergruppe representations
