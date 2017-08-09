@@ -390,6 +390,12 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg):
 				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
 				print(pstr)
 
+# ******************************************************************************
+# Write results to text file
+def write_results(result_file):
+	with open(result_file, "w") as wfile:
+		for item in text_list:
+			wfile.write("%s \n" % item)
 
 # ******************************************************************************
 # Creating an abstract Adinkra handler
