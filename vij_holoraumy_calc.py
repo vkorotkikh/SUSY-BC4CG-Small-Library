@@ -112,7 +112,10 @@ def calc_holomats(main_tetrad_list, pset_arg, holotype):
 			holo_mats.append(holomat)
 			r_matrices.append(rmat)
 
-	nicely_print_boson(holo_mats, r_matrices, pset_arg)
+	if holotype.startswith('boson'):
+		nicely_print_boson(holo_mats, r_matrices, pset_arg)
+	elif holotype.startswith('fermi'):
+		nicely_print_fermi(holo_mats, r_matrices, pset_arg)
 
 
 # ******************************************************************************
@@ -173,17 +176,17 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 		rmats 	  -	List w/ lists, each containing 4 R matrices
 		pset_arg  - String specifying P slices of library, ie P1 or P6
 	"""
-	holos	= []
-	holos = [np.asarray(x) for x in holo_mats]
 
-	print("# ********************************")
-	print("Bosonic Holoraumy matrices for: ", pset_arg)
-	# print("Bosonic or Fermionic....")
+	holos = [np.asarray(x) for x in holo_mats]
+	text_list	= []
+
+	# print("# ********************************")
+	text_list.append("# ********************************")
+	text_list.append("Bosonic Holoraumy matrices for: " + pset_arg)
+	# print("Bosonic Holoraumy matrices for: ", pset_arg)
 	print("")
 	lenh, lenr = len(holos), len(rmats)
-	# print("Length holo_mats: ", len(holo_mats))
 	print("Length holo_mats: ", lenh)
-	# print("Length r_matrices: ", len(r_matrices))
 	print("Length r_matrices: ", lenr)
 	print("")
 
@@ -198,14 +201,21 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 	for zi in range(0, lenh):
 		temph = holos[zi]
 		tempr = rmats[zi]
-		print("#********************************")
-		print("Adinkra #", zi)
-		print("Bosonic Holoraumy Matrices")
+		text_list.append("#********************************")
+		text_list.append("Adinkra # " + str(zi))
+		text_list.append("Bosonic Holoraumy Matrices")
+		# print("Adinkra #", zi)
+		# print("Bosonic Holoraumy Matrices")
 		vij_strings	= []
 		for ijtup in ij_ind:
 			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
 			ijstr		= "V_{" + ij_temp + "}"
 			vij_strings.append(ijstr)
+		""" List comprehension for the above 3line forloop, 4line if counting
+			vij_strings list declaration	"""
+		'''
+		vij_strings = [ "V_{" + (str(ijt[0]+1) + str(ijt[1]+1)) + "}" for ijt in ij_ind]
+		'''
 		# v13strings = " \t" + vij_strings[0] + " \t \t \t" + vij_strings[1] + \
 		# " \t \t \t" + vij_strings[2]
 		v13strings = "\t" + vij_strings[0] + "\t\t   " + vij_strings[1] + \
@@ -220,26 +230,31 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 		mat13str 	= [np.array_str(y)[1:-1] for y in mat13]
 		tm13		= []
 		for matstr in mat13str:
-			# onemat = [ix.lstrip() for ix in matstr.split('\n')]
 			tm13.append([ix.lstrip() for ix in matstr.split('\n')])
-		print(v13strings)
+		# print(v13strings)
+		text_list.append(v13strings)
 		for ix in range(0,4):
 			pstr = tm13[0][ix] + " \t" + tm13[1][ix] + " \t" + tm13[2][ix]
-			print(pstr)
+			# print(pstr)
+			text_list.append(pstr)
 
 		mat46		= temph[3:6]
 		mat46str	= [np.array_str(y)[1:-1] for y in mat46]
 		tm46		= []
 		for matstr in mat46str:
 			tm46.append([ix.lstrip() for ix in matstr.split('\n')])
-		print(v46strings)
+		# print(v46strings)
+		text_list.append(v46strings)
 		for ix in range(0,4):
 			pstr = tm46[0][ix] + " \t" + tm46[1][ix] + " \t" + tm46[2][ix]
-			print(pstr)
-		print("")
+			# print(pstr)
+			text_list.append(pstr)
+		text_list.append("")
+		# print("")
 
 		"""	Printing R matrices """
-		print("R matrices")
+		# print("R matrices")
+		text_list.append("R matrices")
 		for ind, rl in enumerate([ tempr[:2], tempr[2:]]):
 			rltostr = [np.array_str(y)[1:-1] for y in rl]
 			rtm	= []
@@ -256,15 +271,24 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 					lbl_str	= (len1//2)*" " + "R1" + len2*" " + " R2"
 				elif len1 == len2:
 					lbl_str = (len1//2)*" " + "R1" + len2*" " + "R2"
-				print(lbl_str)
+				# print(lbl_str)
+				text_list.append(lbl_str)
 			elif ind == 1:
 				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
 				# print(len1, len2)
 				lbl_str		= "  R3" + len2*" " + " R4"
-				print(lbl_str)
+				# print(lbl_str)
+				text_list.append(lbl_str)
 			for ix in range(0,4):
 				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
-				print(pstr)
+				# print(pstr)
+				text_list.append(pstr)
+		text_list.append("")
+
+	presfile = "Calculated Matrices Slice " + pset_arg + ".txt"
+	with open(presfile, "w") as wfile:
+		for item in text_list:
+			wfile.write("%s \n" % item)
 
 # ******************************************************************************
 # Calculating Fermionic Holoraumy matrices for given Adinkra
