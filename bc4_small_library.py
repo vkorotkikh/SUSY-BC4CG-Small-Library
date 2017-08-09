@@ -58,6 +58,10 @@ def bc4_validation_seq(pset_arg):
 
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
+	'''
+		Define Holoraumy matrix type
+	'''
+	holotype	= "bosonic"
 
 	""" Generate individual Library slices	"""
 	for ps in psets_list:
@@ -79,7 +83,7 @@ def bc4_validation_seq(pset_arg):
 		print("# ********************************")
 		print("Execute Holoraumy calc for P sets:", psl[0], psl[1], psl[2], psl[3], psl[4], psl[5])
 		print("		")
-		matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
+		vij_holoraumy_calc.calc_holomats(temp_plist, pset_arg, holotype)
 
 	elif pset_arg in psets_list:
 	# elif pset_arg != "PALL":
@@ -87,8 +91,8 @@ def bc4_validation_seq(pset_arg):
 		print("		")
 		print("Execute Bosonic Holoraumy Calc for", pset_arg)
 		print("		")
-		# matrix_calc_vijmat2.calculate_vij_matrices(temp_plist)
-		vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg)
+		# vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg)
+		vij_holoraumy_calc.calc_holomats(temp_plist, pset_arg, holotype)
 		print("Holoraumy calc. for:", pset_arg,"finished")
 		print("")
 	elif pset_arg == "PALL":

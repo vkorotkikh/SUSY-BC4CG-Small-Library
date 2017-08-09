@@ -79,12 +79,14 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg):
 	nicely_print_boson(holo_mats, r_matrices, pset_arg)
 
 # ******************************************************************************
-# Do the final Vij calculation
-def calc_holomats(main_tetrad_list, pset_arg, holotype):
-
+# Calc. Bosonic or Fermionic Holoraumy mats for Adinkra.
+def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 	""" Remember that the main_tetrad_ark is a list of lists,
-		with each list containing four tuples, with tuples being
-		matrix number and the matrices itself. """
+		with each list containing four tuples, each tuple containing
+		(matrix #, np.matrix), or a 4 L matrix Adinkra
+		> This is hardcoded for a 4 Matrix Adinkra
+	"""
+
 
 	holotype	= "bosonic"
 	holo_mats	= []
@@ -181,10 +183,13 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 	text_list	= []
 
 	# print("# ********************************")
-	text_list.append("# ********************************")
+	text_list.append("#********************************")
+	text_list.append("Calculated Bosonic Holoraumy Matrices for BC4 CG")
+	text_list.append("BC4 CG Small Library " + pset_arg + " slice")
 	text_list.append("Bosonic Holoraumy matrices for: " + pset_arg)
+	text_list.append("")
 	# print("Bosonic Holoraumy matrices for: ", pset_arg)
-	print("")
+	# print("")
 	lenh, lenr = len(holos), len(rmats)
 	print("Length holo_mats: ", lenh)
 	print("Length r_matrices: ", lenr)
