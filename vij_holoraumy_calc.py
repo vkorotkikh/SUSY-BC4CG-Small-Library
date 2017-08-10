@@ -55,30 +55,6 @@ def alphas_betas():
 
 
 # ******************************************************************************
-# Do the final Vij calculation
-def calc_holoraumy_mats(main_tetrad_list, pset_arg):
-
-	""" Remember that the main_tetrad_ark is a list of lists,
-		with each list containing four tuples, with tuples being
-		matrix number and the matrices itself. """
-
-	holo_mats	= []
-	r_matrices	= []
-
-	for ti, teti in enumerate(main_tetrad_list):
-		if pr_sw:
-			print("# ********************************")
-			print("								     ")
-			print("Tetrad i: ", ti)
-			# calculate_vijmatset(teti)
-		# fermionic_holomats(teti)
-		holomat, rmat = bosonic_holomats(teti)
-		holo_mats.append(holomat)
-		r_matrices.append(rmat)
-
-	nicely_print_boson(holo_mats, r_matrices, pset_arg)
-
-# ******************************************************************************
 # Calc. Bosonic or Fermionic Holoraumy mats for Adinkra.
 def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 	""" Remember that the main_tetrad_ark is a list of lists,
@@ -87,12 +63,11 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 		> This is hardcoded for a 4 Matrix Adinkra
 	"""
 
-
-	holotype	= "bosonic"
+	lholotype	= holotype.lower()
 	holo_mats	= []
 	r_matrices	= []
 
-	if holotype.startswith('boson'):
+	if lholotype.startswith('boson'):
 		for ti, teti in enumerate(main_tetrad_list):
 			if pr_sw:
 				print("# ********************************")
@@ -103,7 +78,7 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 			holomat, rmat = bosonic_holomats(teti)
 			holo_mats.append(holomat)
 			r_matrices.append(rmat)
-	elif holotype.startswith('fermi'):
+	elif lholotype.startswith('fermi'):
 		for ti, teti in enumerate(main_tetrad_list):
 			if pr_sw:
 				print("# ********************************")
@@ -114,9 +89,9 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 			holo_mats.append(holomat)
 			r_matrices.append(rmat)
 
-	if holotype.startswith('boson'):
+	if lholotype.startswith('boson'):
 		nicely_print_boson(holo_mats, r_matrices, pset_arg)
-	elif holotype.startswith('fermi'):
+	elif lholotype.startswith('fermi'):
 		nicely_print_fermi(holo_mats, r_matrices, pset_arg)
 
 

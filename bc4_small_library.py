@@ -49,7 +49,7 @@ def main():
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. """
 	# pset_str = "PALL"
-	pset_str = "P1"
+	pset_str = "P2"
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
@@ -71,19 +71,15 @@ def bc4_validation_seq(pset_arg):
 		else:
 			print("Unknown P set -  ERROR")
 
-	# temp_l			= []
-	""" Changing PALL to ALL to calculate for one big chunk	"""
+	# """ Changing PALL to ALL to calculate for one big chunk	"""
 	if pset_arg == "ALL":
 		temp_plist	= []
 		psl 		= psets_list
 		temp_plist	= tetrad_setgen(pset_arg)
-		# for p, plist in psets_dict.items():
-		# 	temp_plist.extend(plist)
-
-		print("# ********************************")
-		print("Execute Holoraumy calc for P sets:", psl[0], psl[1], psl[2], psl[3], psl[4], psl[5])
-		print("		")
-		vij_holoraumy_calc.calc_holomats(temp_plist, pset_arg, holotype)
+	# 	print("# ********************************")
+	# 	print("Execute Holoraumy calc for P sets:", psl[0], psl[1], psl[2], psl[3], psl[4], psl[5])
+	# 	print("		")
+	# 	vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg, holotype)
 
 	elif pset_arg in psets_list:
 	# elif pset_arg != "PALL":
@@ -91,8 +87,7 @@ def bc4_validation_seq(pset_arg):
 		print("		")
 		print("Execute Bosonic Holoraumy Calc for", pset_arg)
 		print("		")
-		# vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg)
-		vij_holoraumy_calc.calc_holomats(temp_plist, pset_arg, holotype)
+		vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg, holotype)
 		print("Holoraumy calc. for:", pset_arg,"finished")
 		print("")
 	elif pset_arg == "PALL":
@@ -102,8 +97,7 @@ def bc4_validation_seq(pset_arg):
 			print("		")
 			print("Execute Bosonic Holoraumy Calc for", pset)
 			print("		")
-			# matrix_calc_vijmat_nopr.calculate_vij_matrices(plist)
-			vij_holoraumy_calc.calc_holoraumy_mats(plist, pset_arg)
+			vij_holoraumy_calc.calc_holoraumy_mats(plist, pset, holotype)
 			print("Holoraumy calc. for:", pset,"finished")
 			print("")
 
