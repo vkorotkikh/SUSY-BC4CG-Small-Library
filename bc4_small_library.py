@@ -65,7 +65,8 @@ def bc4_validation_seq(pset_arg):
 
 	""" Generate individual Library slices	"""
 	for ps in psets_list:
-		temp_tetrad	= tetrad_setgen(ps)
+		# temp_tetrad	= tetrad_setgen(ps)
+		temp_tetrad = tetrad_setgen_detailed(ps)
 		if ps not in psets_dict:
 			psets_dict['%s' % ps] = temp_tetrad
 		else:
@@ -91,12 +92,7 @@ def bc4_validation_seq(pset_arg):
 		print("		")
 		print("Execute Bosonic Holoraumy Calc for", pset_arg)
 		print("		")
-		if len(temp_plist) > 0 and len(temp_plist[0]) > 1:
-			if isinstance(temp_plist[0], tuple) is True:
-				# vij_holoraumy_calc.
-				pass
-		else:
-			vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg, holotype)
+		vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg, holotype)
 		print("Holoraumy calc. for:", pset_arg,"finished")
 		print("")
 	elif pset_arg == "PALL":

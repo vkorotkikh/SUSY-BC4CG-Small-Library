@@ -58,14 +58,14 @@ def alphas_betas():
 # Calc. Bosonic or Fermionic Holoraumy mats for Adinkra.
 def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 	""" Remember that the main_tetrad_ark is a list of lists,
-		with each list containing four tuples, each tuple containing
-		(matrix #, np.matrix), or a 4 L matrix Adinkra
+		with each list four numpy matrices, or a 4 L matrix Adinkra
 		> This is hardcoded for a 4 Matrix Adinkra
 	"""
 
 	lholotype	= holotype.lower()
 	holo_mats	= []
 	r_matrices	= []
+	adink_def	= []
 
 	if lholotype.startswith('boson'):
 		for ti, teti in enumerate(main_tetrad_list):
@@ -75,24 +75,40 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 				print("Tetrad i: ", ti)
 				# calculate_vijmatset(teti)
 			# fermionic_holomats(teti)
-			holomat, rmat = bosonic_holomats(teti)
-			holo_mats.append(holomat)
-			r_matrices.append(rmat)
+			if len(teti) > 1 and isinstance(teti, tuple) is True:
+				print("YES", teti, "", len(teti))
+				if isinstance(teti[1], tuple) is True:
+					print("TUPLES!!!")
+					holomat, rmat = bosonic_holomats(teti[0])
+					holo_mats.append(holomat)
+					r_matrices.append(rmat)
+					adink_def.append(teti[1])
+			else:
+				print("NO", teti, "", len(teti))
+				holomat, rmat = bosonic_holomats(teti)
+				holo_mats.append(holomat)
+				r_matrices.append(rmat)
 	elif lholotype.startswith('fermi'):
 		for ti, teti in enumerate(main_tetrad_list):
 			if pr_sw:
 				print("# ********************************")
 				print("								     ")
 				print("Tetrad i: ", ti)
-
-			holomat, rmat = fermionic_holomats(teti)
-			holo_mats.append(holomat)
-			r_matrices.append(rmat)
+			if len(teti) > 1:
+				if isinstance(teti, tuple) is True:
+					holomat, rmat = fermionic_holomats(teti)
+					holo_mats.append(holomat)
+					r_matrices.append(rmat)
+					adink_def.append(teti[1])
+			else:
+				holomat, rmat = fermionic_holomats(teti)
+				holo_mats.append(holomat)
+				r_matrices.append(rmat)
 
 	if lholotype.startswith('boson'):
-		nicely_print_boson(holo_mats, r_matrices, pset_arg)
+		nicely_print_boson(holo_mats, r_matrices, pset_arg, adink_def)
 	elif lholotype.startswith('fermi'):
-		nicely_print_fermi(holo_mats, r_matrices, pset_arg)
+		nicely_print_fermi(holo_mats, r_matrices, pset_arg, adink_def)
 
 
 # ******************************************************************************
@@ -148,12 +164,16 @@ def bosonic_holomats(adinkra):
 
 # ******************************************************************************
 # Calculating Bosonic holoraumy matrices for given Adinkra
-def nicely_print_boson(holo_mats, rmats, pset_arg, descrip_hold):
+def nicely_print_boson(holo_mats, rmats, pset_arg, adink_def):
 	""" holo_mats - List of lists w/ each containg 6 Bosnic Holoraumy matrices
 		rmats 	  -	List w/ lists, each containing 4 R matrices
 		pset_arg  - String specifying P slices of library, ie P1 or P6
-		descrip_hold - Contains boolean factors, matrix slice
+		adink_def - List contains tuples of boolean factors, matrix slice
 	"""
+
+	adinkdef_yn	= 0
+	if len(adink_def) > 0:
+		adinkdef_yn = 1
 
 	holos = [np.asarray(x) for x in holo_mats]
 	text_list	= []
@@ -184,6 +204,10 @@ def nicely_print_boson(holo_mats, rmats, pset_arg, descrip_hold):
 		tempr = rmats[zi]
 		text_list.append("#********************************")
 		text_list.append("Adinkra # " + str(zi))
+		if adinkdef_yn:
+			print("Def ", adink_def[zi], " Bool Fct", adink_def[zi][0])
+			print("Def ", adink_def[zi][1])
+			# text_list.append("Boolean Factor:" + adink_def[zi][0] + " P-set " + adink_def[zi][1])
 		text_list.append("Bosonic Holoraumy Matrices")
 		# print("Adinkra #", zi)
 		# print("Bosonic Holoraumy Matrices")
