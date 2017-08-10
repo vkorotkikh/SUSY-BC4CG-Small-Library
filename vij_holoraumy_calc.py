@@ -159,9 +159,9 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 
 	# print("# ********************************")
 	text_list.append("#********************************")
-	text_list.append("Calculated Bosonic Holoraumy Matrices for BC4 CG")
-	text_list.append("BC4 CG Small Library " + pset_arg + " slice")
-	text_list.append("Bosonic Holoraumy matrices for: " + pset_arg)
+	text_list.append("BC4 Coxeter Group Small Library")
+	text_list.append(pset_arg + " set")
+	text_list.append("Calculated Bosonic Holoraumy matrices and R matrices")
 	text_list.append("")
 	# print("Bosonic Holoraumy matrices for: ", pset_arg)
 	# print("")
