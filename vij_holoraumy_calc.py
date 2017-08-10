@@ -148,10 +148,11 @@ def bosonic_holomats(adinkra):
 
 # ******************************************************************************
 # Calculating Bosonic holoraumy matrices for given Adinkra
-def nicely_print_boson(holo_mats, rmats, pset_arg):
+def nicely_print_boson(holo_mats, rmats, pset_arg, descrip_hold):
 	""" holo_mats - List of lists w/ each containg 6 Bosnic Holoraumy matrices
 		rmats 	  -	List w/ lists, each containing 4 R matrices
 		pset_arg  - String specifying P slices of library, ie P1 or P6
+		descrip_hold - Contains boolean factors, matrix slice
 	"""
 
 	holos = [np.asarray(x) for x in holo_mats]
@@ -265,8 +266,8 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 				text_list.append(pstr)
 		text_list.append("")
 
-	# presfile = "BC4-CoxeterGroup-BosonicMatrices " + pset_arg + ".txt"
-	pmatsfile = "BC4-CG " + pset_arg + "-BosonicHolos.txt"
+	pmatsfile = "BC4-CoxeterGroup " + pset_arg + ".txt"
+	# pmatsfile = "BC4-CG " + pset_arg + "-BosonicHolos.txt"
 	with open(pmatsfile, "w") as wfile:
 		for item in text_list:
 			wfile.write("%s \n" % item)

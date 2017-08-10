@@ -70,6 +70,10 @@ def bc4_validation_seq(pset_arg):
 			psets_dict['%s' % ps] = temp_tetrad
 		else:
 			print("Unknown P set -  ERROR")
+		'''
+		adding slice info	'''
+		looplist = tetrad_setgen_detailed(ps)
+		print(len(looplist), len(looplist[0]), "", type(looplist[0]))
 
 	# """ Changing PALL to ALL to calculate for one big chunk	"""
 	if pset_arg == "ALL":
@@ -87,7 +91,12 @@ def bc4_validation_seq(pset_arg):
 		print("		")
 		print("Execute Bosonic Holoraumy Calc for", pset_arg)
 		print("		")
-		vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg, holotype)
+		if len(temp_plist) > 0 and len(temp_plist[0]) > 1:
+			if isinstance(temp_plist[0], tuple) is True:
+				# vij_holoraumy_calc.
+				pass
+		else:
+			vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg, holotype)
 		print("Holoraumy calc. for:", pset_arg,"finished")
 		print("")
 	elif pset_arg == "PALL":
@@ -111,7 +120,7 @@ def tetrad_setgen(pset):
 	""" Transform P# slices into list index by getting the # """
 	pint 	= 0
 	pint 	= int(pset.lstrip("P")) - 1
-	pslice 	= lib_pslices(pint)
+	pslice, pdef 	= bc4cg_libsets(pint)
 	if p_switch:
 		print("# ********************************")
 		print("Starting conversion process for P slice:", pset)
@@ -119,8 +128,6 @@ def tetrad_setgen(pset):
 		print("")
 	""" Perform boolean calculations """
 	pbools	= flips_org_lib(pset)
-	# print(pbools)
-	# print("pbools type", type(pbools))
 
 	for ind, booleans in enumerate(pbools):
 		# print("")
@@ -143,9 +150,51 @@ def tetrad_setgen(pset):
 		# temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
 	return pset_boold
 
+# ******************************************************************************
+def tetrad_setgen_detailed(pset):
+	"""	Generates a {P#} set of tetrads via execution of pset_string_format()
+		and	string_to_tetrad() function. Creates a set of python numpy tetrads
+		from string representation
+		Returns a list containing tuples ( adinkra, (booleans, pslice))
+	"""
+
+	pset_boold 	= []
+	""" Transform P# slices into list index by getting the #
+		subtract 1 for indexing
+	"""
+	pint 	= 0
+	pint 	= int(pset.lstrip("P")) - 1
+	pslice, pdef 	= bc4cg_libsets(pint)
+	if p_switch:
+		print("# ********************************")
+		print("Starting conversion process for P slice:", pset)
+		# print("Length of", pset, "tetrad set:", len(run_group))
+		print("")
+	""" Perform boolean calculations """
+	pbools	= flips_org_lib(pset)
+
+	for ind, booleans in enumerate(pbools):
+		bool_list = []
+		for bins in booleans:
+			bins_list 	= binaries(bins)
+			# temp		= np.array(bins_list)
+			bool_mat	= np.asmatrix(np.diag(bins_list))
+			bool_list.append(bool_mat)
+		# booled_adinkra 	= [(np.dot(pslice[x], bool_list[x])) for x in range(0, len(pslice))]
+		booled_adinkra	= [(np.dot(bool_list[x], pslice[x])) for x in range(0, len(pslice))]
+		if p_switch:
+			print("Boolean Factor for: ", booleans)
+			for i in booled_adinkra:
+				print(i)
+		# pset_boold.append(booled_adinkra)
+		pset_boold.append((booled_adinkra, (booleans, pdef)))
+
+	return pset_boold
+
 ##************************************
 # Defining the P slices of original BC4 CG library
-def lib_pslices(pie_index):
+def bc4cg_libsets(p_index):
+# def lib_pslices(p_index):
 
 	""" {P1} = { (243), (123), (134), (142) }	"""
 	p1	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]]),
@@ -186,9 +235,13 @@ def lib_pslices(pie_index):
 			np.matrix([[0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]])
 			]
 
+	p_strings = [ "{(243), (123), (134), (142)}", "{(234), (124), (132), (143)}",
+			 	"{(1243), (23), (14), (1342)}", "{(24), (1234), (13), (1432)}",
+				"{(34), (12), (1324), (1423)}", "{(), (12)(34), (13)(24), (14)(23)}"]
+
 	p_slices = [ p1, p2, p3, p4, p5, p6 ]
 
-	return p_slices[pie_index]
+	return p_slices[p_index], p_strings[p_index]
 
 ##************************************
 # Defining the Pizza slices
