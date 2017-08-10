@@ -280,9 +280,8 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg):
 	"""
 	fermis = [np.asarray(x) for x in fermi_mats]
 
-	print("# ********************************")
-	print("Bosonic Holoraumy matrices for: ", pset_arg)
-	# print("Bosonic or Fermionic....")
+	print("#********************************")
+	print("Fermionic Holoraumy matrices for: ", pset_arg)
 	print("")
 	lenh, lenr = len(fermis), len(rmats)
 	# print("Length holo_mats: ", len(holo_mats))
@@ -304,7 +303,7 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg):
 		tempr = rmats[zi]
 		print("#********************************")
 		print("Adinkra #", zi)
-		print("Bosonic Holoraumy Matrices")
+		print("Fermionic Holoraumy Matrices")
 		vij_strings	= []
 		for ijtup in ij_ind:
 			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
