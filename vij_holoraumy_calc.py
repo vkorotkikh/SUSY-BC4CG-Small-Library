@@ -265,8 +265,9 @@ def nicely_print_boson(holo_mats, rmats, pset_arg):
 				text_list.append(pstr)
 		text_list.append("")
 
-	presfile = "Calculated Matrices Slice " + pset_arg + ".txt"
-	with open(presfile, "w") as wfile:
+	# presfile = "BC4-CoxeterGroup-BosonicMatrices " + pset_arg + ".txt"
+	pmatsfile = "BC4-CG " + pset_arg + "-BosonicHolos.txt"
+	with open(pmatsfile, "w") as wfile:
 		for item in text_list:
 			wfile.write("%s \n" % item)
 
