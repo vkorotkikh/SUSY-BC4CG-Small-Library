@@ -29,7 +29,7 @@ import vij_holoraumy_calc
 p_switch	= 0
 # ******************************************************************************
 # Main() function.
-def main():
+def main(pset_str):
 
 	print("# ***********************************************************************")
 	print("# Name:    Calculating BC4 CG Small Library")
@@ -49,7 +49,7 @@ def main():
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. """
 	# pset_str = "PALL"
-	pset_str = "P1"
+	# pset_str = "P1"
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
