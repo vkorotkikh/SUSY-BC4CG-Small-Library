@@ -49,7 +49,7 @@ def main():
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. """
 	# pset_str = "PALL"
-	pset_str = "P2"
+	pset_str = "P1"
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
@@ -480,6 +480,12 @@ def alphas_betas():
 if __name__ == "__main__":
 	start_time = time.time()
 
-	main()
+	pset_def = "P1"
+
+	try:
+		main(sys.argv[1])
+	except IndexError:
+		print("Using hardcoded default P-set", pset_def)
+		main(pset_def)
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
