@@ -181,7 +181,10 @@ def nicely_print_boson(holo_mats, rmats, pset_arg, adink_def):
 	# print("# ********************************")
 	text_list.append("#********************************")
 	text_list.append("BC4 Coxeter Group Small Library")
-	text_list.append(pset_arg + " set")
+	if adinkdef_yn:
+		text_list.append(pset_arg + " set: " + adink_def[0][1])
+	else:
+		text_list.append(pset_arg + " set")
 	text_list.append("Calculated Bosonic Holoraumy matrices and R matrices")
 	text_list.append("")
 	# print("Bosonic Holoraumy matrices for: ", pset_arg)
@@ -206,7 +209,10 @@ def nicely_print_boson(holo_mats, rmats, pset_arg, adink_def):
 		text_list.append("Adinkra # " + str(zi))
 		if adinkdef_yn:
 			print("Def ", adink_def[zi], " Bool Fct", adink_def[zi][0])
-			print("Def ", adink_def[zi][1])
+			boolstr = (",").join(['(' + str(ix) + ')' for ix in adink_def[zi][0]])
+			boolstr = "{" + boolstr + "}"
+			print("Bool String:", boolstr)
+			text_list.append("Boolean Factor: " + boolstr)
 			# text_list.append("Boolean Factor:" + adink_def[zi][0] + " P-set " + adink_def[zi][1])
 		text_list.append("Bosonic Holoraumy Matrices")
 		# print("Adinkra #", zi)
@@ -520,25 +526,3 @@ def calculate_vijmatset_nicely(one_adinkra):
 					end_pack[ind_pos] = "-beta^1"
 
 	return vij_tempset, end_pack
-
-
-# ********************************
-# Alpha and Beta matrices hardcoded
-def alphas_betas():
-
-	""" These are the alpha and beta matrices multiplied by 2i
-		alpha and beta are tensor products of Pauli spin matrices
- 		Identity matrix They are defined in equtions (4.5)
-		in Isaac Chappell II, S. James Gates, Jr - 2012
-	"""
-
-	alpha1i = np.matrix([[0, 0, 0, 2], [0, 0, 2, 0], [0, -2, 0, 0], [-2, 0, 0, 0]])
-	alpha2i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, 2], [0, 0, -2, 0]])
-	alpha3i = np.matrix([[0, 0, 2, 0], [0, 0, 0, -2], [-2, 0, 0, 0], [0, 2, 0, 0]])
-
-	# Betas
-	beta1i = np.matrix([[0, 0, 0, 2], [0, 0, -2, 0], [0, 2, 0, 0], [-2, 0, 0, 0]])
-	beta2i = np.matrix([[0, 0, 2, 0], [0, 0, 0, 2], [-2, 0, 0, 0], [0, -2, 0, 0]])
-	beta3i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, -2], [0, 0, 2, 0]])
-
-	return [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
