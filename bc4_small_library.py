@@ -526,38 +526,46 @@ def alphas_betas():
 # **************************************************************************
 # Check user input for issues
 def verify_input(userstr):
-	# hey look im linefarming 
-	tempstr = userstr.lower()
-	if tempstr.startswith('p'):
-		if tempstr.endswith('1'):
-			return userstr
-		elif tempstr.endswith('2'):
-			return userstr
-		elif tempstr.endswith('3'):
-			return userstr
-		elif tempstr.endswith('4'):
-			return userstr
-		elif tempstr.endswith('5'):
-			return userstr
-		elif tempstr.endswith('6'):
-			return userstr
-		else:
-			pass
-	elif not tempstr.startswith('p'):
-		if tempstr.endswith('1'):
-			return userstr
-		elif tempstr.endswith('2'):
-			return userstr
-		elif tempstr.endswith('3'):
-			return userstr
-		elif tempstr.endswith('4'):
-			return userstr
-		elif tempstr.endswith('5'):
-			return userstr
-		elif tempstr.endswith('6'):
-			return userstr
-		else:
-			pass
+	# hey look im linefarming
+	restr = re.compile('[pP1-6]', re.IGNORECASE)
+	str2 = restr.findall(userstr)
+	print(str2)
+	# if str2[0] == 'p':
+	if restr.match(str2[0]) is not None:
+		print('Sucesfull BC4 CG Library matching input')
+		return 'P' + str2[1]
+	else:
+		sys.exit('ISSUE')
+	# if tempstr.startswith('p'):
+	# 	if tempstr.endswith('1'):
+	# 		return userstr
+	# 	elif tempstr.endswith('2'):
+	# 		return userstr
+	# 	elif tempstr.endswith('3'):
+	# 		return userstr
+	# 	elif tempstr.endswith('4'):
+	# 		return userstr
+	# 	elif tempstr.endswith('5'):
+	# 		return userstr
+	# 	elif tempstr.endswith('6'):
+	# 		return userstr
+	# 	else:
+	# 		pass
+	# elif not tempstr.startswith('p'):
+	# 	if tempstr.endswith('1'):
+	# 		return userstr
+	# 	elif tempstr.endswith('2'):
+	# 		return userstr
+	# 	elif tempstr.endswith('3'):
+	# 		return userstr
+	# 	elif tempstr.endswith('4'):
+	# 		return userstr
+	# 	elif tempstr.endswith('5'):
+	# 		return userstr
+	# 	elif tempstr.endswith('6'):
+	# 		return userstr
+	# 	else:
+	# 		pass
 	# return userstr
 
 # **************************************************************************
@@ -592,7 +600,7 @@ if __name__ == "__main__":
 		psetstr = input("Please enter P-set you wish to calculate: ")
 		rstr 	= verify_input(psetstr)
 		print(psetstr)
-		main(rstr)
+		# main(pset_def)
 		# main(pset_def)
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
