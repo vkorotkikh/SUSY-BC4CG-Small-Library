@@ -523,6 +523,10 @@ def alphas_betas():
 
 	return [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
 
+# **************************************************************************
+# Check user input for issues
+def verify_input(userstr):
+
 
 # **************************************************************************
 # Execute main()
@@ -544,7 +548,7 @@ if __name__ == "__main__":
 		# print("#	")
 		print("# ***********************************************************************")
 		print("")
-		print("Please enter P set you want to calculate...")
+		print("Calculating BC4 Coxeter Group Small Libray P-sets")
 		print("")
 		print("P1 or 1 - {P1} ")
 		print("P2 or 1 - {P2} ")
@@ -553,6 +557,9 @@ if __name__ == "__main__":
 		print("P5 or 5 - {P5} ")
 		print("P6 or 6 - {P6} ")
 		print("")
+		psetstr = input("Please enter P-set you wish to calculate: ")
+		print(psetstr)
+
 		main(pset_def)
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
