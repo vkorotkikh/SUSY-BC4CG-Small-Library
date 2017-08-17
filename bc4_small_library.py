@@ -526,7 +526,39 @@ def alphas_betas():
 # **************************************************************************
 # Check user input for issues
 def verify_input(userstr):
-
+	# hey look im linefarming 
+	tempstr = userstr.lower()
+	if tempstr.startswith('p'):
+		if tempstr.endswith('1'):
+			return userstr
+		elif tempstr.endswith('2'):
+			return userstr
+		elif tempstr.endswith('3'):
+			return userstr
+		elif tempstr.endswith('4'):
+			return userstr
+		elif tempstr.endswith('5'):
+			return userstr
+		elif tempstr.endswith('6'):
+			return userstr
+		else:
+			pass
+	elif not tempstr.startswith('p'):
+		if tempstr.endswith('1'):
+			return userstr
+		elif tempstr.endswith('2'):
+			return userstr
+		elif tempstr.endswith('3'):
+			return userstr
+		elif tempstr.endswith('4'):
+			return userstr
+		elif tempstr.endswith('5'):
+			return userstr
+		elif tempstr.endswith('6'):
+			return userstr
+		else:
+			pass
+	# return userstr
 
 # **************************************************************************
 # Execute main()
@@ -558,8 +590,9 @@ if __name__ == "__main__":
 		print("P6 or 6 - {P6} ")
 		print("")
 		psetstr = input("Please enter P-set you wish to calculate: ")
+		rstr 	= verify_input(psetstr)
 		print(psetstr)
-
-		main(pset_def)
+		main(rstr)
+		# main(pset_def)
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
