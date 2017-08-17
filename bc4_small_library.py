@@ -48,6 +48,7 @@ def main(pset_str):
 	""" Options for BC4 Library:
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. """
+		
 	# pset_str = "PALL"
 	# pset_str = "P1"
 	bc4_validation_seq(pset_str)
@@ -526,16 +527,23 @@ def alphas_betas():
 # **************************************************************************
 # Check user input for issues
 def verify_input(userstr):
-	# hey look im linefarming
-	restr = re.compile('[pP1-6]', re.IGNORECASE)
-	str2 = restr.findall(userstr)
-	print(str2)
-	# if str2[0] == 'p':
-	if restr.match(str2[0]) is not None:
-		print('Sucesfull BC4 CG Library matching input')
-		return 'P' + str2[1]
-	else:
-		sys.exit('ISSUE')
+
+	'''
+		Check for PALL and for P1 - P6
+	'''
+	# restr = re.compile('[pP1-6]', re.IGNORECASE)
+	# str2 = restr.findall(userstr)
+
+	if (userstr.lower()).startswith('p'):
+		recomp = re.compile('[pP1-6]', re.IGNORECASE)
+		relist = recomp.findall(userstr)
+		if restr.match(relist[0]) is not None:
+			if len(relist) > 1:
+				if relist[1].isdigit():
+					print('Sucesfull BC4 CG Library matching input')
+					return 'P' + relist[1]
+		else:
+			sys.exit('ISSUE')
 	# if tempstr.startswith('p'):
 	# 	if tempstr.endswith('1'):
 	# 		return userstr
@@ -598,9 +606,9 @@ if __name__ == "__main__":
 		print("P6 or 6 - {P6} ")
 		print("")
 		psetstr = input("Please enter P-set you wish to calculate: ")
-		rstr 	= verify_input(psetstr)
+		# rstr 	= verify_input(psetstr)
 		print(psetstr)
-		# main(pset_def)
+		main(pset_def)
 		# main(pset_def)
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
