@@ -48,7 +48,7 @@ def main(pset_str):
 	""" Options for BC4 Library:
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. """
-		
+
 	# pset_str = "PALL"
 	# pset_str = "P1"
 	bc4_validation_seq(pset_str)
@@ -533,6 +533,12 @@ def verify_input(userstr):
 	'''
 	# restr = re.compile('[pP1-6]', re.IGNORECASE)
 	# str2 = restr.findall(userstr)
+	loc_userstr	= userstr.lower()
+	if 'pall' in loc_userstr:
+		return userstr
+	elif 'all' in loc_userstr:
+		return userstr
+
 
 	if (userstr.lower()).startswith('p'):
 		recomp = re.compile('[pP1-6]', re.IGNORECASE)
@@ -544,37 +550,7 @@ def verify_input(userstr):
 					return 'P' + relist[1]
 		else:
 			sys.exit('ISSUE')
-	# if tempstr.startswith('p'):
-	# 	if tempstr.endswith('1'):
-	# 		return userstr
-	# 	elif tempstr.endswith('2'):
-	# 		return userstr
-	# 	elif tempstr.endswith('3'):
-	# 		return userstr
-	# 	elif tempstr.endswith('4'):
-	# 		return userstr
-	# 	elif tempstr.endswith('5'):
-	# 		return userstr
-	# 	elif tempstr.endswith('6'):
-	# 		return userstr
-	# 	else:
-	# 		pass
-	# elif not tempstr.startswith('p'):
-	# 	if tempstr.endswith('1'):
-	# 		return userstr
-	# 	elif tempstr.endswith('2'):
-	# 		return userstr
-	# 	elif tempstr.endswith('3'):
-	# 		return userstr
-	# 	elif tempstr.endswith('4'):
-	# 		return userstr
-	# 	elif tempstr.endswith('5'):
-	# 		return userstr
-	# 	elif tempstr.endswith('6'):
-	# 		return userstr
-	# 	else:
-	# 		pass
-	# return userstr
+
 
 # **************************************************************************
 # Execute main()
@@ -604,6 +580,7 @@ if __name__ == "__main__":
 		print("P4 or 4 - {P4} ")
 		print("P5 or 5 - {P5} ")
 		print("P6 or 6 - {P6} ")
+		print("PALL - All P sets")
 		print("")
 		psetstr = input("Please enter P-set you wish to calculate: ")
 		# rstr 	= verify_input(psetstr)
