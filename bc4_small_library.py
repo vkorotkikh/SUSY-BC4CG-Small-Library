@@ -550,7 +550,22 @@ def verify_input(userstr):
 					return 'P' + relist[1]
 		else:
 			sys.exit('STRING ISSUE')
-			
+	elif not (userstr.lower()).startswith('p'):
+		ustr_len = len(userstr)
+		recomp = re.compile('[1-6]')
+		if userstr.isdigit():
+			if recomp.match(userstr) is not None:
+				if ustr_len == 1:
+					print(userstr)
+					return userstr
+				elif ustr_len != 1:
+					print("Digit error")
+					print("")
+					sys.exit('Add more crap here')
+			else:
+				print("NONE ISSUE")
+				
+
 
 # **************************************************************************
 # Adding calculation options
