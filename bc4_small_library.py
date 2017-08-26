@@ -25,6 +25,7 @@ from numpy.linalg import inv
 # import matrix_calc_vijmat2
 # import matrix_calc_vijmat_nopr
 import vij_holoraumy_calc
+import matrix_calc_vijmat2
 
 p_switch	= 0
 # ******************************************************************************
@@ -502,27 +503,6 @@ def lmat_flipping(vbasis, binaries_list):
 
 	return lmat_list
 
-
-# ********************************
-# Alpha and Beta matrices hardcoded
-def alphas_betas():
-
-	""" These are the alpha and beta matrices multiplied by 2i
-		alpha and beta are tensor products of Pauli spin matrices
- 		Identity matrix They are defined in equtions (4.5)
-		in Isaac Chappell II, S. James Gates, Jr - 2012
-	"""
-
-	alpha1i = np.matrix([[0, 0, 0, 2], [0, 0, 2, 0], [0, -2, 0, 0], [-2, 0, 0, 0]])
-	alpha2i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, 2], [0, 0, -2, 0]])
-	alpha3i = np.matrix([[0, 0, 2, 0], [0, 0, 0, -2], [-2, 0, 0, 0], [0, 2, 0, 0]])
-
-	# Betas
-	beta1i = np.matrix([[0, 0, 0, 2], [0, 0, -2, 0], [0, 2, 0, 0], [-2, 0, 0, 0]])
-	beta2i = np.matrix([[0, 0, 2, 0], [0, 0, 0, 2], [-2, 0, 0, 0], [0, -2, 0, 0]])
-	beta3i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, -2], [0, 0, 2, 0]])
-
-	return [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
 
 # **************************************************************************
 # Check user input for issues
