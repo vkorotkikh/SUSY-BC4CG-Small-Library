@@ -543,13 +543,60 @@ def verify_input(userstr):
 	if (userstr.lower()).startswith('p'):
 		recomp = re.compile('[pP1-6]', re.IGNORECASE)
 		relist = recomp.findall(userstr)
-		if restr.match(relist[0]) is not None:
+		if recomp.match(relist[0]) is not None:
 			if len(relist) > 1:
 				if relist[1].isdigit():
 					print('Sucesfull BC4 CG Library matching input')
 					return 'P' + relist[1]
 		else:
-			sys.exit('ISSUE')
+			sys.exit('STRING ISSUE')
+			
+
+# **************************************************************************
+# Adding calculation options
+def calc_options():
+
+	print("Choose one of the following calculation options:")
+	print("")
+	print("1. Verify Small Library. Calculate P set elle coefficients")
+	print("2. Calculate P-set Fermionic Matrices")
+	print("3. Calculate P-set Bosonic Matrices")
+	print("")
+	uinput	= input("Choose wisely: ")
+
+	if int(uinput) == 1:
+		pass
+
+	elif int(uinput) == 2:
+		print("")
+		print("Pick P-set to calculate")
+		print("P1 or 1 - {P1} ")
+		print("P2 or 1 - {P2} ")
+		print("P3 or 3 - {P3} ")
+		print("P4 or 4 - {P4} ")
+		print("P5 or 5 - {P5} ")
+		print("P6 or 6 - {P6} ")
+		print("PALL - All P sets")
+		print("")
+		userpset = input(":")
+		checkstr = verify_input(userpset)
+
+	elif int(uinput) == 3:
+		print("")
+		print("Pick P-set to calculate")
+		print("P1 or 1 - {P1} ")
+		print("P2 or 1 - {P2} ")
+		print("P3 or 3 - {P3} ")
+		print("P4 or 4 - {P4} ")
+		print("P5 or 5 - {P5} ")
+		print("P6 or 6 - {P6} ")
+		print("PALL - All P sets")
+		print("")
+		userpset = input(":")
+		checkstr = verify_input(userpset)
+	else:
+		pass
+
 
 
 # **************************************************************************
@@ -564,7 +611,7 @@ if __name__ == "__main__":
 	except IndexError:
 		# print("Using hardcoded default P-set", pset_def)
 		print("# ***********************************************************************")
-		print("# Name:    Calculating BC4 CG Small Library")
+		print("# Name:    BC4 CG Small Library ")
 		print("# Author:  Vadim Korotkikh	")
 		print("# Date:    June 2017	")
 		print("#	")
@@ -572,7 +619,7 @@ if __name__ == "__main__":
 		# print("#	")
 		print("# ***********************************************************************")
 		print("")
-		print("Calculating BC4 Coxeter Group Small Libray P-sets")
+		calc_options()
 		print("")
 		print("P1 or 1 - {P1} ")
 		print("P2 or 1 - {P2} ")
@@ -585,7 +632,7 @@ if __name__ == "__main__":
 		psetstr = input("Please enter P-set you wish to calculate: ")
 		# rstr 	= verify_input(psetstr)
 		print(psetstr)
-		main(pset_def)
 		# main(pset_def)
+
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
