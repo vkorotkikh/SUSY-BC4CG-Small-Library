@@ -564,7 +564,7 @@ def verify_input(userstr):
 					sys.exit('Add more crap here')
 			else:
 				print("NONE ISSUE")
-				
+
 
 
 # **************************************************************************
@@ -576,11 +576,15 @@ def calc_options():
 	print("1. Verify Small Library. Calculate P set elle coefficients")
 	print("2. Calculate P-set Fermionic Matrices")
 	print("3. Calculate P-set Bosonic Matrices")
+	print("4. Set output file string")
 	print("")
 	uinput	= input("Choose wisely: ")
 
 	if int(uinput) == 1:
-		pass
+		print("")
+		print("Would you like to calculate entire BC4 CG Small Library?")
+		print("")
+		verlib = input("")
 
 	elif int(uinput) == 2:
 		print("")
