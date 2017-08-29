@@ -557,6 +557,7 @@ def calc_options():
 	print("2. Calculate P-set Fermionic Matrices")
 	print("3. Calculate P-set Bosonic Matrices")
 	print("4. Set output file string")
+	print("5. Exit")
 	print("")
 	uinput	= input("Choose wisely: ")
 
@@ -564,7 +565,7 @@ def calc_options():
 		print("")
 		print("Would you like to calculate entire BC4 CG Small Library?")
 		print("")
-		verlib = input("")
+		verlib = input("yes/no ")
 
 	elif int(uinput) == 2:
 		print("")
@@ -593,8 +594,17 @@ def calc_options():
 		print("")
 		userpset = input(":")
 		checkstr = verify_input(userpset)
-	else:
+	elif int(uinput) == 4:
+		print("")
+		print("Please enter file naming convention")
+		fileconv = input("")
 		pass
+	elif int(uinput) == 5 or uinput.lower() == 'exit':
+		print("")
+		sys.exit("EXITING")
+	else:
+		print("Please re-enter selection or type 'exit'")
+		uinput = input("")
 
 
 
