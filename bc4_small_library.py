@@ -551,21 +551,35 @@ def verify_input(userstr):
 # Adding calculation options
 def calc_options():
 
-	print("Choose one of the following calculation options:")
-	print("")
-	print("1. Verify Small Library. Calculate P set elle coefficients")
-	print("2. Calculate P-set Fermionic Matrices")
-	print("3. Calculate P-set Bosonic Matrices")
-	print("4. Set output file string")
-	print("5. Exit")
-	print("")
+	# print("Choose one of the following calculation options:")
+	# print("")
+	# print("1. Verify Small Library. Calculate P set elle coefficients")
+	# print("2. Calculate P-set Fermionic Matrices")
+	# print("3. Calculate P-set Bosonic Matrices")
+	# print("4. Set output file string")
+	# print("5. Exit")
+	# print("")
+	base_options_print()
 	uinput	= input("Choose wisely: ")
 
 	if int(uinput) == 1:
 		print("")
 		print("Would you like to calculate entire BC4 CG Small Library?")
 		print("")
-		verlib = input("yes/no ")
+		userlib = input(" yes/no ")
+		if userlib == 'yes':
+			pass
+		else:
+			userchk = input("exit?  yes/no?")
+			if userchk.lower() == 'yes':
+				sys.exit("EXITING")
+			else:
+				base_options_print()
+				uinput	= input("Choose wisely: ")
+				''' *** ** * ** *** **** *** ** * ** ***
+					FIGURE OUT HOW TO MAKE THESE LOOP
+					*** ** * ** *** **** *** ** * ** *** '''
+				pass
 
 	elif int(uinput) == 2:
 		print("")
@@ -606,7 +620,19 @@ def calc_options():
 		print("Please re-enter selection or type 'exit'")
 		uinput = input("")
 
+# **************************************************************************
+def base_options_print():
 
+	print("#******************************************************************")
+	print("	")
+	print("Choose one of the following calculation options:")
+	print("")
+	print(" [1] -  Verify Small Library. Calculate P set elle coefficients")
+	print(" [2] =  Calculate P-set Fermionic Matrices")
+	print(" [3] =  Calculate P-set Bosonic Matrices")
+	print(" [4] -  Set output file string")
+	print(" [5] -  Exit")
+	print("")
 
 # **************************************************************************
 # Execute main()
