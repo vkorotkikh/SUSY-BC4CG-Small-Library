@@ -56,7 +56,7 @@ def main(pset_str):
 
 # ******************************************************************************
 # BC4 Validation function process organizer
-def bc4_validation_seq(pset_arg):
+def bc4_validation_seq(pset_arg, *args):
 
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
@@ -643,6 +643,15 @@ def user_options():
 	print(" < 5 >  -  Set output file string")
 	print(" < 6 >  =  Nevermind. Get me outa here! Exit")
 	print("")
+	uinput = input(": ")
+	if uinput.strip() == '1':
+		pass
+	elif uinput.strip() == '2':
+		bc4_validation_seq('PALL', 'fermi', 'coef')
+	elif uinput.strip() == '3':
+		pass
+	elif uinput.strip() == '4':
+		calc_options()
 
 # **************************************************************************
 # Execute main()
