@@ -621,17 +621,27 @@ def calc_options():
 		uinput = input("")
 
 # **************************************************************************
-def base_options_print():
+def user_options():
 
-	print("#******************************************************************")
+	print("#***********************************************************************")
+	print("# Name: BC4 Coxeter Group Small Library Calculation Toolset ")
+	print("# Author:  Vadim Korotkikh	")
+	print("# Date:    June 2017	")
+	print("#	")
+	# print("# Description: Function for verifying the BC4 space coefficient library")
+	# print("#	")
+	print("#***********************************************************************")
+	# print("")
+	# print("#******************************************************************")
 	print("	")
 	print("Choose one of the following calculation options:")
 	print("")
-	print(" [1] -  Verify Small Library. Calculate P set elle coefficients")
-	print(" [2] =  Calculate P-set Fermionic Matrices")
-	print(" [3] =  Calculate P-set Bosonic Matrices")
-	print(" [4] -  Set output file string")
-	print(" [5] -  Exit")
+	print(" < 1 >  -  Display BC4 CG Library P sets")
+	print(" < 2 >  -  Verify BC4 CG Small Library ~V coefficient values")
+	print(" < 3 >  -  Calculate P-set Fermionic Matrices")
+	print(" < 4 >  -  Calculate P-set Bosonic Matrices")
+	print(" < 5 >  -  Set output file string")
+	print(" < 6 >  =  Nevermind. Get me outa here! Exit")
 	print("")
 
 # **************************************************************************
