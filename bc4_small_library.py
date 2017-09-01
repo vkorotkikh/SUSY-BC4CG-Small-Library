@@ -60,10 +60,30 @@ def bc4_validation_seq(pset_arg, *args):
 
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
+	holotype		= ""
+	calctype		= ""
+	''' Figure out *args and implement calc accordingly '''
+	args_tuple	= args
+	arsglen		= len(args)
+	if all(isinstance(xarg, str) for xarg in args_tuple):
+		print("all strings")
+		for xarg in args_tuple:
+			if xarg == 'fermi':
+				holotype = 'fermionic'
+			elif xarg == 'boson':
+				holotype = 'bosonic'
+			elif xarg == 'coef':
+				print("calculate elle coefficients")
+				calctype = 'coef'
+			elif xarg == 'matrices':
+				calctype = 'mats'
+			else:
+				print("WHAT? ERROR")  # configure this better later
+
 	'''
 		Define Holoraumy matrix type
 	'''
-	holotype	= "bosonic"
+	# holotype	= "bosonic"
 
 	""" Generate individual Library slices	"""
 	for ps in psets_list:
