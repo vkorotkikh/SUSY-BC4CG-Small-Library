@@ -565,7 +565,8 @@ def verify_input(userstr):
 			else:
 				print("NONE ISSUE")
 
-
+# **************************************************************************
+# Default standard P set options
 def pset_options_std():
 	''' Making a func of printing the P-set options. Tired of rewriting it '''
 	userinput = ""
