@@ -695,7 +695,13 @@ def user_options():
 		print(" < 1 >  -  Verify entire BC4 CG Library")
 		print(" < 2 >  -  Verify select P-set from the Small Library")
 		ninput = input(": ")
-
+		if ninput.strip() == '1':
+			# for now
+			pass
+		elif ninput.strip() == '2':
+			usr_pset = pset_options_std()
+		else:
+			print("How do I go back one?")
 		# bc4_validation_seq('PALL', 'fermi', 'coef')
 	elif uinput.strip() == '3':
 		pass
