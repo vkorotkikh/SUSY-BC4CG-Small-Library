@@ -570,18 +570,19 @@ def pset_options_std():
 	''' Making a func of printing the P-set options. Tired of rewriting it '''
 	userinput = ""
 	print("")
-	print("Pick P-set to calculate")
-	print("P1 or 1 - {P1} ")
-	print("P2 or 1 - {P2} ")
-	print("P3 or 3 - {P3} ")
-	print("P4 or 4 - {P4} ")
-	print("P5 or 5 - {P5} ")
-	print("P6 or 6 - {P6} ")
+	print("Pick P-set to calculate. Use 1-6 or P1 - P6")
+	print(" < 1 >  -  {P1} ")
+	print(" < 2 >  -  {P2} ")
+	print(" < 3 >  -  {P3} ")
+	print(" < 4 >  -  {P4} ")
+	print(" < 5 >  -  {P5} ")
+	print(" < 6 >  -  {P6} ")
+	print(" < exit >  -  Go back")
 	userinput = input(": ")
 
 	return userinput
 
-	
+
 # **************************************************************************
 # Adding calculation options
 def calc_options():
