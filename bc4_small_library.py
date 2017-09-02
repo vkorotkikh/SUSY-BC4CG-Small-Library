@@ -665,6 +665,14 @@ def user_options():
 	print("")
 	uinput = input(": ")
 	if uinput.strip() == '1':
+		print("")
+		print(" < 1 >  -  Display entire BC4 CG Library")
+		print(" < 2 >  -  Display select P-set from the Library")
+		ninput = input(": ")
+			if ninput.strip() == '1':
+				pass
+			elif ninput.strip() == '2':
+				# Lets make the P-Set options a function
 		pass
 	elif uinput.strip() == '2':
 		bc4_validation_seq('PALL', 'fermi', 'coef')
