@@ -668,12 +668,10 @@ def user_options():
 	# print("# Description: Function for verifying the BC4 space coefficient library")
 	# print("#	")
 	print("#***********************************************************************")
-	# print("")
-	# print("#******************************************************************")
 	print("	")
 	print("Choose one of the following calculation options:")
 	print("")
-	print(" < 1 >  -  Display BC4 CG Library P sets")
+	print(" < 1 >  -  Display BC4 CG Small Library P sets")
 	print(" < 2 >  -  Verify BC4 CG Small Library ~V coefficient values")
 	print(" < 3 >  -  Calculate P-set Fermionic Matrices")
 	print(" < 4 >  -  Calculate P-set Bosonic Matrices")
@@ -683,16 +681,22 @@ def user_options():
 	uinput = input(": ")
 	if uinput.strip() == '1':
 		print("")
-		print(" < 1 >  -  Display entire BC4 CG Library")
-		print(" < 2 >  -  Display select P-set from the Library")
+		print(" < 1 >  -  Display entire BC4 CG Small Library")
+		print(" < 2 >  -  Display select P-set from the Small Library")
 		ninput = input(": ")
-			if ninput.strip() == '1':
-				pass
-			elif ninput.strip() == '2':
-				# Lets make the P-Set options a function
+		if ninput.strip() == '1':
+			pass
+		elif ninput.strip() == '2':
+			usr_pset = pset_options_std()
+			# Lets make the P-Set options a function
 		pass
 	elif uinput.strip() == '2':
-		bc4_validation_seq('PALL', 'fermi', 'coef')
+		print("")
+		print(" < 1 >  -  Verify entire BC4 CG Library")
+		print(" < 2 >  -  Verify select P-set from the Small Library")
+		ninput = input(": ")
+
+		# bc4_validation_seq('PALL', 'fermi', 'coef')
 	elif uinput.strip() == '3':
 		pass
 	elif uinput.strip() == '4':
@@ -718,19 +722,20 @@ if __name__ == "__main__":
 		# print("#	")
 		print("# ***********************************************************************")
 		print("")
-		calc_options()
-		print("")
-		print("P1 or 1 - {P1} ")
-		print("P2 or 1 - {P2} ")
-		print("P3 or 3 - {P3} ")
-		print("P4 or 4 - {P4} ")
-		print("P5 or 5 - {P5} ")
-		print("P6 or 6 - {P6} ")
-		print("PALL - All P sets")
-		print("")
-		psetstr = input("Please enter P-set you wish to calculate: ")
+		# calc_options()
+		user_options()
+		# print("")
+		# print("P1 or 1 - {P1} ")
+		# print("P2 or 1 - {P2} ")
+		# print("P3 or 3 - {P3} ")
+		# print("P4 or 4 - {P4} ")
+		# print("P5 or 5 - {P5} ")
+		# print("P6 or 6 - {P6} ")
+		# print("PALL - All P sets")
+		# print("")
+		# psetstr = input("Please enter P-set you wish to calculate: ")
 		# rstr 	= verify_input(psetstr)
-		print(psetstr)
+
 		# main(pset_def)
 
 	print("-- Execution time --")
