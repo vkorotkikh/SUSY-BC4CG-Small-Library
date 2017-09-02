@@ -704,6 +704,12 @@ def user_options():
 		pass
 		''' calc_options is broken. Either update or delete it '''
 		# calc_options()
+	elif uinput.strip() == '5':
+		pass
+	elif uinput.strip() == '6':
+		print("")
+		print("Quiting script. Are you sure (yes/no)?")
+		ninput = input(": ")
 
 # **************************************************************************
 # Execute main()
