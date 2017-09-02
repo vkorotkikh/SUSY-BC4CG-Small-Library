@@ -482,34 +482,7 @@ def vierergruppe_flops():
 	return vgruppe
 
 
-##************************************
-# Function for calling calculate_vij_matrices
-def calculate_vgruppe_sets(gruppe_adinkras, gruppe_binaries):
-	"""
-	Function for printing out the details of each Adinkra - Vij matrix
-	sixset calculation, including the binary representation and the
-	corresponding resulting Vij matrices and their elles/tilde elles
-	Coefficients.
-	"""
-
-	for i in range(0, len(gruppe_adinkras)):
-
-		print("")
-		print("Calculating for binary flip:", gruppe_binaries[i])
-
-		vijset = vij_holoraumy_4x4.calculate_vijmatset(gruppe_adinkras[i])
-		for i in vijset:
-			print(i)
-	# for vgrp, binaries_list in vierergruppe_tilde.items():
-	# 	vbasis	= vgruppe_sets[vgrp]
-	# 	temp 	= lmat_flipping(vbasis, binaries_list)
-	# 	# for i, tet in enumerate(temp):
-	# 	# 	print("Length of tet:", len(tet), "Type", type(tet))
-	# 	# print("Length lmat_flipping", len(temp), vgrp, binaries_list)
-	# 	main_tetrad.extend(temp)
-
-
-##************************************
+# **************************************************************************
 # Use the binary representation info to perform flips on L mats in each tetrad
 def lmat_flipping(vbasis, binaries_list):
 
@@ -658,6 +631,7 @@ def calc_options():
 		uinput = input("")
 
 # **************************************************************************
+# User options
 def user_options():
 
 	print("#***********************************************************************")
