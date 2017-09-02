@@ -710,6 +710,13 @@ def user_options():
 		print("")
 		print("Quiting script. Are you sure (yes/no)?")
 		ninput = input(": ")
+		if ninput.lower() == 'yes':
+			sys.exit("EXITING BC4 CG Utility")
+		elif ninput.lower() == 'no':
+			print("Going back to main menu")
+			pass
+		else:
+			pass
 
 # **************************************************************************
 # Execute main()
