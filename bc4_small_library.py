@@ -704,7 +704,17 @@ def user_options():
 			print("How do I go back one?")
 		# bc4_validation_seq('PALL', 'fermi', 'coef')
 	elif uinput.strip() == '3':
-		pass
+		print("")
+		print(" < 1 >  -  Calculate all P-sets")
+		print(" < 2 >  -  Calculate select P-set from the Small Library")
+		if ninput.strip() == '1':
+			# for now
+			pass
+		elif ninput.strip() == '2':
+			usr_pset = pset_options_std()
+		else:
+			print("How do I go back one?")
+
 	elif uinput.strip() == '4':
 		calc_options()
 
