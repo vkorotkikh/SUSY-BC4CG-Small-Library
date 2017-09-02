@@ -52,7 +52,7 @@ def main(pset_str):
 
 	# pset_str = "PALL"
 	# pset_str = "P1"
-	bc4_validation_seq(pset_str)
+	bc4cg_holoraumy_calc(pset_str)
 
 # ******************************************************************************
 # BC4 Calculation options organizer -  director
@@ -62,25 +62,33 @@ def bc4_validation_organizer(pset_arg, *args):
 		PALL, ALL, P1 - P6,  'coef' ->  only fermi
 		PALL, P1 - P6, 'mats' - fermi / boson
 	'''
-	psets_list	= ["P1", "P2", "P3", "P4", "P5", "P6"]
+
 	args_tuple	= args
 	if all(isinstance(argx, str) for argx in args_tuple):
 		print("All *args are strings")
 		if len(args_tuple) == 2 and args_tuple[0] == 'coef':
 			''' redirect to calculating the coefficients '''
+			pass
+		elif len(args_tuple) == 2 and 'coef' in args_tuple:
+			if 'boson' in args_tuple:
+				print("ERROR")
+				# sys.exit()5
+			elif 'fermi' in args_tuple and not 'boson' in args_tuple:
+				# pass args to whatever function will do this
+				pass
 
 		elif len(args_tuple) == 2 and args_tuple[0] == 'mats':
 			if args_tuple[1] == 'fermi' or args_tuple[1] == 'boson':
-				bc4_validation_seq(pset_arg, args_tuple[1])
+				bc4cg_holoraumy_calc(pset_arg, args_tuple[1])
 			elif 'fermi' in args_tuple or 'boson' in args_tuple:
-				bc4_validation_seq(pset_arg, args_tuple[1])
+				bc4cg_holoraumy_calc(pset_arg, args_tuple[1])
 	# bc4_validation_organizer('PALL', 'boson', 'mats')
 	# bc4_validation_organizer('PALL', 'fermi', 'coef')
 
 
 # ******************************************************************************
 # BC4 Validation function process organizer
-def bc4_validation_seq(pset_arg, *args):
+def bc4cg_holoraumy_calc(pset_arg, *args):
 
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
@@ -96,9 +104,6 @@ def bc4_validation_seq(pset_arg, *args):
 				holotype = 'fermionic'
 			elif xarg == 'boson':
 				holotype = 'bosonic'
-			elif xarg == 'coef':
-				print("calculate elle coefficients")
-				calctype = 'coef'
 			elif xarg == 'matrices':
 				calctype = 'mats'
 			else:
@@ -202,7 +207,7 @@ def tetrad_setgen_detailed(pset):
 
 	pset_boold 	= []
 	""" Transform P# slices into list index by getting the #
-		subtract 1 for indexing
+		subtract 1 for `index`ing
 	"""
 	pint 	= 0
 	pint 	= int(pset.lstrip("P")) - 1
