@@ -55,6 +55,19 @@ def main(pset_str):
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
+# BC4 Calculation options organizer -  director
+def bc4_validation_organizer(pset_arg, *args):
+	''' Based on pset_arg and *args figures out which function to pass
+		arguments too.
+		PALL, ALL, P1 - P6,  'coef' ->  only fermi
+		PALL, P1 - P6, 'mats' - fermi / boson
+	'''
+
+	# bc4_validation_organizer('PALL', 'boson', 'mats')
+	# bc4_validation_organizer('PALL', 'fermi', 'coef')
+
+
+# ******************************************************************************
 # BC4 Validation function process organizer
 def bc4_validation_seq(pset_arg, *args):
 
@@ -678,6 +691,7 @@ def user_options():
 		print("")
 		print(" < 1 >  -  Verify entire BC4 CG Library")
 		print(" < 2 >  -  Verify select P-set from the Small Library")
+		print(" < 3 >  -  Back to main menu")
 		ninput = input(": ")
 		if ninput.strip() == '1':
 			# for now
@@ -686,14 +700,16 @@ def user_options():
 			usr_pset = pset_options_std()
 		else:
 			print("How do I go back one?")
-		# bc4_validation_seq('PALL', 'fermi', 'coef')
+		# bc4_validation_organizer('PALL', 'coef', 'fermi')
 	elif uinput.strip() == '3':
 		print("")
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
+		print(" < 3 >  -  Back to main menu")
 		ninput = input(": ")
 		if ninput.strip() == '1':
 			# for now
+			bc4_validation_organizer('PALL', 'Vmats', 'fermi')
 			pass
 		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
@@ -701,9 +717,21 @@ def user_options():
 			print("How do I go back one?")
 
 	elif uinput.strip() == '4':
-		pass
+		print("")
+		print(" < 1 >  -  Calculate all P-sets")
+		print(" < 2 >  -  Calculate select P-set from the Small Library")
+		print(" < 3 >  -  Back to main menu")
+		ninput = input(": ")
 		''' calc_options is broken. Either update or delete it '''
-		# calc_options()
+		if ninput.strip() == '1':
+			# for now
+			bc4_validation_organizer('PALL', 'Vmats', 'boson')
+			pass
+		elif ninput.strip() == '2':
+			usr_pset = pset_options_std()
+		else:
+			print("How do I go back one?")
+
 	elif uinput.strip() == '5':
 		pass
 	elif uinput.strip() == '6':
