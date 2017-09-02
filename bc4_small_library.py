@@ -669,26 +669,36 @@ def user_options():
 	# print("#	")
 	print("#***********************************************************************")
 	print("	")
-	print("Choose one of the following calculation options:")
-	print("")
-	print(" < 1 >  -  Display BC4 CG Small Library P sets")
-	print(" < 2 >  -  Verify BC4 CG Small Library ~V coefficient values")
-	print(" < 3 >  -  Calculate P-set Fermionic Matrices")
-	print(" < 4 >  -  Calculate P-set Bosonic Matrices")
-	print(" < 5 >  -  Set output file string")
-	print(" < 6 >  =  Nevermind. Get me outa here! Exit")
-	print("")
-	uinput = input(": ")
+
+	# **************************************************************************
+	def core_options():
+		print("Choose one of the following calculation options:")
+		print("")
+		print(" < 1 >  -  Display BC4 CG Small Library P sets")
+		print(" < 2 >  -  Verify BC4 CG Small Library ~V coefficient values")
+		print(" < 3 >  -  Calculate P-set Fermionic Matrices")
+		print(" < 4 >  -  Calculate P-set Bosonic Matrices")
+		print(" < 5 >  -  Set output file string")
+		print(" < 6 >  =  Nevermind. Get me outa here! Exit")
+		print("")
+		# userinput = input(": ")
+		return input(": ")
+
+
+	uinput = core_options()
 	if uinput.strip() == '1':
 		print("")
 		print(" < 1 >  -  Display entire BC4 CG Small Library")
 		print(" < 2 >  -  Display select P-set from the Small Library")
+		print(" < 3 >  -  Back to main menu")
 		ninput = input(": ")
 		if ninput.strip() == '1':
 			pass
 		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
 			# Lets make the P-Set options a function
+		elif ninput.strip() == '3':
+			pass
 		pass
 	elif uinput.strip() == '2':
 		print("")
@@ -707,6 +717,7 @@ def user_options():
 		print("")
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
+		ninput = input(": ")
 		if ninput.strip() == '1':
 			# for now
 			pass
@@ -716,7 +727,9 @@ def user_options():
 			print("How do I go back one?")
 
 	elif uinput.strip() == '4':
-		calc_options()
+		pass
+		''' calc_options is broken. Either update or delete it '''
+		# calc_options()
 
 # **************************************************************************
 # Execute main()
