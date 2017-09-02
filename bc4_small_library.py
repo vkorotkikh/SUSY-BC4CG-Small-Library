@@ -62,7 +62,18 @@ def bc4_validation_organizer(pset_arg, *args):
 		PALL, ALL, P1 - P6,  'coef' ->  only fermi
 		PALL, P1 - P6, 'mats' - fermi / boson
 	'''
+	psets_list	= ["P1", "P2", "P3", "P4", "P5", "P6"]
+	args_tuple	= args
+	if all(isinstance(argx, str) for argx in args_tuple):
+		print("All *args are strings")
+		if len(args_tuple) == 2 and args_tuple[0] == 'coef':
+			''' redirect to calculating the coefficients '''
 
+		elif len(args_tuple) == 2 and args_tuple[0] == 'mats':
+			if args_tuple[1] == 'fermi' or args_tuple[1] == 'boson':
+				bc4_validation_seq(pset_arg, args_tuple[1])
+			elif 'fermi' in args_tuple or 'boson' in args_tuple:
+				bc4_validation_seq(pset_arg, args_tuple[1])
 	# bc4_validation_organizer('PALL', 'boson', 'mats')
 	# bc4_validation_organizer('PALL', 'fermi', 'coef')
 
