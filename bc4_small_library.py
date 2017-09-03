@@ -700,7 +700,7 @@ def user_options():
 			usr_pset = pset_options_std()
 			# Lets make the P-Set options a function
 		elif ninput.strip() == '3':
-			pass
+			option_activator('core')
 		pass
 
 	def option_two():
@@ -764,24 +764,29 @@ def user_options():
 		else:
 			pass
 
+	# **************************************************************************
+	# It runs all the options
+	def option_activator(input_str):
+		counter = 0
+		if input_str.strip() == '1':
+			option_one()
+		elif input_str.strip() == '2':
+			option_two()
+		elif input_str.strip() == '3':
+			option_three()
+		elif input_str.strip() == '4':
+			optioh_four()
+		elif input_str.strip() == '5':
+			option_five()
+		elif input_str.strip() == '6':
+			option_six()
+		elif input_str.strip() == 'core':
+			option_activator(core_options())
+		else:
+			print("UNRECOGNIZED OPTION")
+
 	uinput = core_options()
-
-	if uinput.strip() == '1':
-		option_one()
-	elif uinput.strip() == '2':
-		option_two()
-	elif uinput.strip() == '3':
-		option_three()
-	elif uinput.strip() == '4':
-		optioh_four()
-	elif uinput.strip() == '5':
-		option_five()
-	elif uinput.strip() == '6':
-		option_six()
-	else:
-		print("UNRECOGNIZED OPTION")
-		pass
-
+	option_activator(uinput)
 
 
 # **************************************************************************
