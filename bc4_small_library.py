@@ -567,24 +567,6 @@ def verify_input(userstr):
 			else:
 				print("NONE ISSUE")
 
-# **************************************************************************
-# Default standard P set options
-def pset_options_std():
-	''' Making a func of printing the P-set options. Tired of rewriting it '''
-	userinput = ""
-	print("")
-	print("Pick P-set to calculate. Use 1-6 or P1 - P6")
-	print(" < 1 >  -  {P1} ")
-	print(" < 2 >  -  {P2} ")
-	print(" < 3 >  -  {P3} ")
-	print(" < 4 >  -  {P4} ")
-	print(" < 5 >  -  {P5} ")
-	print(" < 6 >  -  {P6} ")
-	print(" < exit >  -  Go back")
-	userinput = input(": ")
-
-	return userinput
-
 
 # **************************************************************************
 # Adding calculation options
@@ -658,6 +640,25 @@ def calc_options():
 	else:
 		print("Please re-enter selection or type 'exit'")
 		uinput = input("")
+
+# **************************************************************************
+# Default standard P set options
+def pset_options_std():
+	''' Making a func of printing the P-set options. Tired of rewriting it '''
+	userinput = ""
+	print("")
+	print("Pick P-set to calculate. Use 1-6 or P1 - P6")
+	print(" < 1 >  -  {P1} ")
+	print(" < 2 >  -  {P2} ")
+	print(" < 3 >  -  {P3} ")
+	print(" < 4 >  -  {P4} ")
+	print(" < 5 >  -  {P5} ")
+	print(" < 6 >  -  {P6} ")
+	print(" < exit >  -  Go back")
+	userinput = input(": ")
+
+	return userinput
+	
 
 # **************************************************************************
 # User options
