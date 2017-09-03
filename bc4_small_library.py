@@ -701,7 +701,9 @@ def user_options():
 			# Lets make the P-Set options a function
 		elif ninput.strip() == '3':
 			option_activator('core')
-		pass
+		else:
+			print("UNRECOGNIZED. Come again?")
+
 
 	def option_two():
 		print("")
@@ -714,9 +716,11 @@ def user_options():
 			pass
 		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
+		elif ninput.strip() == '3':
+			option_activator('core')
 		else:
-			print("How do I go back one?")
-		# bc4_validation_organizer('PALL', 'coef', 'fermi')
+			print("UNRECOGNIZED. Come again?")
+			pass
 
 	def option_three():
 		print("")
@@ -730,7 +734,10 @@ def user_options():
 			pass
 		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
+		elif ninput.strip() == '3':
+			option_activator('core')
 		else:
+			print("UNRECOGNIZED. Come again?")
 			print("How do I go back one?")
 
 	def option_four():
@@ -738,18 +745,21 @@ def user_options():
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
 		print(" < 3 >  -  Back to main menu")
-		ninput = input(": ")
+		opt_str = input(": ")
 		''' calc_options is broken. Either update or delete it '''
-		if ninput.strip() == '1':
+		if opt_str.strip() == '1':
 			# for now
 			bc4_validation_organizer('PALL', 'Vmats', 'boson')
 			pass
-		elif ninput.strip() == '2':
+		elif opt_str.strip() == '2':
 			usr_pset = pset_options_std()
+		elif opt_str.strip() == '3':
+			option_activator('core')
 		else:
 			print("How do I go back one?")
 
 	def option_five():
+		print("Is this even necessary?")
 		pass
 
 	def option_six():
@@ -760,7 +770,7 @@ def user_options():
 			sys.exit("EXITING BC4 CG Utility")
 		elif ninput.lower() == 'no':
 			print("Going back to main menu")
-			pass
+			option_activator('core')
 		else:
 			pass
 
