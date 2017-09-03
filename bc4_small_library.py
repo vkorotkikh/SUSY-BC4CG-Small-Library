@@ -536,11 +536,16 @@ def verify_input(userstr):
 	# restr = re.compile('[pP1-6]', re.IGNORECASE)
 	# str2 = restr.findall(userstr)
 	loc_userstr	= userstr.lower()
-	if 'pall' in loc_userstr:
-		return userstr
-	elif 'all' in loc_userstr:
-		return userstr
-
+	if userstr.isdigit():
+		if int(userstr) in list(range(1,7)):
+			return userstr
+		else:
+			return 0
+	elif userstr[0].isdigit():
+		if int(userstr[0]) in list(range(1,7)):
+			return userstr
+		else:
+			return 0
 
 	if (userstr.lower()).startswith('p'):
 		recomp = re.compile('[pP1-6]', re.IGNORECASE)
@@ -656,9 +661,17 @@ def pset_options_std():
 	print(" < 6 >  -  {P6} ")
 	print(" < exit >  -  Go back")
 	userinput = input(": ")
+	checkstr  = verify_input(userinput)
+	if checkstr == 'exit':
+		user_options()
+	if checkstr:
+		return userinput
+	elif not checkstr:
+		pass
+	else:
+		pass
+	# return userinput
 
-	return userinput
-	
 
 # **************************************************************************
 # User options
