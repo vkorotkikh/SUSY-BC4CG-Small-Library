@@ -687,9 +687,8 @@ def user_options():
 		# userinput = input(": ")
 		return input(": ")
 
-
-	uinput = core_options()
-	if uinput.strip() == '1':
+	def option_one():
+		counter	= 0
 		print("")
 		print(" < 1 >  -  Display entire BC4 CG Small Library")
 		print(" < 2 >  -  Display select P-set from the Small Library")
@@ -703,7 +702,8 @@ def user_options():
 		elif ninput.strip() == '3':
 			pass
 		pass
-	elif uinput.strip() == '2':
+
+	def option_two():
 		print("")
 		print(" < 1 >  -  Verify entire BC4 CG Library")
 		print(" < 2 >  -  Verify select P-set from the Small Library")
@@ -717,7 +717,8 @@ def user_options():
 		else:
 			print("How do I go back one?")
 		# bc4_validation_organizer('PALL', 'coef', 'fermi')
-	elif uinput.strip() == '3':
+
+	def option_three():
 		print("")
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
@@ -732,7 +733,7 @@ def user_options():
 		else:
 			print("How do I go back one?")
 
-	elif uinput.strip() == '4':
+	def option_four():
 		print("")
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
@@ -748,9 +749,10 @@ def user_options():
 		else:
 			print("How do I go back one?")
 
-	elif uinput.strip() == '5':
+	def option_five():
 		pass
-	elif uinput.strip() == '6':
+
+	def option_six():
 		print("")
 		print("Quiting script. Are you sure (yes/no)?")
 		ninput = input(": ")
@@ -761,6 +763,26 @@ def user_options():
 			pass
 		else:
 			pass
+
+	uinput = core_options()
+
+	if uinput.strip() == '1':
+		option_one()
+	elif uinput.strip() == '2':
+		option_two()
+	elif uinput.strip() == '3':
+		option_three()
+	elif uinput.strip() == '4':
+		optioh_four()
+	elif uinput.strip() == '5':
+		option_five()
+	elif uinput.strip() == '6':
+		option_six()
+	else:
+		print("UNRECOGNIZED OPTION")
+		pass
+
+
 
 # **************************************************************************
 # Execute main()
