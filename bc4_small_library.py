@@ -639,6 +639,7 @@ def calc_options():
 		print("Please re-enter selection or type 'exit'")
 		uinput = input("")
 
+
 # **************************************************************************
 # Default standard P set options
 def pset_options_std():
@@ -652,18 +653,20 @@ def pset_options_std():
 	print(" < 4 >  -  {P4} ")
 	print(" < 5 >  -  {P5} ")
 	print(" < 6 >  -  {P6} ")
-	print(" < exit >  -  Go back")
+	print(" < 7 / exit >  -  Go back")
 	userinput = input(": ")
 	checkstr  = verify_input(userinput)
-	if checkstr == 'exit':
-		user_options()
-	if checkstr:
-		return userinput
-	elif not checkstr:
+	if not checkstr:
+		print("INVALID INPUT")
+		print("TRY AGAIN")
+		pset_options_std()
 		pass
+	elif checkstr.strip() == '7' or checkstr.lower() == 'exit':
+		user_options()
+	elif checkstr:
+		return userinput
 	else:
 		pass
-	# return userinput
 
 
 # **************************************************************************
