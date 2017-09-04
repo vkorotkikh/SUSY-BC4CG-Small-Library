@@ -79,16 +79,19 @@ def bc4_validation_organizer(pset_arg, *args):
 
 		elif len(args_tuple) == 2 and args_tuple[0] == 'mats':
 			if args_tuple[1] == 'fermi' or args_tuple[1] == 'boson':
-				bc4cg_holoraumy_calc(pset_arg, args_tuple[1])
+				bc4cg_holoraumy_mats(pset_arg, args_tuple[1])
 			elif 'fermi' in args_tuple or 'boson' in args_tuple:
-				bc4cg_holoraumy_calc(pset_arg, args_tuple[1])
+				bc4cg_holoraumy_mats(pset_arg, args_tuple[1])
+		elif len(args_tuple) == 2 and 'mats' in args_tuple:
+			if 'fermi' in args_tuple or 'boson' in args_tuple:
+				bc4cg_holoraumy_mats(pset_arg, args_tuple)
 	# bc4_validation_organizer('PALL', 'boson', 'mats')
 	# bc4_validation_organizer('PALL', 'fermi', 'coef')
 
 
 # ******************************************************************************
 # BC4 Validation function process organizer
-def bc4cg_holoraumy_calc(pset_arg, *args):
+def bc4cg_holoraumy_mats(pset_arg, *args):
 
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
@@ -109,10 +112,8 @@ def bc4cg_holoraumy_calc(pset_arg, *args):
 			else:
 				print("WHAT? ERROR")  # configure this better later
 
-	'''
-		Define Holoraumy matrix type
-	'''
-	# holotype	= "bosonic"
+	if 'fermi' in args_tuple:
+		sys.exit("Fermi borked for now")
 
 	""" Generate individual Library slices	"""
 	for ps in psets_list:
@@ -538,16 +539,16 @@ def verify_input(userstr):
 	loc_userstr	= userstr.lower()
 	if userstr.isdigit():
 		if int(userstr) in list(range(1,7)):
-			return userstr
+			return "P" + userstr
 		else:
 			return 0
 	elif userstr[0].isdigit():
 		if int(userstr[0]) in list(range(1,7)):
-			return userstr
+			return "P" + userstr
 		else:
 			return 0
 
-	if (userstr.lower()).startswith('p'):
+	if (loc_userstr).startswith('p'):
 		recomp = re.compile('[pP1-6]', re.IGNORECASE)
 		relist = recomp.findall(userstr)
 		if recomp.match(relist[0]) is not None:
@@ -557,7 +558,7 @@ def verify_input(userstr):
 					return 'P' + relist[1]
 		else:
 			sys.exit('STRING ISSUE')
-	elif not (userstr.lower()).startswith('p'):
+	elif not (loc_userstr).startswith('p'):
 		ustr_len = len(userstr)
 		recomp = re.compile('[1-6]')
 		if userstr.isdigit():
@@ -577,14 +578,6 @@ def verify_input(userstr):
 # Adding calculation options
 def calc_options():
 
-	# print("Choose one of the following calculation options:")
-	# print("")
-	# print("1. Verify Small Library. Calculate P set elle coefficients")
-	# print("2. Calculate P-set Fermionic Matrices")
-	# print("3. Calculate P-set Bosonic Matrices")
-	# print("4. Set output file string")
-	# print("5. Exit")
-	# print("")
 	base_options_print()
 	uinput	= input("Choose wisely: ")
 
@@ -730,6 +723,7 @@ def user_options():
 			pass
 		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
+			print(usr_pset)
 		elif ninput.strip() == '3':
 			option_activator('core')
 		else:
@@ -743,11 +737,13 @@ def user_options():
 		print(" < 3 >  -  Back to main menu")
 		ninput = input(": ")
 		if ninput.strip() == '1':
-			# for now
-			bc4_validation_organizer('PALL', 'Vmats', 'fermi')
+			# bc4_validation_organizer('PALL', 'Vmats', 'fermi')
+			bc4_validation_organizer('PALL', 'mats', 'fermi')
 			pass
 		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
+			print(usr_pset)
+			bc4_validation_organizer(usr_pset, 'mats', 'fermi')
 		elif ninput.strip() == '3':
 			option_activator('core')
 		else:
@@ -760,17 +756,19 @@ def user_options():
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
 		print(" < 3 >  -  Back to main menu")
 		opt_str = input(": ")
-		''' calc_options is broken. Either update or delete it '''
+
 		if opt_str.strip() == '1':
 			# for now
-			bc4_validation_organizer('PALL', 'Vmats', 'boson')
+			bc4_validation_organizer('PALL', 'mats', 'boson')
 			pass
 		elif opt_str.strip() == '2':
 			usr_pset = pset_options_std()
+			bc4_validation_organizer(usr_pset, 'mats', 'boson')
 		elif opt_str.strip() == '3':
 			option_activator('core')
 		else:
-			print("How do I go back one?")
+			option_four()
+			# print("How do I go back one?")
 
 	def option_five():
 		print("Is this even necessary?")
@@ -799,7 +797,7 @@ def user_options():
 		elif input_str.strip() == '3':
 			option_three()
 		elif input_str.strip() == '4':
-			optioh_four()
+			option_four()
 		elif input_str.strip() == '5':
 			option_five()
 		elif input_str.strip() == '6':
