@@ -747,10 +747,9 @@ def user_options():
 		elif ninput.strip() == '3':
 			option_activator('core')
 		else:
-			print("UNRECOGNIZED. Come again?")
-			print("How do I go back one?")
+			option_three()
 
-	def option_four():
+	def option_four(loopcount = 0):
 		print("")
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
@@ -767,7 +766,12 @@ def user_options():
 		elif opt_str.strip() == '3':
 			option_activator('core')
 		else:
-			option_four()
+			loopcount += 1
+			if loopcount <= 5:
+				option_four(loopcount)
+			else:
+				print("Returning to core options...")
+				option_activator('core')
 			# print("How do I go back one?")
 
 	def option_five():
@@ -833,17 +837,6 @@ if __name__ == "__main__":
 		print("")
 		# calc_options()
 		user_options()
-		# print("")
-		# print("P1 or 1 - {P1} ")
-		# print("P2 or 1 - {P2} ")
-		# print("P3 or 3 - {P3} ")
-		# print("P4 or 4 - {P4} ")
-		# print("P5 or 5 - {P5} ")
-		# print("P6 or 6 - {P6} ")
-		# print("PALL - All P sets")
-		# print("")
-		# psetstr = input("Please enter P-set you wish to calculate: ")
-		# rstr 	= verify_input(psetstr)
 
 		# main(pset_def)
 
