@@ -27,7 +27,7 @@ import matrix_calc_vijmat2
 
 # ******************************************************************************
 # Main() function.
-def main():
+def main(pset_str):
 
 	print("# ***********************************************************************")
 	print("# Name:    Verifying BC4 Space Vij coefficient")
@@ -44,8 +44,9 @@ def main():
 	""" Options for BC4 Library:
 		ALL - Entire small library, one big chunk.
 		PALL - Entire small library, one at a time.
-		P1, P2, P3, P4, P5, P6 - Only one section. 	"""
-	pset_str = "PALL"
+		P1, P2, P3, P4, P5, P6 - Only one section.
+	"""
+	# pset_str = "PALL"
 	bc4_validation_seq(pset_str)
 
 # ******************************************************************************
@@ -623,22 +624,7 @@ def pset_string_format(req_pgroup):
 
 	if req_pgroup in pq_set:
 		return pq_set[req_pgroup]
-	# if req_pgroup == 'pl1':
-	# 	return pl1
-	# elif req_pgroup == 'pl2':
-	# 	return pl2
-	# elif req_pgroup == 'pl3':
-	# 	return pl3
-	# elif req_pgroup == 'pl4':
-	# 	return pl4
-	# elif req_pgroup == "pl5":
-	# 	return pl5
-	# elif req_pgroup == "pl6":
-	# 	return pl6
-	# elif req_pgroup == "plall":
-	# 	return plall
-	# elif req_pgroup == "pl13":
-	# 	return pl13
+
 
 # **************************************************************************
 # Execute main()

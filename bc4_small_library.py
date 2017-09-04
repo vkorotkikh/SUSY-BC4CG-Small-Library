@@ -794,8 +794,9 @@ def user_options():
 			# print("How do I go back one?")
 
 	def option_five():
-		print("Is this even necessary?")
-		pass
+		print("NOT ACTIVATED (code not finished)")
+		print("Going back to main menu")
+		option_activator('core')
 
 	def option_six():
 		print("")
@@ -823,7 +824,7 @@ def user_options():
 			option_four()
 		elif input_str.strip() == '5':
 			option_five()
-		elif input_str.strip() == '6':
+		elif input_str.strip() == '6' or input_str.lower() == 'exit':
 			option_six()
 		elif input_str.strip() == 'core':
 			option_activator(core_options())
