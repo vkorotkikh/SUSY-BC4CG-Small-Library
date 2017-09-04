@@ -709,10 +709,15 @@ def user_options():
 		elif ninput.strip() == '3':
 			option_activator('core')
 		else:
-			print("UNRECOGNIZED. Come again?")
+			loopcount += 1
+			print("Unrecognized option")
+			if loopcount <= 5:
+				option_one(loopcount)
+			else:
+				print("Returning to core options...")
+				option_activator('core')
 
-
-	def option_two():
+	def option_two(loopcount=0):
 		print("")
 		print(" < 1 >  -  Verify entire BC4 CG Library")
 		print(" < 2 >  -  Verify select P-set from the Small Library")
@@ -727,10 +732,16 @@ def user_options():
 		elif ninput.strip() == '3':
 			option_activator('core')
 		else:
-			print("UNRECOGNIZED. Come again?")
-			pass
+			loopcount += 1
+			print("Unrecognized option")
+			if loopcount <= 5:
+				option_two(loopcount)
+			else:
+				print("Returning to core options...")
+				option_activator('core')
 
-	def option_three():
+	# Set loopcount = 0 of no arg is supplied for first time
+	def option_three(loopcount=0):
 		print("")
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
@@ -747,9 +758,16 @@ def user_options():
 		elif ninput.strip() == '3':
 			option_activator('core')
 		else:
-			option_three()
+			loopcount += 1
+			print("Unrecognized option")
+			if loopcount <= 5:
+				option_three(loopcount)
+			else:
+				print("Returning to core options...")
+				option_activator('core')
 
-	def option_four(loopcount = 0):
+	# Preset loopcount = 0 if no arg supplied for first time.
+	def option_four(loopcount=0):
 		print("")
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
@@ -767,6 +785,7 @@ def user_options():
 			option_activator('core')
 		else:
 			loopcount += 1
+			print("Unrecognized option")
 			if loopcount <= 5:
 				option_four(loopcount)
 			else:

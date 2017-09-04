@@ -92,7 +92,7 @@ def string_to_tetrad(indx_num,tet_strrep):
 		tempm = numpy.vstack((vtl[mi[0]]*sgi[0],vtl[mi[1]]*sgi[1],vtl[mi[2]]*sgi[2],vtl[mi[3]]*sgi[3]))
 		matint = tempm.astype(int)
 		matint1 = np.asmatrix(matint)
-		
+
 		if debug_pr:
 			print(matint1)
 		else:
@@ -140,8 +140,7 @@ def gen_sign_perm(n):
 
 # ******************************************************************************
 def matrix_strings():
-
-	# tetrad_bc4chk 	= []
+	# These are not the Small Library definitions
 
 	""" {CM} L-matrix tetrad set - P2 Gadget values """
 	pg1 = [
@@ -464,13 +463,3 @@ def matrix_strings():
 	# 	matrix_calc_vijmat2.calculate_vij_matrices(tetrad_bc4chk)
 
 main()
-
-
-#	Saving for later
-	# for ind, itet in enumerate(run_group):
-	# 	# print("IND DEBUG:", ind)
-	# 	decdig = ind * 4
-	# 	tempt = string_to_tetrad(decdig, itet)
-	# 	# tuple_hole = (ind, tempt)
-	# 	tuple_hole = tempt
-	# 	tetrad_bc4chk.append(tuple_hole)
