@@ -691,10 +691,10 @@ def user_options():
 		print(" < 5 >  -  Set output file string")
 		print(" < 6 >  =  Nevermind. Get me outa here! Exit")
 		print("")
-		# userinput = input(": ")
 		return input(": ")
 
-	def option_one():
+	# Set loopcount = 0 of no arg is supplied for first time
+	def option_one(loopcount=0):
 		counter	= 0
 		print("")
 		print(" < 1 >  -  Display entire BC4 CG Small Library")
