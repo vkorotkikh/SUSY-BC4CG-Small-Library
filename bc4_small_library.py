@@ -114,6 +114,10 @@ def bc4_validation_organizer(pset_arg, *args):
 # ******************************************************************************
 # BC4 Validation function process organizer
 def bc4cg_holoraumy_mats(pset_arg, *args):
+	"""
+	ITT, pset is tracked via P1, P2, P3....so pset_arg must be a Pn or
+	it must be made one. Otherwise function will not execute
+	"""
 
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
@@ -149,15 +153,6 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 		looplist = tetrad_setgen_detailed(ps)
 		print(len(looplist), len(looplist[0]), "", type(looplist[0]))
 
-	# """ Changing PALL to ALL to calculate for one big chunk	"""
-	if pset_arg == "ALL":
-		temp_plist	= []
-		psl 		= psets_list
-		temp_plist	= tetrad_setgen(pset_arg)
-	# 	print("# ********************************")
-	# 	print("Execute Holoraumy calc for P sets:", psl[0], psl[1], psl[2], psl[3], psl[4], psl[5])
-	# 	print("		")
-	# 	vij_holoraumy_calc.calc_holoraumy_mats(temp_plist, pset_arg, holotype)
 
 	elif pset_arg in psets_list:
 	# elif pset_arg != "PALL":
@@ -188,7 +183,11 @@ def tetrad_setgen(pset):
 	pset_boold 	= []
 	""" Transform P# slices into list index by getting the # """
 	pint 	= 0
-	pint 	= int(pset.lstrip("P")) - 1
+	if pset[0].lower() == 'p':
+		pint = int(pset.lstrip("P")) - 1
+	else:
+		pint = int(pset) - 1
+	# pint 	= int(pset.lstrip("P")) - 1
 	pslice, pdef 	= bc4cg_libsets(pint)
 	if p_switch:
 		print("# ********************************")
