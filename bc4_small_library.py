@@ -817,8 +817,12 @@ def user_options():
 			pass
 
 	# **************************************************************************
-	# It runs all the options
+	# Executes options inner functions based on input_str
 	def option_activator(input_str, mcounter=0):
+		''' option_activator - Inner function of user_options that depending on
+			input_str either executes other inner functions or rexecutes itself
+			with core_options() func. providing input string.
+		'''
 		if input_str.strip() == '1':
 			option_one()
 		elif input_str.strip() == '2':
