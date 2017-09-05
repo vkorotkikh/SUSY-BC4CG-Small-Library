@@ -118,24 +118,20 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
 	holotype		= ""
-	calctype		= ""
+
 	''' Figure out *args and implement calc accordingly '''
 	args_tuple	= args
 	arsglen		= len(args)
 	if all(isinstance(xarg, str) for xarg in args_tuple):
 		print("all strings")
-		if 'mats' in args_tuple or 'Vmats' in args_tuple:
-			for xarg in args_tuple:
-				if xarg == 'fermi':
-					holotype = 'fermionic'
-				elif xarg == 'boson':
-					holotype = 'bosonic'
-				elif xarg == 'matrices':
-					calctype = 'mats'
-				else:
-					print("WHAT? ERROR")  # configure this better later
-		else:
-			print("bc4cg_holoraumy_mats-ERROR MATS")
+		# if 'mats' in args_tuple or 'Vmats' in args_tuple:
+		for xarg in args_tuple:
+			if xarg == 'fermi':
+				holotype = 'fermionic'
+			elif xarg == 'boson':
+				holotype = 'bosonic'
+			else:
+				print("bc4cg_holoraumy_mats-ERROR")  # configure this better later
 
 	if 'fermi' in args_tuple:
 		sys.exit("Fermi borked for now")
