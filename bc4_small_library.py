@@ -77,11 +77,14 @@ def bc4_validation_organizer(pset_arg, *args):
 				# pass args to whatever function will do this
 				pass
 
-		elif len(args_tuple) == 2 and args_tuple[0] == 'mats':
-			if args_tuple[1] == 'fermi' or args_tuple[1] == 'boson':
-				bc4cg_holoraumy_mats(pset_arg, args_tuple[1])
-			elif 'fermi' in args_tuple or 'boson' in args_tuple:
-				bc4cg_holoraumy_mats(pset_arg, args_tuple[1])
+		elif len(args_tuple) == 2 and 'mats' in args_tuple:
+			if 'boson' in args_tuple or args_tuple[1] == 'boson':
+				bc4cg_holoraumy_mats(pset_arg, args_tuple[0], args_tuple[1])
+
+			# if args_tuple[1] == 'fermi' or args_tuple[1] == 'boson':
+			# 	bc4cg_holoraumy_mats(pset_arg, args_tuple[1])
+			# elif 'fermi' in args_tuple or 'boson' in args_tuple:
+			# 	bc4cg_holoraumy_mats(pset_arg, args_tuple[1])
 		elif len(args_tuple) == 2 and 'mats' in args_tuple:
 			if 'fermi' in args_tuple or 'boson' in args_tuple:
 				bc4cg_holoraumy_mats(pset_arg, args_tuple)
