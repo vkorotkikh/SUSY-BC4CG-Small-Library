@@ -818,8 +818,7 @@ def user_options():
 
 	# **************************************************************************
 	# It runs all the options
-	def option_activator(input_str):
-		counter = 0
+	def option_activator(input_str, mcounter=0):
 		if input_str.strip() == '1':
 			option_one()
 		elif input_str.strip() == '2':
@@ -832,10 +831,13 @@ def user_options():
 			option_five()
 		elif input_str.strip() == '6' or input_str.lower() == 'exit':
 			option_six()
-		elif input_str.strip() == 'core':
+		elif input_str.strip() == 'core' or input_str.lower() == 'core':
 			option_activator(core_options())
 		else:
-			print("UNRECOGNIZED OPTION")
+			print("UNRECOGNIZED SELECTION: ", input_str)
+			print("Try again...")
+			mcounter+=1
+			option_activator(core_options(), mcounter)
 
 	uinput = core_options()
 	option_activator(uinput)
