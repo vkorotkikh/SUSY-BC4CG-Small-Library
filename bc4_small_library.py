@@ -116,7 +116,7 @@ def bc4_validation_organizer(pset_arg, *args):
 def bc4cg_holoraumy_mats(pset_arg, *args):
 	"""
 	ITT, pset is tracked via P1, P2, P3....so pset_arg must be a Pn or
-	it must be made one. Otherwise function will not execute
+	it must be made one. Otherwise function will not executed
 	"""
 
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
@@ -154,7 +154,7 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 		print(len(looplist), len(looplist[0]), "", type(looplist[0]))
 
 
-	elif pset_arg in psets_list:
+	if pset_arg in psets_list:
 	# elif pset_arg != "PALL":
 		temp_plist = psets_dict[pset_arg]
 		print("		")
@@ -694,9 +694,10 @@ def pset_options_std():
 def user_options():
 
 	print("#***********************************************************************")
-	print("# Name: BC4 Coxeter Group Small Library Calculation Toolset ")
+	print("# Name: BC4 Coxeter Group Small Library Toolset ")
 	print("# Author:  Vadim Korotkikh	")
 	print("# Date:    June 2017	")
+	print("# Description: Function for verifying the BC4 space coefficient library")
 	print("#	")
 	# print("# Description: Function for verifying the BC4 space coefficient library")
 	# print("#	")
@@ -876,20 +877,18 @@ if __name__ == "__main__":
 	start_time = time.time()
 
 	pset_def = "P1"
-
 	try:
 		main(sys.argv[1])
 	except IndexError:
 		# print("Using hardcoded default P-set", pset_def)
-		print("# ***********************************************************************")
-		print("# Name:    BC4 CG Small Library ")
-		print("# Author:  Vadim Korotkikh	")
-		print("# Date:    June 2017	")
-		print("#	")
-		# print("# Description: Function for verifying the BC4 space coefficient library")
+		# print("# ***********************************************************************")
+		# print("# Name:    BC4 CG Small Library ")
+		# print("# Author:  Vadim Korotkikh	")
+		# print("# Date:    June 2017	")
 		# print("#	")
-		print("# ***********************************************************************")
-		print("")
+		# print("#	")
+		# print("# ***********************************************************************")
+		# print("")
 		# calc_options()
 		user_options()
 

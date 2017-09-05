@@ -88,6 +88,7 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 				holomat, rmat = bosonic_holomats(teti)
 				holo_mats.append(holomat)
 				r_matrices.append(rmat)
+				
 	elif lholotype.startswith('fermi'):
 		for ti, teti in enumerate(main_tetrad_list):
 			if pr_sw:
