@@ -64,6 +64,9 @@ def bc4_validation_organizer(pset_arg, *args):
 	'''
 
 	args_tuple	= args
+	argslow	= [x.lower() for x in args_tuple]
+	print(argslow, type(args))
+	sys.exit()
 	if all(isinstance(argx, str) for argx in args_tuple):
 		print("All *args are strings")
 		if len(args_tuple) == 2 and args_tuple[0] == 'coef':
@@ -79,15 +82,31 @@ def bc4_validation_organizer(pset_arg, *args):
 
 		elif len(args_tuple) == 2 and 'mats' in args_tuple:
 			if 'boson' in args_tuple or args_tuple[1] == 'boson':
-				bc4cg_holoraumy_mats(pset_arg, args_tuple[0], args_tuple[1])
+				bosind = args_tuple.index('boson')
+				matind = args_tuple.index('mats')
+				bc4cg_holoraumy_mats(pset_arg, matind, bind)
+			elif 'fermi' in args_tuple or args_tuple[1] == 'fermi':
+				ferind = args_tuple.index('fermi')
+				matind = args_tuple.index('mats')
+			else:
+				print("this shouldn't have happened")
 
-			# if args_tuple[1] == 'fermi' or args_tuple[1] == 'boson':
-			# 	bc4cg_holoraumy_mats(pset_arg, args_tuple[1])
-			# elif 'fermi' in args_tuple or 'boson' in args_tuple:
-			# 	bc4cg_holoraumy_mats(pset_arg, args_tuple[1])
-		elif len(args_tuple) == 2 and 'mats' in args_tuple:
-			if 'fermi' in args_tuple or 'boson' in args_tuple:
-				bc4cg_holoraumy_mats(pset_arg, args_tuple)
+		elif len(args_tuple) == 2 and 'Vmats' in args_tuple:
+			if 'boson' in args_tuple or args_tuple[1] == 'boson':
+				bind = args_tuple.index('boson')
+				matind = args_tuple.index('mats')
+				bc4cg_holoraumy_mats(pset_arg, matind, bind)
+			elif 'fermi' in args_tuple or args_tuple[1] == 'fermi':
+				ferind = args_tuple.index('fermi')
+				matind = args_tuple.index('mats')
+				bc4cg_holoraumy_mats(pset_arg, matind, bind)
+			else:
+				print("this shouldn't have happened")
+
+		else:
+			# What goes here? Technically this shuldn't happen. Unless I change
+			# the code later
+			pass
 	# bc4_validation_organizer('PALL', 'boson', 'mats')
 	# bc4_validation_organizer('PALL', 'fermi', 'coef')
 
