@@ -809,7 +809,7 @@ def user_options():
 		print("Quiting script. Are you sure (yes/no)?")
 		ninput = input(": ")
 		if ninput.lower() == 'yes':
-			sys.exit("EXITING BC4 CG Utility")
+			sys.exit("EXITING BC4 CG Library Utility")
 		elif ninput.lower() == 'no':
 			print("Going back to main menu")
 			option_activator('core')
@@ -836,8 +836,14 @@ def user_options():
 		else:
 			print("UNRECOGNIZED SELECTION: ", input_str)
 			print("Try again...")
-			mcounter+=1
-			option_activator(core_options(), mcounter)
+			if mcounter <= 6:
+				mcounter+=1
+				option_activator(core_options(), mcounter)
+			elif mcounter >= 7:
+				print("Too many attempts. Try again later.")
+				# print("EXITING BC4 CG Library Utility")
+
+				sys.exit("EXITING BC4 CG Library Utility")
 
 	uinput = core_options()
 	option_activator(uinput)
