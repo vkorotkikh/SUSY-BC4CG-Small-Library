@@ -35,10 +35,15 @@ class AdinkraSet():
 
 
 
-	def __init__(self, args, *args):
+	def __init__(self, mainset *args):
 
-		self.arg = args
+		self.mainset 	= mainset
+		self.args_tuple	= *args
 
+		def filter_by_rule(self, inset):
+
+			templist = inset
+			pass
 
 		# object instance method
 		def gather_adinkras(self):
