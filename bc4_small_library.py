@@ -880,19 +880,8 @@ if __name__ == "__main__":
 	try:
 		main(sys.argv[1])
 	except IndexError:
-		# print("Using hardcoded default P-set", pset_def)
-		# print("# ***********************************************************************")
-		# print("# Name:    BC4 CG Small Library ")
-		# print("# Author:  Vadim Korotkikh	")
-		# print("# Date:    June 2017	")
-		# print("#	")
-		# print("#	")
-		# print("# ***********************************************************************")
-		# print("")
 		# calc_options()
 		user_options()
-
-		# main(pset_def)
 
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
