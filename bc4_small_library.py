@@ -711,6 +711,8 @@ def user_options():
 		print(" < 1 >  -  Calculate P-set Bosonic Matrices")
 		print(" < 2 >  -  Calculate P-set Fermionic Matrices")
 		print(" < 3 >  -  Display/Print BC4 CG Small Library P-sets")
+		print(" < 4 >  -  Verify BC4 CG Small Library ~V coefficient values")
+		print(" < 5 >  -  Exit")
 		# print(" < 1 >  -  Display BC4 CG Small Library P sets")
 		# print(" < 2 >  -  Verify BC4 CG Small Library ~V coefficient values")
 		# print(" < 3 >  -  Calculate P-set Fermionic Matrices")
@@ -722,53 +724,6 @@ def user_options():
 
 	# Set loopcount = 0 of no arg is supplied for first time
 	def option_one(loopcount=0):
-		counter	= 0
-		print("")
-		print(" < 1 >  -  Display entire BC4 CG Small Library")
-		print(" < 2 >  -  Display select P-set from the Small Library")
-		print(" < 3 >  -  Back to main menu")
-		ninput = input(": ")
-		if ninput.strip() == '1':
-			pass
-		elif ninput.strip() == '2':
-			usr_pset = pset_options_std()
-			# Lets make the P-Set options a function
-		elif ninput.strip() == '3':
-			option_activator('core')
-		else:
-			loopcount += 1
-			print("Unrecognized option")
-			if loopcount <= 5:
-				option_one(loopcount)
-			else:
-				print("Returning to core options...")
-				option_activator('core')
-
-	def option_two(loopcount=0):
-		print("")
-		print(" < 1 >  -  Verify entire BC4 CG Library")
-		print(" < 2 >  -  Verify select P-set from the Small Library")
-		print(" < 3 >  -  Back to main menu")
-		ninput = input(": ")
-		if ninput.strip() == '1':
-			# for now
-			pass
-		elif ninput.strip() == '2':
-			usr_pset = pset_options_std()
-			print(usr_pset)
-		elif ninput.strip() == '3':
-			option_activator('core')
-		else:
-			loopcount += 1
-			print("Unrecognized option")
-			if loopcount <= 5:
-				option_two(loopcount)
-			else:
-				print("Returning to core options...")
-				option_activator('core')
-
-	# Set loopcount = 0 of no arg is supplied for first time
-	def option_three(loopcount=0):
 		print("")
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
@@ -788,27 +743,73 @@ def user_options():
 			loopcount += 1
 			print("Unrecognized option")
 			if loopcount <= 5:
+				option_one(loopcount)
+			else:
+				print("Returning to core options...")
+				option_activator('core')
+
+	# Set loopcount = 0 of no arg is supplied for first time
+	def option_two(loopcount=0):
+		print("")
+		print(" < 1 >  -  Calculate all P-sets")
+		print(" < 2 >  -  Calculate select P-set from the Small Library")
+		print(" < 3 >  -  Back to main menu")
+		ninput = input(": ")
+		if ninput.strip() == '1':
+			# bc4_validation_organizer('PALL', 'Vmats', 'fermi')
+			bc4_validation_organizer('PALL', 'mats', 'fermi')
+			pass
+		elif ninput.strip() == '2':
+			usr_pset = pset_options_std()
+			print(usr_pset)
+			bc4_validation_organizer(usr_pset, 'mats', 'fermi')
+		elif ninput.strip() == '3':
+			option_activator('core')
+		else:
+			loopcount += 1
+			print("Unrecognized option")
+			if loopcount <= 5:
+				option_two(loopcount)
+			else:
+				print("Returning to core options...")
+				option_activator('core')
+
+	def option_three(loopcount=0):
+		counter	= 0
+		print("")
+		print(" < 1 >  -  Display entire BC4 CG Small Library")
+		print(" < 2 >  -  Display select P-set from the Small Library")
+		print(" < 3 >  -  Back to main menu")
+		ninput = input(": ")
+		if ninput.strip() == '1':
+			pass
+		elif ninput.strip() == '2':
+			usr_pset = pset_options_std()
+			# Lets make the P-Set options a function
+		elif ninput.strip() == '3':
+			option_activator('core')
+		else:
+			loopcount += 1
+			print("Unrecognized option")
+			if loopcount <= 5:
 				option_three(loopcount)
 			else:
 				print("Returning to core options...")
 				option_activator('core')
 
-	# Preset loopcount = 0 if no arg supplied for first time.
 	def option_four(loopcount=0):
 		print("")
-		print(" < 1 >  -  Calculate all P-sets")
-		print(" < 2 >  -  Calculate select P-set from the Small Library")
+		print(" < 1 >  -  Verify entire BC4 CG Library")
+		print(" < 2 >  -  Verify select P-set from the Small Library")
 		print(" < 3 >  -  Back to main menu")
-		opt_str = input(": ")
-
-		if opt_str.strip() == '1':
+		ninput = input(": ")
+		if ninput.strip() == '1':
 			# for now
-			bc4_validation_organizer('PALL', 'mats', 'boson')
 			pass
-		elif opt_str.strip() == '2':
+		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
-			bc4_validation_organizer(usr_pset, 'mats', 'boson')
-		elif opt_str.strip() == '3':
+			print(usr_pset)
+		elif ninput.strip() == '3':
 			option_activator('core')
 		else:
 			loopcount += 1
@@ -818,7 +819,32 @@ def user_options():
 			else:
 				print("Returning to core options...")
 				option_activator('core')
-			# print("How do I go back one?")
+
+	# Preset loopcount = 0 if no arg supplied for first time.
+	# def option_four(loopcount=0):
+	# 	print("")
+	# 	print(" < 1 >  -  Calculate all P-sets")
+	# 	print(" < 2 >  -  Calculate select P-set from the Small Library")
+	# 	print(" < 3 >  -  Back to main menu")
+	# 	opt_str = input(": ")
+	#
+	# 	if opt_str.strip() == '1':
+	# 		# for now
+	# 		bc4_validation_organizer('PALL', 'mats', 'boson')
+	# 		pass
+	# 	elif opt_str.strip() == '2':
+	# 		usr_pset = pset_options_std()
+	# 		bc4_validation_organizer(usr_pset, 'mats', 'boson')
+	# 	elif opt_str.strip() == '3':
+	# 		option_activator('core')
+	# 	else:
+	# 		loopcount += 1
+	# 		print("Unrecognized option")
+	# 		if loopcount <= 5:
+	# 			option_four(loopcount)
+	# 		else:
+	# 			print("Returning to core options...")
+	# 			option_activator('core')
 
 	def option_five():
 		print("NOT ACTIVATED (code not finished)")
