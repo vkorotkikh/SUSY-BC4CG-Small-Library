@@ -66,7 +66,7 @@ def bc4_validation_organizer(pset_arg, *args):
 	args_tuple	= args
 	argslow	= [x.lower() for x in args_tuple]
 	print(argslow, type(args))
-	sys.exit()
+	# sys.exit()
 	if all(isinstance(argx, str) for argx in args_tuple):
 		print("All *args are strings")
 		if len(args_tuple) == 2 and args_tuple[0] == 'coef':
