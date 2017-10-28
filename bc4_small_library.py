@@ -706,14 +706,17 @@ def user_options():
 
 	# **************************************************************************
 	def core_options():
-		print("Choose one of the following calculation options:")
+		print("Choose from one of the following calculation options:")
 		print("")
-		print(" < 1 >  -  Display BC4 CG Small Library P sets")
-		print(" < 2 >  -  Verify BC4 CG Small Library ~V coefficient values")
-		print(" < 3 >  -  Calculate P-set Fermionic Matrices")
-		print(" < 4 >  -  Calculate P-set Bosonic Matrices")
-		print(" < 5 >  -  Set output file string")
-		print(" < 6 >  =  Nevermind. Get me outa here! Exit")
+		print(" < 1 >  -  Calculate P-set Bosonic Matrices")
+		print(" < 2 >  -  Calculate P-set Fermionic Matrices")
+		print(" < 3 >  -  Display/Print BC4 CG Small Library P-sets")
+		# print(" < 1 >  -  Display BC4 CG Small Library P sets")
+		# print(" < 2 >  -  Verify BC4 CG Small Library ~V coefficient values")
+		# print(" < 3 >  -  Calculate P-set Fermionic Matrices")
+		# print(" < 4 >  -  Calculate P-set Bosonic Matrices")
+		# print(" < 5 >  -  Set output file string")
+		# print(" < 6 >  =  Nevermind. Get me outa here! Exit")
 		print("")
 		return input(": ")
 
