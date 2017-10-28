@@ -152,7 +152,6 @@ def bosonic_holomats(adinkra):
 	ij_indices = list(itertools.combinations([0,1,2,3], 2))
 
 	for ijtup in ij_indices:
-
 		limat	= adinkra[ijtup[0]]
 		ljmat	= adinkra[ijtup[1]]
 		rimat	= np.transpose(limat)

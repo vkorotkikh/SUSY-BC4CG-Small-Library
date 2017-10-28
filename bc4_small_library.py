@@ -75,7 +75,6 @@ def bc4_validation_organizer(pset_arg, *args):
 		elif len(args_tuple) == 2 and 'coef' in args_tuple:
 			if 'boson' in args_tuple:
 				print("ERROR")
-				# sys.exit()5
 			elif 'fermi' in args_tuple and not 'boson' in args_tuple:
 				# pass args to whatever function will do this
 				pass
