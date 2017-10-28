@@ -731,12 +731,12 @@ def user_options():
 		ninput = input(": ")
 		if ninput.strip() == '1':
 			# bc4_validation_organizer('PALL', 'Vmats', 'fermi')
-			bc4_validation_organizer('PALL', 'mats', 'fermi')
+			bc4_validation_organizer('PALL', 'mats', 'boson')
 			pass
 		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
 			print(usr_pset)
-			bc4_validation_organizer(usr_pset, 'mats', 'fermi')
+			bc4_validation_organizer(usr_pset, 'mats', 'boson')
 		elif ninput.strip() == '3':
 			option_activator('core')
 		else:
