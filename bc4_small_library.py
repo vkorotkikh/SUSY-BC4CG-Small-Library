@@ -147,8 +147,7 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 			psets_dict['%s' % ps] = temp_tetrad
 		else:
 			print("Unknown P set -  ERROR")
-		'''
-		adding slice info	'''
+		'''	adding slice info	'''
 		looplist = tetrad_setgen_detailed(ps)
 		print(len(looplist), len(looplist[0]), "", type(looplist[0]))
 
@@ -594,72 +593,6 @@ def verify_input(userstr):
 
 
 # **************************************************************************
-# Adding calculation options
-def calc_options():
-
-	base_options_print()
-	uinput	= input("Choose wisely: ")
-
-	if int(uinput) == 1:
-		print("")
-		print("Would you like to calculate entire BC4 CG Small Library?")
-		print("")
-		userlib = input(" yes/no ")
-		if userlib == 'yes':
-			pass
-		else:
-			userchk = input("exit?  yes/no?")
-			if userchk.lower() == 'yes':
-				sys.exit("EXITING")
-			else:
-				base_options_print()
-				uinput	= input("Choose wisely: ")
-				''' *** ** * ** *** **** *** ** * ** ***
-					FIGURE OUT HOW TO MAKE THESE LOOP
-					*** ** * ** *** **** *** ** * ** *** '''
-				pass
-
-	elif int(uinput) == 2:
-		print("")
-		print("Pick P-set to calculate")
-		print("P1 or 1 - {P1} ")
-		print("P2 or 1 - {P2} ")
-		print("P3 or 3 - {P3} ")
-		print("P4 or 4 - {P4} ")
-		print("P5 or 5 - {P5} ")
-		print("P6 or 6 - {P6} ")
-		print("PALL - All P sets")
-		print("")
-		userpset = input(":")
-		checkstr = verify_input(userpset)
-
-	elif int(uinput) == 3:
-		print("")
-		print("Pick P-set to calculate")
-		print("P1 or 1 - {P1} ")
-		print("P2 or 1 - {P2} ")
-		print("P3 or 3 - {P3} ")
-		print("P4 or 4 - {P4} ")
-		print("P5 or 5 - {P5} ")
-		print("P6 or 6 - {P6} ")
-		print("PALL - All P sets")
-		print("")
-		userpset = input(":")
-		checkstr = verify_input(userpset)
-	elif int(uinput) == 4:
-		print("")
-		print("Please enter file naming convention")
-		fileconv = input("")
-		pass
-	elif int(uinput) == 5 or uinput.lower() == 'exit':
-		print("")
-		sys.exit("EXITING")
-	else:
-		print("Please re-enter selection or type 'exit'")
-		uinput = input("")
-
-
-# **************************************************************************
 # Default standard P set options
 def pset_options_std():
 	''' Making a func of printing the P-set options. Tired of rewriting it '''
@@ -908,7 +841,6 @@ if __name__ == "__main__":
 	try:
 		main(sys.argv[1])
 	except IndexError:
-		# calc_options()
 		user_options()
 
 	print("-- Execution time --")
