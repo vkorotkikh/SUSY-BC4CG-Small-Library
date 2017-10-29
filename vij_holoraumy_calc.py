@@ -95,13 +95,16 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 				print("# ********************************")
 				print("								     ")
 				print("Tetrad i: ", ti)
-			if len(teti) > 1:
-				if isinstance(teti, tuple) is True:
+			if len(teti) > 1 and isinstance(teti, tuple) is True:
+				print("YES, Tup!", teti, "", len(teti))
+				if isinstance(teti[1], tuple) is True:
+					print("Tuple inside too")
 					holomat, rmat = fermionic_holomats(teti)
 					holo_mats.append(holomat)
 					r_matrices.append(rmat)
 					adink_def.append(teti[1])
 			else:
+				print("Not Tup", teti, "", len(teti))
 				holomat, rmat = fermionic_holomats(teti)
 				holo_mats.append(holomat)
 				r_matrices.append(rmat)
