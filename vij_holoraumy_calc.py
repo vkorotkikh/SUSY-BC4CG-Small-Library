@@ -88,7 +88,7 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 				holomat, rmat = bosonic_holomats(teti)
 				holo_mats.append(holomat)
 				r_matrices.append(rmat)
-				
+
 	elif lholotype.startswith('fermi'):
 		for ti, teti in enumerate(main_tetrad_list):
 			if pr_sw:
@@ -198,8 +198,9 @@ def nicely_print_boson(holo_mats, rmats, pset_arg, adink_def):
 	np.set_printoptions(precision=2, suppress=True, linewidth=100)
 	ij_ind	= list(itertools.combinations([0,1,2,3], 2))
 	setlen = 0
-	if len(holos) == len(rmats):
-		setlen = len(holos)
+	# if len(holos) == len(rmats):
+	if lenh == lenr:
+		setlen = lenh
 	else:
 		print("LENGTH MISMATCH ERROR")
 
