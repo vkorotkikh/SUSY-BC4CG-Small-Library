@@ -508,8 +508,9 @@ def verify_input(userstr):
 		if recomp.match(relist[0]) is not None:
 			if len(relist) > 1:
 				if relist[1].isdigit():
-					print('Sucesfull BC4 CG Library matching input')
-					return 'P' + relist[1]
+					if int(relist[1]) in list(range(1,7)):
+						print('Sucesfull BC4 CG Library matching input')
+						return 'P' + relist[1]
 		else:
 			sys.exit('STRING ISSUE')
 	elif not (loc_str).startswith('p'):
