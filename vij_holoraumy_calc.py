@@ -512,9 +512,8 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg, adink_def):
 	for zi in range(0, lenh):
 		temph = fermis[zi]
 		tempr = rmats[zi]
-		print("#********************************")
-		print("Adinkra #", zi)
-		print("Fermionic Holoraumy Matrices")
+		text_list.append("#********************************")
+		text_list.append("Adinkra # " + str(zi))
 		vij_strings	= []
 		for ijtup in ij_ind:
 			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
