@@ -137,6 +137,11 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 				holotype = 'bosonic'
 			else:
 				print("bc4cg_holoraumy_mats-ERROR")  # configure this better later
+	elif any(isinstance(xard, str) for xarg in args_tuple):
+		print("not all strings")
+		if len(args_tuple) >= 1 and len(args_tuple) == 2:
+			if isinstance(args_tuple[1], str):
+				holotype = args_tuple[1]
 
 	if 'fermi' in args_tuple:
 		sys.exit("Fermi borked for now")
