@@ -61,8 +61,6 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 		with each list four numpy matrices, or a 4 L matrix Adinkra
 		> This is hardcoded for a 4 Matrix Adinkra
 	"""
-	exit()
-
 	lholotype	= holotype.lower()
 	holo_mats	= []
 	r_matrices	= []
@@ -157,7 +155,6 @@ def bosonic_holomats(adinkra):
 		ljmat	= adinkra[ijtup[1]]
 		rimat	= np.transpose(limat)
 		rjmat	= np.transpose(ljmat)
-
 		""" Vij bosonic eq	1501.00101 3.5	"""
 		holo_mat = np.divide((np.dot(limat, rjmat) - np.dot(ljmat, rimat)),2)
 		# holo_mat = np.dot(limat, rjmat) - np.dot(ljmat, rimat)
@@ -208,6 +205,7 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 	for zi in range(0, lenh):
 		temph = holos[zi]
 		tempr = rmats[zi]
+		templ = lmat_list[zi][0]
 		text_list.append("#********************************")
 		text_list.append("Adinkra # " + str(zi))
 		if adinkdef_yn:
@@ -266,10 +264,13 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 		text_list.append("")
 		# print("")
 		""" Printing L Matrices """
-
+		for ind, lm in enumerate([templ[:2], templ[2:]]):
+			lmtostr = [np.array_str(y)[1:-1] for y in lm]
+			ltm	= []
+			for matstr in lmtostr:
+				ltm.append([ix.lstrip() for ix in matstr.split('\n')])
 
 		"""	Printing R matrices """
-		# print("R matrices")
 		text_list.append("R matrices")
 		for ind, rl in enumerate([ tempr[:2], tempr[2:]]):
 			rltostr = [np.array_str(y)[1:-1] for y in rl]

@@ -141,10 +141,6 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 			psets_dict['%s' % ps] = temp_tetrad
 		else:
 			print("Unknown P set -  ERROR")
-		'''	adding slice info	'''
-		looplist = tetrad_setgen_detailed(ps)
-		print(len(looplist), len(looplist[0]), "", type(looplist[0]))
-
 
 	if pset_arg in psets_list:
 	# elif pset_arg != "PALL":
@@ -579,9 +575,8 @@ def user_options():
 		# print(" < 2 >  -  Verify BC4 CG Small Library ~V coefficient values")
 		# print(" < 3 >  -  Calculate P-set Fermionic Matrices")
 		# print(" < 4 >  -  Calculate P-set Bosonic Matrices")
-		# print(" < 5 >  -  Set output file string")
-		# print(" < 6 >  =  Nevermind. Get me outa here! Exit")
-		print("")
+		# print(" < 6 >  -  Set output file string")
+		# print("")
 		return input(": ")
 
 	# Set loopcount = 0 of no arg is supplied for first time
@@ -682,6 +677,17 @@ def user_options():
 				print("Returning to core options...")
 				option_activator('core')
 
+	def option_five():
+		print("")
+		print("Quiting script. Are you sure (yes/no)?")
+		ninput = input(": ")
+		if ninput.lower() == 'yes':
+			sys.exit("EXITING BC4 CG Library Utility")
+		elif ninput.lower() == 'no':
+			print("Going back to main menu")
+			option_activator('core')
+		else:
+			pass
 	# Preset loopcount = 0 if no arg supplied for first time.
 	# def option_four(loopcount=0):
 	# 	print("")
@@ -708,22 +714,10 @@ def user_options():
 	# 			print("Returning to core options...")
 	# 			option_activator('core')
 
-	def option_five():
-		print("NOT ACTIVATED (code not finished)")
-		print("Going back to main menu")
-		option_activator('core')
-
-	def option_six():
-		print("")
-		print("Quiting script. Are you sure (yes/no)?")
-		ninput = input(": ")
-		if ninput.lower() == 'yes':
-			sys.exit("EXITING BC4 CG Library Utility")
-		elif ninput.lower() == 'no':
-			print("Going back to main menu")
-			option_activator('core')
-		else:
-			pass
+	# def option_six():
+	# 	print("NOT ACTIVATED (code not finished)")
+	# 	print("Going back to main menu")
+	# 	option_activator('core')
 
 	# **************************************************************************
 	# Executes options inner functions based on input_str
