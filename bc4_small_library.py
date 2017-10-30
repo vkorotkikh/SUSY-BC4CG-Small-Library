@@ -81,10 +81,11 @@ def bc4_validation_organizer(pset_arg, *args):
 
 		elif len(args_tuple) == 2 and 'mats' in args_tuple:
 			if 'boson' in args_tuple or args_tuple[1] == 'boson':
-				bosind = args_tuple.index('boson')
-				matind = args_tuple.index('mats')
-				print("wtf", bosind, matind)
-				bc4cg_holoraumy_mats(pset_arg, matind, bosind)
+				bosi = args_tuple.index('boson')
+				mati = args_tuple.index('mats')
+				print("wtf", bosi, mati)
+				# Send input to bc4cg_holo via matching the indices to content
+				bc4cg_holoraumy_mats(pset_arg, args_tuple[mati], args_tuple[bosi])
 			elif 'fermi' in args_tuple or args_tuple[1] == 'fermi':
 				ferind = args_tuple.index('fermi')
 				matind = args_tuple.index('mats')
