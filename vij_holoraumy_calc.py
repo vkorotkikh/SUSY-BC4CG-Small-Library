@@ -476,12 +476,17 @@ def nicely_print_boson(holo_mats, rmats, pset_arg, adink_def):
 
 # ******************************************************************************
 # Calculating Fermionic Holoraumy matrices for given Adinkra
-def nicely_print_fermi(fermi_mats, rmats, pset_arg):
+def nicely_print_fermi(fermi_mats, rmats, pset_arg, adink_def):
 
 	""" ***CHECK THIS*** I'm not sure this is even correct to do,
 		since every x in fermi_mats is a list of 6 numpy.matrices
 	"""
-	fermis = [np.asarray(x) for x in fermi_mats]
+	fermis	= [np.asarray(x) for x in fermi_mats]
+	text_list = []
+
+	adinkdef_yn	= 0
+	if len(adink_def) > 0:
+		adinkdef_yn = 1
 
 	print("#********************************")
 	print("Fermionic Holoraumy matrices for: ", pset_arg)
