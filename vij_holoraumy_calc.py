@@ -515,6 +515,16 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg, adink_def):
 		text_list.append("#********************************")
 		text_list.append("Adinkra # " + str(zi))
 		vij_strings	= []
+		if adinkdef_yn:
+			print("Def ", adink_def[zi], " Bool Fct", adink_def[zi][0])
+			boolstr = (",").join(['(' + str(ix) + ')' for ix in adink_def[zi][0]])
+			boolstr = "{" + boolstr + "}"
+			print("Bool String:", boolstr)
+			text_list.append("Boolean Factor: " + boolstr)
+			# text_list.append("Boolean Factor:" + adink_def[zi][0] + " P-set " + adink_def[zi][1])
+		text_list.append("Fermionic Holoraumy Matrices")
+
+		vij_strings	= []
 		for ijtup in ij_ind:
 			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
 			ijstr		= "~V_{" + ij_temp + "}"
