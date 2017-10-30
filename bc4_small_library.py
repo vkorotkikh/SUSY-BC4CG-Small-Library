@@ -488,23 +488,23 @@ def verify_input(userstr):
 	'''
 		Check for PALL and for P1 - P6
 	'''
-	# restr = re.compile('[pP1-6]', re.IGNORECASE)
-	# str2 = restr.findall(userstr)
-	loc_userstr	= userstr.strip().lower()
-	if loc_userstr.isdigit():
-		if int(loc_userstr) in list(range(1,7)):
-			return "P" + loc_userstr
+	# loc_userstr	= userstr.strip().lower()
+	loc_str = userstr.copy()
+	loc_str = loc_str.strip().lower()
+	if loc_str.isdigit():
+		if int(loc_str) in list(range(1,7)):
+			return "P" + loc_str
 		else:
 			return 0
-	elif loc_userstr[0].isdigit():
-		if int(loc_userstr[0]) in list(range(1,7)):
-			return "P" + loc_userstr
+	elif loc_str[0].isdigit():
+		if int(loc_str[0]) in list(range(1,7)):
+			return "P" + loc_str
 		else:
 			return 0
 
-	if (loc_userstr).startswith('p'):
+	if (loc_str).startswith('p'):
 		recomp = re.compile('[pP1-6]', re.IGNORECASE)
-		relist = recomp.findall(loc_userstr)
+		relist = recomp.findall(loc_str)
 		if recomp.match(relist[0]) is not None:
 			if len(relist) > 1:
 				if relist[1].isdigit():
@@ -512,7 +512,7 @@ def verify_input(userstr):
 					return 'P' + relist[1]
 		else:
 			sys.exit('STRING ISSUE')
-	elif not (loc_userstr).startswith('p'):
+	elif not (loc_str).startswith('p'):
 		ustr_len = len(userstr)
 		recomp = re.compile('[1-6]')
 		if userstr.isdigit():
