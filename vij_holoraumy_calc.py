@@ -504,8 +504,8 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg, adink_def):
 	np.set_printoptions(precision=2, suppress=True, linewidth=100)
 	ij_ind	= list(itertools.combinations([0,1,2,3], 2))
 	setlen = 0
-	if len(fermis) == len(rmats):
-		setlen = len(fermis)
+	if lenh == lenr:
+		setlen = lenh
 	else:
 		print("LENGTH MISMATCH ERROR")
 
