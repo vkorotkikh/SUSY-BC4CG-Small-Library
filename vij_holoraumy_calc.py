@@ -24,7 +24,7 @@ from numpy import array
 from numpy.linalg import inv
 from pprint import pprint
 
-pr_sw	= 0
+pr_sw	= 1
 
 # ******************************************************************************
 # Main() function.
