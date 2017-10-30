@@ -417,7 +417,6 @@ def nicely_print_boson(holo_mats, rmats, pset_arg, adink_def):
 		text_list.append(v13strings)
 		for ix in range(0,4):
 			pstr = tm13[0][ix] + " \t" + tm13[1][ix] + " \t" + tm13[2][ix]
-			# print(pstr)
 			text_list.append(pstr)
 
 		mat46		= temph[3:6]
@@ -546,17 +545,19 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg, adink_def):
 		for matstr in mat13str:
 			# onemat = [ix.lstrip() for ix in matstr.split('\n')]
 			tm13.append([ix.lstrip() for ix in matstr.split('\n')])
+		text_list.append(v13strings)
 		print(v13strings)
 		for ix in range(0,4):
-			pstr = tm13[0][ix] + "\t\t" + tm13[1][ix] + "\t\t" + tm13[2][ix]
-			print(pstr)
+			pstr = tm13[0][ix] + " \t" + tm13[1][ix] + " \t" + tm13[2][ix]
+			text_list.append(pstr)
 
 		mat46		= temph[3:6]
 		mat46str	= [np.array_str(y)[1:-1] for y in mat46]
 		tm46		= []
 		for matstr in mat46str:
 			tm46.append([ix.lstrip() for ix in matstr.split('\n')])
-		print(v46strings)
+		text_list.append(v46strings)
+		'''*** End upgrade here***'''
 		for ix in range(0,4):
 			pstr = tm46[0][ix] + "\t\t" + tm46[1][ix] + "\t\t" + tm46[2][ix]
 			print(pstr)
