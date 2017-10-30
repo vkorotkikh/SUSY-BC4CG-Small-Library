@@ -95,7 +95,7 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 				print("								     ")
 				print("Tetrad i: ", ti)
 			if len(teti) > 1 and isinstance(teti, tuple) is True:
-				print("YES, Tup!", teti, "", len(teti))
+				# print("YES, Tup!", teti, "", len(teti))
 				if isinstance(teti[1], tuple) is True:
 					print("Tuple inside too")
 					holomat, rmat = fermionic_holomats(teti)
@@ -109,7 +109,8 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 				r_matrices.append(rmat)
 
 	if lholotype.startswith('boson'):
-		nicely_print_boson(holo_mats, r_matrices, pset_arg, adink_def)
+		# nicely_print_boson(holo_mats, r_matrices, pset_arg, adink_def)
+		full_nprint_boson(main_tetrad_list, holo_mats, r_matrices, pset_arg, adink_def)
 	elif lholotype.startswith('fermi'):
 		nicely_print_fermi(holo_mats, r_matrices, pset_arg, adink_def)
 
@@ -206,6 +207,7 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 		temph = holos[zi]
 		tempr = rmats[zi]
 		templ = lmat_list[zi][0]
+		print(templ)
 		text_list.append("#********************************")
 		text_list.append("Adinkra # " + str(zi))
 		if adinkdef_yn:
@@ -264,11 +266,33 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 		text_list.append("")
 		# print("")
 		""" Printing L Matrices """
-		for ind, lm in enumerate([templ[:2], templ[2:]]):
+		text_list.append("L matrices")
+		for ind, lmi in enumerate([templ[:2], templ[2:]]):
+			lm	= [np.asarray(x) for x in lmi]
 			lmtostr = [np.array_str(y)[1:-1] for y in lm]
 			ltm	= []
 			for matstr in lmtostr:
 				ltm.append([ix.lstrip() for ix in matstr.split('\n')])
+			if ind == 0:
+				len1, len2 	= len(ltm[0][0]), len(ltm[1][0])
+				lbl_str	= ""
+				if len2 > len1:
+					lbl_str	= (len1//3)*" " + "L1" + len2*" " + "L2"
+				elif len1 > len2:
+					lbl_str	= (len1//2)*" " + "L1" + len2*" " + " L2"
+				elif len1 == len2:
+					lbl_str = (len1//2)*" " + "L1" + len2*" " + "L2"
+				# print(lbl_str)
+				text_list.append(lbl_str)
+			elif ind == 1:
+				len1, len2 	= len(ltm[0][0]), len(ltm[1][0])
+				lbl_str		= "  L3" + len2*" " + " L4"
+				# print(lbl_str)
+				text_list.append(lbl_str)
+			for ix in range(0,4):
+				pstr = ltm[0][ix] + "\t" + ltm[1][ix]
+				text_list.append(pstr)
+		text_list.append("")
 
 		"""	Printing R matrices """
 		text_list.append("R matrices")
