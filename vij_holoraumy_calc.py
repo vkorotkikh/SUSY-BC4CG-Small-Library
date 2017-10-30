@@ -167,7 +167,9 @@ def bosonic_holomats(adinkra):
 
 # ******************************************************************************
 def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
-	""" holo_mats - List of lists w/ each containg 6 Bosnic Holoraumy matrices
+	"""
+		lmat_list - List of lists w/ each cont. Adinkra 4 L matrices
+		holo_mats - List of lists w/ each containg 6 Bosnic Holoraumy matrices
 		rmats 	  -	List w/ lists, each containing 4 R matrices
 		pset_arg  - String specifying P slices of library, ie P1 or P6
 		adink_def - List contains tuples of boolean factors, matrix slice
@@ -264,7 +266,7 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 		text_list.append("")
 		# print("")
 		""" Printing L Matrices """
-		
+
 
 		"""	Printing R matrices """
 		# print("R matrices")
