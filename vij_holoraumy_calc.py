@@ -326,7 +326,7 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 				text_list.append(pstr)
 		text_list.append("")
 
-	pmatsfile = "BC4-CoxeterGroup " + pset_arg + ".txt"
+	pmatsfile = "BC4-CoxeterGroup " + pset_arg + " withLmats.txt"
 	# pmatsfile = "BC4-CG " + pset_arg + "-BosonicHolos.txt"
 	with open(pmatsfile, "w") as wfile:
 		for item in text_list:
