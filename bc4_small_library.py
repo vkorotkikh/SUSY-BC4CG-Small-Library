@@ -49,8 +49,6 @@ def main(pset_str):
 	""" Options for BC4 Library:
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. """
-
-	# pset_str = "PALL"
 	# pset_str = "P1"
 	bc4cg_holoraumy_calc(pset_str)
 
@@ -97,7 +95,7 @@ def bc4_validation_organizer(pset_arg, *args):
 			elif 'fermi' in args_tuple or args_tuple[1] == 'fermi':
 				ferind = args_tuple.index('fermi')
 				matind = args_tuple.index('mats')
-				bc4cg_holoraumy_mats(pset_arg, matind, bind)
+				# bc4cg_holoraumy_mats(pset_arg, matind, bind)
 			else:
 				print("this shouldn't have happened")
 
@@ -135,11 +133,6 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 			else:
 				pass
 				# print("bc4cg_holoraumy_mats-ERROR")  # configure this better later
-	print("args_tuple", pset_arg, args_tuple)
-
-	if 'fermi' in args_tuple:
-		sys.exit("Fermi borked for now")
-
 	""" Generate individual Library slices	"""
 	for ps in psets_list:
 		# temp_tetrad	= tetrad_setgen(ps)
