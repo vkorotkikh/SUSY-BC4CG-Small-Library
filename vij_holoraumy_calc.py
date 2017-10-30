@@ -61,6 +61,7 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 		with each list four numpy matrices, or a 4 L matrix Adinkra
 		> This is hardcoded for a 4 Matrix Adinkra
 	"""
+	exit()
 
 	lholotype	= holotype.lower()
 	holo_mats	= []
