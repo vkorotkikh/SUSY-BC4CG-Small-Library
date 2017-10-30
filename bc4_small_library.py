@@ -85,7 +85,7 @@ def bc4_validation_organizer(pset_arg, *args):
 				mati = args_tuple.index('mats')
 				print("wtf", bosi, mati)
 				# Send input to bc4cg_holo via matching the indices to content
-				bc4cg_holoraumy_mats(pset_arg, args_tuple[mati], args_tuple[bosi])
+				bc4cg_holoraumy_mats(pset_arg, args_tuple[bosi], args_tuple[mati])
 			elif 'fermi' in args_tuple or args_tuple[1] == 'fermi':
 				ferind = args_tuple.index('fermi')
 				matind = args_tuple.index('mats')
@@ -136,12 +136,9 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 			elif xarg == 'boson':
 				holotype = 'bosonic'
 			else:
-				print("bc4cg_holoraumy_mats-ERROR")  # configure this better later
-	elif any(isinstance(xard, str) for xarg in args_tuple):
-		print("not all strings")
-		if len(args_tuple) >= 1 and len(args_tuple) == 2:
-			if isinstance(args_tuple[1], str):
-				holotype = args_tuple[1]
+				pass
+				# print("bc4cg_holoraumy_mats-ERROR")  # configure this better later
+	print("args_tuple", pset_arg, args_tuple)
 
 	if 'fermi' in args_tuple:
 		sys.exit("Fermi borked for now")
