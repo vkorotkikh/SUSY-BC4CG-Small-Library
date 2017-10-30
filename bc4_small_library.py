@@ -498,13 +498,13 @@ def verify_input(userstr):
 			return 0
 	elif loc_userstr[0].isdigit():
 		if int(loc_userstr[0]) in list(range(1,7)):
-			return ("P" + loc_userstr)
+			return "P" + loc_userstr
 		else:
 			return 0
 
 	if (loc_userstr).startswith('p'):
 		recomp = re.compile('[pP1-6]', re.IGNORECASE)
-		relist = recomp.findall(userstr)
+		relist = recomp.findall(loc_userstr)
 		if recomp.match(relist[0]) is not None:
 			if len(relist) > 1:
 				if relist[1].isdigit():
