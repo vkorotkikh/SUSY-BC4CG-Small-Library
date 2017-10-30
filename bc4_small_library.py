@@ -62,11 +62,9 @@ def bc4_validation_organizer(pset_arg, *args):
 		PALL, ALL, P1 - P6,  'coef' ->  only fermi
 		PALL, P1 - P6, 'mats' - fermi / boson
 	'''
-
 	args_tuple	= args
 	argslow	= [x.lower() for x in args_tuple]
-	print(argslow, type(args))
-	# sys.exit()
+	# print(argslow, type(args))
 	if all(isinstance(argx, str) for argx in args_tuple):
 		print("All *args are strings")
 		if len(args_tuple) == 2 and args_tuple[0] == 'coef':
@@ -83,7 +81,6 @@ def bc4_validation_organizer(pset_arg, *args):
 			if 'boson' in args_tuple or args_tuple[1] == 'boson':
 				bosi = args_tuple.index('boson')
 				mati = args_tuple.index('mats')
-				print("wtf", bosi, mati)
 				# Send input to bc4cg_holo via matching the indices to content
 				bc4cg_holoraumy_mats(pset_arg, args_tuple[bosi], args_tuple[mati])
 			elif 'fermi' in args_tuple or args_tuple[1] == 'fermi':
@@ -94,9 +91,9 @@ def bc4_validation_organizer(pset_arg, *args):
 
 		elif len(args_tuple) == 2 and 'Vmats' in args_tuple:
 			if 'boson' in args_tuple or args_tuple[1] == 'boson':
-				bosind = args_tuple.index('boson')
-				matind = args_tuple.index('mats')
-				bc4cg_holoraumy_mats(pset_arg, matind, bosind)
+				bosi = args_tuple.index('boson')
+				mati = args_tuple.index('mats')
+				bc4cg_holoraumy_mats(pset_arg, args_tuple[bosi], args_tuple[mati])
 			elif 'fermi' in args_tuple or args_tuple[1] == 'fermi':
 				ferind = args_tuple.index('fermi')
 				matind = args_tuple.index('mats')
@@ -493,15 +490,15 @@ def verify_input(userstr):
 	'''
 	# restr = re.compile('[pP1-6]', re.IGNORECASE)
 	# str2 = restr.findall(userstr)
-	loc_userstr	= userstr.lower()
-	if userstr.isdigit():
-		if int(userstr) in list(range(1,7)):
-			return "P" + userstr
+	loc_userstr	= userstr.strip().lower()
+	if loc_userstr.isdigit():
+		if int(loc_userstr) in list(range(1,7)):
+			return "P" + loc_userstr
 		else:
 			return 0
-	elif userstr[0].isdigit():
-		if int(userstr[0]) in list(range(1,7)):
-			return "P" + userstr
+	elif loc_userstr[0].isdigit():
+		if int(loc_userstr[0]) in list(range(1,7)):
+			return ("P" + loc_userstr)
 		else:
 			return 0
 
@@ -555,7 +552,7 @@ def pset_options_std():
 	elif checkstr.strip() == '7' or checkstr.lower() == 'exit':
 		user_options()
 	elif checkstr:
-		return userinput
+		return checkstr
 	else:
 		pass
 
