@@ -488,13 +488,16 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg, adink_def):
 	if len(adink_def) > 0:
 		adinkdef_yn = 1
 
-	print("#********************************")
-	print("Fermionic Holoraumy matrices for: ", pset_arg)
-	print("")
+	text_list.append("#********************************")
+	text_list.append("BC4 Coxeter Group Small Library")
+	if adinkdef_yn:
+		text_list.append(pset_arg + " set: " + adink_def[0][1])
+	else:
+		text_list.append(pset_arg + " set")
+	text_list.append("Calculated Fermionic Holoraumy matrices and R matrices")
+	text_list.append("")
 	lenh, lenr = len(fermis), len(rmats)
-	# print("Length holo_mats: ", len(holo_mats))
 	print("Length holo_mats: ", lenh)
-	# print("Length r_matrices: ", len(r_matrices))
 	print("Length r_matrices: ", lenr)
 	print("")
 
