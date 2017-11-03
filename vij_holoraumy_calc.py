@@ -72,8 +72,6 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 				print("# ********************************")
 				print("								     ")
 				print("Tetrad i: ", ti)
-				# calculate_vijmatset(teti)
-			# fermionic_holomats(teti)
 			if len(teti) > 1 and isinstance(teti, tuple) is True:
 				print("YES", teti, "", len(teti))
 				if isinstance(teti[1], tuple) is True:
@@ -563,8 +561,7 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg, adink_def):
 			pstr = tm46[0][ix] + " \t" + tm46[1][ix] + " \t" + tm46[2][ix]
 			text_list.append(pstr)
 		text_list.append("")
-		'''*** End upgrade here***'''
-
+		
 		"""	Printing R matrices """
 		print("R matrices")
 		for ind, rl in enumerate([ tempr[:2], tempr[2:]]):
