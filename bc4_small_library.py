@@ -299,56 +299,10 @@ def bc4cg_libsets(p_index):
 
 	return p_slices[p_index], p_strings[p_index]
 
-##************************************
-# Defining the Pizza slices
-""" Definitions used in Adinkra Condense paper """
-def pieslices(pie_index):
-
-	p1	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
-			np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0]]),
-			np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]])
-			]
-
-	p2	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]]),
-			np.matrix([[0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0]]),
-			np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0]])
-			]
-
-	p3	=	[np.matrix([[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0]]),
-			np.matrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0]]),
-			np.matrix([[0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0]])
-			]
-
-	p4	=	[np.matrix([[1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0]]),
-			np.matrix([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0]]),
-			np.matrix([[0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]])
-			]
-
-	p5	=	[np.matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]]),
-			np.matrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0]]),
-			np.matrix([[0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0]])
-			]
-
-	p6	=	[np.matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
-			np.matrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]]),
-			np.matrix([[0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0]]),
-			np.matrix([[0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]])
-			]
-
-	pie_complete = [ p1, p2, p3, p4, p5, p6 ]
-
-	return pie_complete[pie_index]
-
 
 ##************************************
 # Perform flop operation over Adinkra color space
 def colorspace_flop(adinkra, flop_op):
-	# print("Executing colorspace_flip", flop_op)
 	""" Moving around the Lmatrices in the Adinkra	"""
 	new_adinkra	= [ adinkra[(ind - 1)] for ind in flop_op]
 
@@ -358,7 +312,6 @@ def colorspace_flop(adinkra, flop_op):
 ##************************************
 # Perform flip operation over Adinkra color space
 def colorspace_flip(adinkra, flip_op):
-
 	# print("Executing colorspace_flip", flip_op)
 	""" Weird bug here if you do the algorith this way """
 	# new_adinkra	= []
@@ -388,7 +341,7 @@ def binaries(bin_code):
 			return btuple[1]
 
 ##************************************
-# Defining the flips used in original CG BC4 Library
+# Defining the flips used in original BC4 Coxeter Group Library
 def flips_org_lib(flip_set):
 
 	p_slice 	= {}
