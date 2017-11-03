@@ -116,13 +116,9 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 # ******************************************************************************
 # Calculating Fermionic holoraumy matrices for given Adinkra
 def fermionic_holomats(adinkra):
-
-	# vij_possibilities 	= alphas_betas()
-
 	""" Store Fermionic Holoraumy matrices """
 	vij_fermi	= []
-	# r_matrices	= []
-	r_matrices	= [np.transpose(mat) for mat in adinkra]
+	r_matrices	= [np.asarray(np.transpose(mat)) for mat in adinkra]
 	""" Store 6 Vij matrices in temp_vijmat"""
 	# temp_vijmat		= []
 	ij_indices	= list(itertools.combinations([0,1,2,3], 2))
@@ -561,10 +557,13 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg, adink_def):
 			pstr = tm46[0][ix] + " \t" + tm46[1][ix] + " \t" + tm46[2][ix]
 			text_list.append(pstr)
 		text_list.append("")
-		
+
 		"""	Printing R matrices """
 		print("R matrices")
 		for ind, rl in enumerate([ tempr[:2], tempr[2:]]):
+			print("ind:rl")
+			print(matstr, id(matstr), type(matstr))
+			print("rl", rl)
 			rltostr = [np.array_str(y)[1:-1] for y in rl]
 			rtm	= []
 			for matstr in rltostr:

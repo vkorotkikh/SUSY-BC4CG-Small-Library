@@ -158,7 +158,7 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 			pint = int(pset.lstrip("P"))
 			print("		")
 			print("Execute Bosonic Holoraumy Calc for", pset)
-			print("		")
+			# print("		")
 			vij_holoraumy_calc.calc_holoraumy_mats(plist, pset, holotype)
 			print("Holoraumy calc. for:", pset,"finished")
 			print("")
