@@ -64,7 +64,7 @@ def bc4_validation_organizer(pset_arg, *args):
 	argslow	= [x.lower() for x in args_tuple]
 	# print(argslow, type(args))
 	if all(isinstance(argx, str) for argx in args_tuple):
-		print("All *args are strings")
+		# print("All *args are strings")
 		if len(args_tuple) == 2 and args_tuple[0] == 'coef':
 			''' redirect to calculating the coefficients '''
 			pass
@@ -82,8 +82,9 @@ def bc4_validation_organizer(pset_arg, *args):
 				# Send input to bc4cg_holo via matching the indices to content
 				bc4cg_holoraumy_mats(pset_arg, args_tuple[bosi], args_tuple[mati])
 			elif 'fermi' in args_tuple or args_tuple[1] == 'fermi':
-				ferind = args_tuple.index('fermi')
-				matind = args_tuple.index('mats')
+				feri = args_tuple.index('fermi')
+				mati = args_tuple.index('mats')
+				bc4cg_holoraumy_mats(pset_arg, args_tuple[feri], args_tuple[mati])
 			else:
 				print("this shouldn't have happened")
 
@@ -380,34 +381,6 @@ def flips_org_lib(flip_set):
 
 	return p_slice[flip_set]
 
-
-##************************************
-# Defining the elle binary representations for the Vierergruppe
-def flip_ellebin(flip_set):
-
-	vgrp_elle			= {}
-
-	vgrp_elle['()']		= [[14,8,2,4], [2,4,14,8], [4,2,8,14],[8,14,4,2],
-							[6,0,10,12], [10,12,6,0], [12,10,0,6], [0,6,12,10]]
-
-	vgrp_elle['(12)'] 	= [[14,4,2,8], [2,8,14,4], [4,14,8,2], [8,2,4,14],
-							[6,12,10,0], [10,0,6,12], [12,6,0,10], [0,10,12,6]]
-
-	vgrp_elle['(13)'] 	= [[14,2,8,4], [2,14,4,8], [4,8,2,14], [8,4,14,2],
-							[6,10,0,12], [10,6,12,0], [12,0,10,6], [0,12,6,10]]
-
-	vgrp_elle['(23)'] 	= [[2,4,8,14], [14,8,4,2], [8,14,2,4], [4,2,14,8],
-							[10,12,0,6], [6,0,12,10], [0,6,10,12], [12,10,6,0]]
-
-	vgrp_elle['(123)']	= [[14,4,8,2], [2,8,4,14], [4,14,2,8], [8,2,14,4],
-							[6,12,0,10], [10,0,12,6], [12,6,10,0], [0,10,6,12]]
-
-	vgrp_elle['(132)']	= [[14,2,4,8], [2,14,8,4], [4,8,14,2], [8,4,2,14],
-							[6,10,12,0], [10,6,0,12], [12,0,6,10], [0,12,10,6]]
-
-	return vgrp_elle[flip_set]
-
-
 # **************************************************************************
 # Use the binary representation info to perform flips on L mats in each tetrad
 def lmat_flipping(vbasis, binaries_list):
@@ -419,14 +392,11 @@ def lmat_flipping(vbasis, binaries_list):
 		binmats = [binaries(b) for b in xbin]
 		temp	= [np.dot(binmats[i], vbasis[i]) for i in range(0, len(binmats))]
 		lmat_list.append(temp)
-
 	return lmat_list
-
 
 # **************************************************************************
 # Check user input for issues
 def verify_input(userstr):
-
 	'''
 		Check for PALL and for P1 - P6 or 7/exit option
 	'''
