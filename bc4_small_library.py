@@ -428,7 +428,7 @@ def lmat_flipping(vbasis, binaries_list):
 def verify_input(userstr):
 
 	'''
-		Check for PALL and for P1 - P6
+		Check for PALL and for P1 - P6 or 7/exit option
 	'''
 	# loc_userstr	= userstr.strip().lower()
 	loc_str = userstr
@@ -436,11 +436,15 @@ def verify_input(userstr):
 	if loc_str.isdigit():
 		if int(loc_str) in list(range(1,7)):
 			return "P" + loc_str
+		elif int(loc_str) == 7:
+			return loc_str
 		else:
 			return 0
 	elif loc_str[0].isdigit():
 		if int(loc_str[0]) in list(range(1,7)):
 			return "P" + loc_str[0]
+		elif int(loc_str[0]) == 7:
+			return loc_str
 		else:
 			return 0
 
@@ -468,7 +472,7 @@ def verify_input(userstr):
 					print("")
 					sys.exit('Add more crap here')
 			else:
-				print("NONE ISSUE")
+				sys.exit("NONE ISSUE")
 
 
 # **************************************************************************
