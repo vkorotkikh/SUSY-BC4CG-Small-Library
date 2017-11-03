@@ -452,7 +452,6 @@ def nicely_print_boson(holo_mats, rmats, pset_arg, adink_def):
 					lbl_str	= (len1//2)*" " + "R1" + len2*" " + " R2"
 				elif len1 == len2:
 					lbl_str = (len1//2)*" " + "R1" + len2*" " + "R2"
-				# print(lbl_str)
 				text_list.append(lbl_str)
 			elif ind == 1:
 				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
@@ -467,6 +466,7 @@ def nicely_print_boson(holo_mats, rmats, pset_arg, adink_def):
 		text_list.append("")
 
 	pmatsfile = "BC4-CoxeterGroup " + pset_arg + ".txt"
+	# pmatsfile = "BC4-CG-BosonicH " + pset_arg + ".txt"
 	# pmatsfile = "BC4-CG " + pset_arg + "-BosonicHolos.txt"
 	with open(pmatsfile, "w") as wfile:
 		for item in text_list:
@@ -583,15 +583,20 @@ def nicely_print_fermi(fermi_mats, rmats, pset_arg, adink_def):
 					lbl_str	= (len1//2)*" " + "R1" + len2*" " + " R2"
 				elif len1 == len2:
 					lbl_str = (len1//2)*" " + "R1" + len2*" " + "R2"
-				print(lbl_str)
+				text_list.append(lbl_str)
 			elif ind == 1:
 				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
-				# print(len1, len2)
 				lbl_str		= "  R3" + len2*" " + " R4"
-				print(lbl_str)
+				text_list.append(lbl_str)
 			for ix in range(0,4):
 				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
-				print(pstr)
+				text_list.append(pstr)
+		text_list.append("")
+
+	pmatsfile = "BC4-CG-FermionicH " + pset_arg + ".txt"
+	with open(pmatsfile, "w") as wfile:
+		for item in text_list:
+			wfile.write("%s \n" % item)
 
 # ******************************************************************************
 # Write results to text file
