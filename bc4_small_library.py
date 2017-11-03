@@ -458,7 +458,7 @@ def pset_options_std():
 	print(" < 4 >  -  {P4} ")
 	print(" < 5 >  -  {P5} ")
 	print(" < 6 >  -  {P6} ")
-	print(" < 7 / exit >  -  Go back")
+	print(" < 7/Back >  -  Go back")
 	userinput = input(": ")
 	checkstr  = verify_input(userinput)
 	if not checkstr:
@@ -466,7 +466,7 @@ def pset_options_std():
 		print("TRY AGAIN")
 		pset_options_std()
 		pass
-	elif checkstr.strip() == '7' or checkstr.lower() == 'exit':
+	elif checkstr.strip() == '7' or checkstr.lower() == 'back':
 		user_options()
 	elif checkstr:
 		return checkstr
