@@ -15,7 +15,7 @@
 # ******************************************************************************
 # Library Imports
 
-import sys, math, time, itertools
+import sys, math, time, itertools, logging
 import numpy as np
 from numpy import array
 from numpy.linalg import inv
@@ -26,7 +26,6 @@ pr_sw	= 0
 # ********************************
 # Alpha and Beta matrices hardcoded
 def alphas_betas():
-
 	""" These are the alpha and beta matrices multiplied by 2i
 		alpha and beta are tensor products of Pauli spin matrices
  		Identity matrix They are defined in equtions (4.5)
