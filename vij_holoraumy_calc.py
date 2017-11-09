@@ -15,7 +15,7 @@
 # ******************************************************************************
 # Library Imports
 
-import sys, math, time, itertools, logging
+import sys, time, itertools, logging
 import numpy as np
 from numpy import array
 from numpy.linalg import inv
@@ -63,15 +63,14 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 				print("								     ")
 				print("Tetrad i: ", ti)
 			if len(teti) > 1 and isinstance(teti, tuple) is True:
-				print("YES", teti, "", len(teti))
+				# print("YES", teti, "", len(teti))
 				if isinstance(teti[1], tuple) is True:
-					print("TUPLES!!!")
 					holomat, rmat = bosonic_holomats(teti[0])
 					holo_mats.append(holomat)
 					r_matrices.append(rmat)
 					adink_def.append(teti[1])
 			else:
-				print("NO", teti, "", len(teti))
+				# print("NO", teti, "", len(teti))
 				holomat, rmat = bosonic_holomats(teti)
 				holo_mats.append(holomat)
 				r_matrices.append(rmat)
@@ -85,13 +84,11 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 			if len(teti) > 1 and isinstance(teti, tuple) is True:
 				# print("YES, Tup!", teti, "", len(teti))
 				if isinstance(teti[1], tuple) is True:
-					print("Tuple inside too")
 					holomat, rmat = fermionic_holomats(teti[0])
 					holo_mats.append(holomat)
 					r_matrices.append(rmat)
 					adink_def.append(teti[1])
 			else:
-				print("Not Tup", teti, "", len(teti))
 				holomat, rmat = fermionic_holomats(teti)
 				holo_mats.append(holomat)
 				r_matrices.append(rmat)
@@ -108,9 +105,8 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 def fermionic_holomats(adinkra):
 	""" Store Fermionic Holoraumy matrices """
 	vij_fermi	= []
+
 	r_matrices	= [np.asarray(np.transpose(mat)) for mat in adinkra]
-	""" Store 6 Vij matrices in temp_vijmat"""
-	# temp_vijmat		= []
 	ij_indices	= list(itertools.combinations([0,1,2,3], 2))
 
 	for ijtup in ij_indices:
@@ -132,7 +128,6 @@ def bosonic_holomats(adinkra):
 	""" Store n Vij bosonic matrices in vij_bosonic	"""
 	vij_bosonic	= []
 	r_matrices	= [np.asarray(np.transpose(mat)) for mat in adinkra]
-
 	ij_indices = list(itertools.combinations([0,1,2,3], 2))
 
 	for ijtup in ij_indices:
@@ -180,8 +175,8 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 
 	np.set_printoptions(precision=2, suppress=True, linewidth=100)
 	ij_ind	= list(itertools.combinations([0,1,2,3], 2))
+
 	setlen = 0
-	# if len(holos) == len(rmats):
 	if lenh == lenr:
 		setlen = lenh
 	else:
