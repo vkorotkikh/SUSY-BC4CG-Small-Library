@@ -204,8 +204,6 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
 			ijstr		= "V_{" + ij_temp + "}"
 			vij_strings.append(ijstr)
-		""" List comprehension for the above 3line forloop, 4line if counting
-			vij_strings list declaration	"""
 		'''
 		vij_strings = [ "V_{" + (str(ijt[0]+1) + str(ijt[1]+1)) + "}" for ijt in ij_ind]
 		'''
@@ -282,7 +280,6 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 				rtm.append([ix.lstrip() for ix in matstr.split('\n')])
 
 			if ind == 0:
-				# print("Length: ", len(rtm[0
 				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
 				lbl_str	= ""
 				if len2 > len1:
@@ -291,7 +288,6 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 					lbl_str	= (len1//2)*" " + "R1" + len2*" " + " R2"
 				elif len1 == len2:
 					lbl_str = (len1//2)*" " + "R1" + len2*" " + "R2"
-				# print(lbl_str)
 				text_list.append(lbl_str)
 			elif ind == 1:
 				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
@@ -372,8 +368,6 @@ def nicely_print_boson(holo_mats, rmats, pset_arg, adink_def):
 			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
 			ijstr		= "V_{" + ij_temp + "}"
 			vij_strings.append(ijstr)
-		""" List comprehension for the above 3line forloop, 4line if counting
-			vij_strings list declaration	"""
 		'''
 		vij_strings = [ "V_{" + (str(ijt[0]+1) + str(ijt[1]+1)) + "}" for ijt in ij_ind]
 		'''
