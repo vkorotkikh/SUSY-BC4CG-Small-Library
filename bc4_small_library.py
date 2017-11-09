@@ -23,6 +23,8 @@ import vij_holoraumy_calc
 import matrix_calc_vijmat2
 
 p_switch	= 0
+logging.basicConfig(level=logging.DEBUG)
+bc4logger = logging.getLogger(__file__)
 #>******************************************************************************
 def main(pset_str):
 
@@ -52,8 +54,6 @@ def bc4_validation_organizer(pset_arg, *args):
 		PALL, ALL, P1 - P6,  'coef' ->  only fermi
 		PALL, P1 - P6, 'mats' - fermi / boson
 	'''
-	logging.basicConfig(level=logging.INFO)
-	bc4logger = logging.getLogger(__name__)
 	args_tuple	= args
 	argslow	= [x.lower() for x in args_tuple]
 	# print(argslow, type(args))
@@ -482,7 +482,7 @@ def user_options():
 	# print("#	")
 	print("#***********************************************************************")
 	print("	")
-
+	bc4logger.info("Executing user options")
 	# **************************************************************************
 	def core_options():
 		print("Choose from one of the following calculation options:")
@@ -496,8 +496,7 @@ def user_options():
 		# print(" < 2 >  -  Verify BC4 CG Small Library ~V coefficient values")
 		# print(" < 3 >  -  Calculate P-set Fermionic Matrices")
 		# print(" < 4 >  -  Calculate P-set Bosonic Matrices")
-		# print(" < 6 >  -  Set output file string")
-		# print("")
+		# print(" < 6 >  -  Set output file string")(
 		return input(": ")
 
 	# Set loopcount = 0 of no arg is supplied for first time
@@ -509,17 +508,18 @@ def user_options():
 		ninput = input(": ")
 		if ninput.strip() == '1':
 			# bc4_validation_organizer('PALL', 'Vmats', 'fermi')
+			bc4logger.info(" Calculating all P-set %s" % ('Bosonic Holo. matrices'))
 			bc4_validation_organizer('PALL', 'mats', 'boson')
-			pass
 		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
-			print(usr_pset)
+			bc4logger.info(" Calculating %s %s" % (usr_pset, 'Bosonic Holo. matrices'))
 			bc4_validation_organizer(usr_pset, 'mats', 'boson')
 		elif ninput.strip() == '3':
 			option_activator('core')
 		else:
 			loopcount += 1
 			print("Unrecognized option")
+			bc4logger.debug("Unrecognized input %s" % ninput)
 			if loopcount <= 5:
 				option_one(loopcount)
 			else:
@@ -535,11 +535,12 @@ def user_options():
 		ninput = input(": ")
 		if ninput.strip() == '1':
 			# bc4_validation_organizer('PALL', 'Vmats', 'fermi')
+			bc4logger.info("Calculating all P-set %s" % ('Fermionic Holo. matrices'))
 			bc4_validation_organizer('PALL', 'mats', 'fermi')
-			pass
 		elif ninput.strip() == '2':
 			usr_pset = pset_options_std()
-			print(usr_pset)
+			bc4logger.info("Calculating %s %s" % (usr_pset, 'Fermionic Holo. matrices'))
+			exit()
 			bc4_validation_organizer(usr_pset, 'mats', 'fermi')
 		elif ninput.strip() == '3':
 			option_activator('core')
@@ -662,12 +663,13 @@ def user_options():
 		elif input_str.strip() == 'core' or input_str.lower() == 'core':
 			option_activator(core_options())
 		else:
+			bc4logger.debug("Unknown input  %s", input_str)
 			print("UNRECOGNIZED SELECTION: ", input_str)
 			print("Try again...")
 			if mcounter <= 6:
 				mcounter+=1
 				option_activator(core_options(), mcounter)
-			elif mcounter >= 7:
+			elif mcounter == 7:
 				print("Too many attempts. Try again later.")
 				# print("EXITING BC4 CG Library Utility")
 
