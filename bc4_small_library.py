@@ -75,12 +75,14 @@ def bc4_validation_organizer(pset_arg, *args):
 				bosi = args_tuple.index('boson')
 				mati = args_tuple.index('mats')
 				# Send input to bc4cg_holo via matching the indices to content
+
 				bc4cg_holoraumy_mats(pset_arg, args_tuple[bosi], args_tuple[mati])
 			elif 'fermi' in args_tuple or args_tuple[1] == 'fermi':
 				feri = args_tuple.index('fermi')
 				mati = args_tuple.index('mats')
 				bc4cg_holoraumy_mats(pset_arg, args_tuple[feri], args_tuple[mati])
 			else:
+				bc4logger.debug("ERROR %s %s" % (pset_arg, args_tuple[1]))
 				print("this shouldn't have happened")
 
 		elif len(args_tuple) == 2 and 'Vmats' in args_tuple:
@@ -93,6 +95,7 @@ def bc4_validation_organizer(pset_arg, *args):
 				matind = args_tuple.index('mats')
 				# bc4cg_holoraumy_mats(pset_arg, matind, bind)
 			else:
+				bc4logger.debug("ERROR %s %s" % (pset_arg, args_tuple[1]))
 				print("this shouldn't have happened")
 
 		else:
