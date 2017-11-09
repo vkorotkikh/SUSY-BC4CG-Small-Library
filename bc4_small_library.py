@@ -1,26 +1,21 @@
 # ******************************************************************************
-# Name:    Verifying BC4 Space Vij coefficient
+# Name:    Calculating BC4 CG Small Library
 # Author:  Vadim Korotkikh
 # Email:   va.korotki@gmail.com
-# Date:    November 2016
-# Version: 1.0A
+# Date:    July 2017
+# Version: 2.0
 #
-# Description: Function for verifying the BC4 space coefficient library
+# Description: Code for verifying the BC4 space coefficient library
 #
 # ******************************************************************************
 # Library Imports
 
-import re
-import sys
-import math
-import time
-import numpy.matlib
-import itertools
+import re, sys, math, time
+import itertools, logging
 import numpy as np
 from numpy import array
-from numpy.linalg import inv
 
-# ******************************************************************************
+#>******************************************************************************
 # Function Imports
 # import matrix_calc_vijmat2
 # import matrix_calc_vijmat_nopr
@@ -28,8 +23,7 @@ import vij_holoraumy_calc
 import matrix_calc_vijmat2
 
 p_switch	= 0
-# ******************************************************************************
-# Main() function.
+#>******************************************************************************
 def main(pset_str):
 
 	print("# ***********************************************************************")
@@ -49,11 +43,9 @@ def main(pset_str):
 	""" Options for BC4 Library:
 		PALL - Entire small library, one at a time.
 		P1, P2, P3, P4, P5, P6 - Only one section. """
-	# pset_str = "P1"
-	bc4cg_holoraumy_calc(pset_str)
+	# bc4cg_holoraumy_calc(pset_str)
 
-# ******************************************************************************
-# BC4 Calculation options organizer -  director
+#>******************************************************************************
 def bc4_validation_organizer(pset_arg, *args):
 	''' Based on pset_arg and *args figures out which function to pass
 		arguments too.
@@ -108,10 +100,10 @@ def bc4_validation_organizer(pset_arg, *args):
 	# bc4_validation_organizer('PALL', 'fermi', 'coef')
 
 
-# ******************************************************************************
-# BC4 Validation function process organizer
+#>******************************************************************************
 def bc4cg_holoraumy_mats(pset_arg, *args):
 	"""
+	Process organizer
 	ITT, pset is tracked via P1, P2, P3....so pset_arg must be a Pn or
 	it must be made one. Otherwise function will not executed
 	"""
@@ -163,7 +155,7 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 			print("Holoraumy calc. for:", pset,"finished")
 			print("")
 
-# ******************************************************************************
+#>******************************************************************************
 def tetrad_setgen(pset):
 	"""	Generates a {P#} set of tetrads via execution of pset_string_format()
 		and	string_to_tetrad() function. Creates a set of python numpy tetrads
@@ -207,7 +199,7 @@ def tetrad_setgen(pset):
 		# temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
 	return pset_boold
 
-# ******************************************************************************
+#>******************************************************************************
 def tetrad_setgen_detailed(pset):
 	"""	Generates a {P#} set of tetrads via execution of pset_string_format()
 		and	string_to_tetrad() function. Creates a set of python numpy tetrads
@@ -248,10 +240,9 @@ def tetrad_setgen_detailed(pset):
 
 	return pset_boold
 
-##************************************
-# Defining the P slices of original BC4 CG library
+#>******************************************************************************
 def bc4cg_libsets(p_index):
-# def lib_pslices(p_index):
+	""" Defining the P set slices of the original BC4 CG Adinkra library	"""
 
 	""" {P1} = { (243), (123), (134), (142) }	"""
 	p1	= 	[np.matrix([[1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]]),
@@ -381,10 +372,11 @@ def flips_org_lib(flip_set):
 
 	return p_slice[flip_set]
 
-# **************************************************************************
-# Use the binary representation info to perform flips on L mats in each tetrad
+#>******************************************************************************
 def lmat_flipping(vbasis, binaries_list):
-
+	"""
+	Use the binary representation info to perform flips on L mats in each tetrad
+	"""
 	lmat_list		= []
 
 	for xbin in binaries_list:
@@ -394,8 +386,7 @@ def lmat_flipping(vbasis, binaries_list):
 		lmat_list.append(temp)
 	return lmat_list
 
-# **************************************************************************
-# Check user input for issues
+#>******************************************************************************
 def verify_input(userstr):
 	'''
 		Check for PALL and for P1 - P6 or 7/exit option
@@ -445,7 +436,7 @@ def verify_input(userstr):
 				sys.exit("NONE ISSUE")
 
 
-# **************************************************************************
+#>******************************************************************************
 # Default standard P set options
 def pset_options_std():
 	''' Making a func of printing the P-set options. Tired of rewriting it '''
@@ -688,7 +679,6 @@ def user_options():
 if __name__ == "__main__":
 	start_time = time.time()
 
-	pset_def = "P1"
 	try:
 		main(sys.argv[1])
 	except IndexError:
