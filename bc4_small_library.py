@@ -2,7 +2,7 @@
 # Name:    Calculating BC4 CG Small Library
 # Author:  Vadim Korotkikh
 # Email:   va.korotki@gmail.com
-# Date:    July 2017
+# Date:    November 2017
 # Version: 2.0
 #
 # Description: Code for verifying the BC4 space coefficient library
@@ -17,10 +17,7 @@ from numpy import array
 
 #>******************************************************************************
 # Function Imports
-# import matrix_calc_vijmat2
-# import matrix_calc_vijmat_nopr
 import vij_holoraumy_calc
-import matrix_calc_vijmat2
 
 p_switch	= 0
 logging.basicConfig(level=logging.DEBUG)

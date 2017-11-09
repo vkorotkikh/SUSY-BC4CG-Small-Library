@@ -2,8 +2,8 @@
 # Name:    Calculate Vij matrices and the elle & tilde~elle Coefficients
 # Author:  Vadim Korotkikh
 # Email:   va.korotki@gmail.com
-# Date:    November 2016
-# Version: 1.3
+# Date:    November 2017
+# Version: 2.0
 #
 # Description: Calculates the corresponding Vij Holoraumy matrices for Adinkras
 # Using the Holoraumy matrices, finds the corresponding elle or tilde`elle
@@ -15,22 +15,13 @@
 # ******************************************************************************
 # Library Imports
 
-import sys
-import math
-import time
-import itertools
+import sys, math, time, itertools
 import numpy as np
 from numpy import array
 from numpy.linalg import inv
 from pprint import pprint
 
 pr_sw	= 0
-
-# ******************************************************************************
-# Main() function.
-def main():
-	# gen_signm(4)
-	pass
 
 # ********************************
 # Alpha and Beta matrices hardcoded
