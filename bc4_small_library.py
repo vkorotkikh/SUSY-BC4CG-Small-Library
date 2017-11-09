@@ -52,9 +52,12 @@ def bc4_validation_organizer(pset_arg, *args):
 		PALL, ALL, P1 - P6,  'coef' ->  only fermi
 		PALL, P1 - P6, 'mats' - fermi / boson
 	'''
+	logging.basicConfig(level=logging.INFO)
+	bc4logger = logging.getLogger(__name__)
 	args_tuple	= args
 	argslow	= [x.lower() for x in args_tuple]
 	# print(argslow, type(args))
+	bc4logger.info("Input args: %s" % pset_arg)
 	if all(isinstance(argx, str) for argx in args_tuple):
 		# print("All *args are strings")
 		if len(args_tuple) == 2 and args_tuple[0] == 'coef':
