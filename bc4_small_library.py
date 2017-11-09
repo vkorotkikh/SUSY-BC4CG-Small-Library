@@ -97,13 +97,10 @@ def bc4_validation_organizer(pset_arg, *args):
 			else:
 				bc4logger.debug("ERROR %s %s" % (pset_arg, args_tuple[1]))
 				print("this shouldn't have happened")
-
 		else:
 			# What goes here? Technically this shuldn't happen. Unless I change
 			# the code later
 			pass
-	# bc4_validation_organizer('PALL', 'boson', 'mats')
-	# bc4_validation_organizer('PALL', 'fermi', 'coef')
 
 
 #>******************************************************************************
@@ -113,7 +110,6 @@ def bc4cg_holoraumy_mats(pset_arg, *args):
 	ITT, pset is tracked via P1, P2, P3....so pset_arg must be a Pn or
 	it must be made one. Otherwise function will not executed
 	"""
-
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
 	holotype		= ""
