@@ -21,6 +21,7 @@ import vij_holoraumy_calc
 p_switch	= 0
 logging.basicConfig(level=logging.DEBUG)
 bc4logger = logging.getLogger(__file__)
+
 #>******************************************************************************
 def main(pset_str):
 
@@ -31,16 +32,9 @@ def main(pset_str):
 	print("# Date:    June 2017	")
 	print("# Version: N/A")
 	print("#	")
-	# print("# Description: Function for verifying the BC4 space coefficient library")
-	# print("#	")
 	print("# ***********************************************************************")
 	print("		")
 
-	""" PALL seems to be broken for now due to lack of if elif logic at end
-		of string_to_tetrad() function """
-	""" Options for BC4 Library:
-		PALL - Entire small library, one at a time.
-		P1, P2, P3, P4, P5, P6 - Only one section. """
 	# bc4cg_holoraumy_calc(pset_str)
 
 #>******************************************************************************
@@ -101,11 +95,11 @@ def bc4_validation_organizer(pset_arg, *args):
 
 #>******************************************************************************
 def bc4cg_holoraumy_mats(pset_arg, *args):
-	"""
+	'''
 	Process organizer
 	ITT, pset is tracked via P1, P2, P3....so pset_arg must be a Pn or
 	it must be made one. Otherwise function will not executed
-	"""
+	'''
 	psets_list		= ["P1", "P2", "P3", "P4", "P5", "P6"]
 	psets_dict		= {}
 	holotype		= ""
@@ -302,13 +296,11 @@ def binaries(bin_code):
 			return btuple[1]
 
 ##************************************
-# Defining the flips used in original BC4 Coxeter Group Library
 def flips_org_lib(flip_set):
-
+	""" Hardcoded definitions of the boolean 'factors' used for each P
+		slice of the original BC4 Coxeter Group Small Library	"""
 	p_slice 	= {}
 
-	# p_slice['P1']	= [[0,12,10,6], [0,6,12,10], [2,4,14,8], [2,14,8,4],
-	# 					[8,4,2,14], [8,14,4,2], [10,12,6,0], [10,6,0,12]]
 	p_slice['P1']	= [[0,6,12,10], [0,12,10,6], [2,4,14,8], [2,14,8,4],
 						[4,2,8,14], [4,8,14,2], [6,0,10,12], [6,10,12,0],
 						[8,4,2,14], [8,14,4,2], [10,6,0,12], [10,12,6,0],
@@ -343,9 +335,9 @@ def flips_org_lib(flip_set):
 
 #>******************************************************************************
 def lmat_flipping(vbasis, binaries_list):
-	"""
+	'''
 	Use the binary representation info to perform flips on L mats in each tetrad
-	"""
+	'''
 	lmat_list		= []
 
 	for xbin in binaries_list:
@@ -358,7 +350,7 @@ def lmat_flipping(vbasis, binaries_list):
 #>******************************************************************************
 def verify_input(userstr):
 	'''
-		Check for PALL and for P1 - P6 or 7/exit option
+	Check whether string is PALL or one of P1 - P6 or 7/exit option
 	'''
 	# loc_userstr	= userstr.strip().lower()
 	loc_str = userstr
