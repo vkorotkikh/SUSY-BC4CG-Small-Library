@@ -13,7 +13,6 @@
 import re, sys, math, time
 import itertools, logging
 import numpy as np
-from numpy import array
 
 #>******************************************************************************
 # Function Imports
@@ -289,35 +288,6 @@ def bc4cg_libsets(p_index):
 	p_slices = [ p1, p2, p3, p4, p5, p6 ]
 
 	return p_slices[p_index], p_strings[p_index]
-
-
-##************************************
-# Perform flop operation over Adinkra color space
-def colorspace_flop(adinkra, flop_op):
-	""" Moving around the Lmatrices in the Adinkra	"""
-	new_adinkra	= [ adinkra[(ind - 1)] for ind in flop_op]
-
-	return new_adinkra
-
-
-##************************************
-# Perform flip operation over Adinkra color space
-def colorspace_flip(adinkra, flip_op):
-	# print("Executing colorspace_flip", flip_op)
-	""" Weird bug here if you do the algorith this way """
-	# new_adinkra	= []
-	# for i in range(0, len(adinkra)):
-	# 	tmat 		= adinkra[i]
-	# 	tmat[1:]	= tmat[1:] * flip_op[i]
-	# 	new_adinkra.append(tmat)
-	""" Normal algorithm """
-	new_adinkra	= []
-	for i in range(0, len(flip_op)):
-		# new_adinkra[i][1:]	= new_adinkra[i][1:] * flip_op[i]
-		temp_mat	= adinkra[i] * flip_op[i]
-		new_adinkra.append(temp_mat)
-	return new_adinkra
-
 
 ##************************************
 # Defining the binary multiplication arrays

@@ -11,7 +11,14 @@
 # Library Imports
 
 import os
+import gtk
 
 
 def main():
+	pass
+
+
+
+class LauncherGUI:
+
 	pass
