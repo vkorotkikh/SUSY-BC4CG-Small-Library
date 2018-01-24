@@ -18,7 +18,6 @@ def main():
 	pass
 
 
-
 class LauncherGUI:
 
 	pass

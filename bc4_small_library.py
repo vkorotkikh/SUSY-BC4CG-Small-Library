@@ -198,8 +198,6 @@ def tetrad_setgen(pset):
 			for i in booled_adinkra:
 				print(i)
 		pset_boold.append(booled_adinkra)
-
-		# temp_adinkra	= [(np.dot(bool_list[x],pslice[x])) for x in range(0,len(pslice))]
 	return pset_boold
 
 #>******************************************************************************
@@ -220,7 +218,6 @@ def tetrad_setgen_detailed(pset):
 	if p_switch:
 		print("# ********************************")
 		print("Starting conversion process for P slice:", pset)
-		# print("Length of", pset, "tetrad set:", len(run_group))
 		print("")
 	""" Perform boolean calculations """
 	pbools	= flips_org_lib(pset)
