@@ -284,8 +284,9 @@ def bc4cg_libsets(p_index):
 	return p_slices[p_index], p_strings[p_index]
 
 ##************************************
-# Defining the binary multiplication arrays
 def binaries(bin_code):
+	""" Defining the booleans as n=4 vector of 1s, corresponding to boolean
+	value. 0 - all 1, no flipping done. 14 - [ 1, -1, -1, -1 ]	"""
 	bin_code = int(bin_code)
 	binaries_lt	= [(0, [1,1,1,1]), (2, [1,-1,1,1]), (4, [1,1,-1,1]),
 					(6, [1,-1,-1,1]), (8, [1,1,1,-1]), (10, [1,-1,1,-1]),
@@ -335,9 +336,9 @@ def flips_org_lib(flip_set):
 
 #>******************************************************************************
 def lmat_flipping(vbasis, binaries_list):
-	'''
-	Use the binary representation info to perform flips on L mats in each tetrad
-	'''
+	""" Use the binary representation values to perform flips on L matrices in
+	each Adinkra	"""
+
 	lmat_list		= []
 
 	for xbin in binaries_list:
@@ -513,7 +514,7 @@ def user_options():
 
 	def option_three(loopcount=0):
 		counter	= 0
-		print("")
+		print(" -- Work in Progress -- ")
 		print(" < 1 >  -  Display entire BC4 CG Small Library")
 		print(" < 2 >  -  Display select P-set from the Small Library")
 		print(" < 3 >  -  Back to main menu")
@@ -535,7 +536,7 @@ def user_options():
 				option_activator('core')
 
 	def option_four(loopcount=0):
-		print("")
+		print(" -- Work in Progress -- ")
 		print(" < 1 >  -  Verify entire BC4 CG Library")
 		print(" < 2 >  -  Verify select P-set from the Small Library")
 		print(" < 3 >  -  Back to main menu")
@@ -575,7 +576,7 @@ def user_options():
 	# 	print(" < 2 >  -  Calculate select P-set from the Small Library")
 	# 	print(" < 3 >  -  Back to main menu")
 	# 	opt_str = input(": ")
-	#
+
 	# 	if opt_str.strip() == '1':
 	# 		# for now
 	# 		bc4_validation_organizer('PALL', 'mats', 'boson')
