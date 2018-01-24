@@ -18,7 +18,18 @@ import numpy as np
 # Function Imports
 import vij_holoraumy_calc
 
-p_switch	= 0
+p_switch = 0
+py_ver = ''
+if sys.version_info >= (3, 5):
+	py_ver = '3.5'
+elif sys.version_info >= (2, 6) and sys.version_info < (2, 7):
+	py_ver = '2.6'
+	print("Python version :", sys.version_info[0:3])
+elif sys.version_info >= (2, 7):
+	py_ver = '2.7'
+	print("Python version :", sys.version_info[0:3])
+else:
+	raise Exception("Minimum Python 2.6 or Python 3.5 are required for this code.")
 logging.basicConfig(level=logging.DEBUG)
 bc4logger = logging.getLogger(__file__)
 
@@ -412,7 +423,7 @@ def pset_options_std():
 	print(" < 5 >  -  {P5} ")
 	print(" < 6 >  -  {P6} ")
 	print(" < 7/Back >  -  Go back")
-	userinput = input(": ")
+	userinput = pyver_uinput(": ")
 	checkstr  = verify_input(userinput)
 	if not checkstr:
 		print("INVALID INPUT")
@@ -426,6 +437,13 @@ def pset_options_std():
 	else:
 		pass
 
+
+# **************************************************************************
+def pyver_uinput(instr):
+	if int(py_ver[0]) >= 3:
+		return `input`(instr)
+	elif int(py_ver[0]) < 3:
+		return raw_input(instr)
 
 # **************************************************************************
 # User options
@@ -456,7 +474,7 @@ def user_options():
 		# print(" < 3 >  -  Calculate P-set Fermionic Matrices")
 		# print(" < 4 >  -  Calculate P-set Bosonic Matrices")
 		# print(" < 6 >  -  Set output file string")(
-		return input(": ")
+		return pyver_uinput(": ")
 
 	# Set loopcount = 0 of no arg is supplied for first time
 	def option_one(loopcount=0):
@@ -464,7 +482,7 @@ def user_options():
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
 		print(" < 3 >  -  Back to main menu")
-		ninput = input(": ")
+		ninput = pyver_uinput(": ")
 		if ninput.strip() == '1':
 			# bc4_validation_organizer('PALL', 'Vmats', 'fermi')
 			bc4logger.info(" Calculating all P-set %s" % ('Bosonic Holo. matrices'))
@@ -491,7 +509,7 @@ def user_options():
 		print(" < 1 >  -  Calculate all P-sets")
 		print(" < 2 >  -  Calculate select P-set from the Small Library")
 		print(" < 3 >  -  Back to main menu")
-		ninput = input(": ")
+		ninput = pyver_uinput(": ")
 		if ninput.strip() == '1':
 			# bc4_validation_organizer('PALL', 'Vmats', 'fermi')
 			bc4logger.info("Calculating all P-set %s" % ('Fermionic Holo. matrices'))
@@ -518,7 +536,7 @@ def user_options():
 		print(" < 1 >  -  Display entire BC4 CG Small Library")
 		print(" < 2 >  -  Display select P-set from the Small Library")
 		print(" < 3 >  -  Back to main menu")
-		ninput = input(": ")
+		ninput = pyver_uinput(": ")
 		if ninput.strip() == '1':
 			pass
 		elif ninput.strip() == '2':
@@ -540,7 +558,7 @@ def user_options():
 		print(" < 1 >  -  Verify entire BC4 CG Library")
 		print(" < 2 >  -  Verify select P-set from the Small Library")
 		print(" < 3 >  -  Back to main menu")
-		ninput = input(": ")
+		ninput = pyver_uinput(": ")
 		if ninput.strip() == '1':
 			# for now
 			pass
@@ -561,7 +579,7 @@ def user_options():
 	def option_five():
 		print("")
 		print("Quiting script. Are you sure (yes/no)?")
-		ninput = input(": ")
+		ninput = pyver_uinput(": ")
 		if ninput.lower() == 'yes':
 			sys.exit("EXITING BC4 CG Library Utility")
 		elif ninput.lower() == 'no':
