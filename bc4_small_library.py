@@ -45,7 +45,7 @@ def main(pset_str):
 	print("#	")
 	print("# ***********************************************************************")
 	print("		")
-
+	user_options()
 	# bc4cg_holoraumy_calc(pset_str)
 
 #>******************************************************************************
@@ -299,7 +299,6 @@ def binaries(bin_code):
 	binaries_lt	= [(0, [1,1,1,1]), (2, [1,-1,1,1]), (4, [1,1,-1,1]),
 					(6, [1,-1,-1,1]), (8, [1,1,1,-1]), (10, [1,-1,1,-1]),
 					(12, [1,1,-1,-1]), (14, [1,-1,-1,-1])]
-
 	for btuple in binaries_lt:
 		if bin_code == btuple[0]:
 			return btuple[1]
@@ -361,9 +360,7 @@ def verify_input(userstr):
 	'''
 	Check whether string is PALL or one of P1 - P6 or 7/exit option
 	'''
-	# loc_userstr	= userstr.strip().lower()
-	loc_str = userstr
-	loc_str = loc_str.strip().lower()
+	loc_str = userstr.strip().lower()
 	if loc_str.isdigit():
 		if int(loc_str) in list(range(1,7)):
 			return "P" + loc_str
@@ -645,8 +642,6 @@ def user_options():
 				option_activator(core_options(), mcounter)
 			elif mcounter == 7:
 				print("Too many attempts. Try again later.")
-				# print("EXITING BC4 CG Library Utility")
-
 				sys.exit("EXITING BC4 CG Library Utility")
 
 	uinput = core_options()
@@ -657,11 +652,9 @@ def user_options():
 # Execute main()
 if __name__ == "__main__":
 	start_time = time.time()
-
 	try:
 		main(sys.argv[1])
 	except IndexError:
 		user_options()
-
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
