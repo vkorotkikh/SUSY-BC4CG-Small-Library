@@ -18,12 +18,13 @@ p_switch = 0
 py_ver = ''
 if sys.version_info >= (3,5):
 	py_ver = '3.5'
+	print("Python version: %s" % sys.version[0:6])
 elif sys.version_info >= (2,6) and sys.version_info < (2,7):
 	py_ver = '2.6'
-	\
+	print("Python version: %s" % sys.version[0:6])
 elif sys.version_info >= (2,7):
 	py_ver = '2.7'
-	print("Python version :", sys.version_info[0:3])
+	print("Python version: %s" % sys.version[0:6])
 else:
 	raise Exception("Minimum Python 2.6 or Python 3.5 are required for this code.")
 logging.basicConfig(level=logging.DEBUG)
@@ -435,7 +436,7 @@ def pset_options_std():
 # **************************************************************************
 def pyver_uinput(instr):
 	if int(py_ver[0]) >= 3:
-		return `input`(instr)
+		return input(instr)
 	elif int(py_ver[0]) < 3:
 		return raw_input(instr)
 
@@ -581,7 +582,7 @@ def user_options():
 			option_activator('core')
 		else:
 			pass
-			
+
 
 	# **************************************************************************
 	# Executes options inner functions based on input_str

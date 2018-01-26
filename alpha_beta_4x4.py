@@ -53,14 +53,11 @@ def sign_combimutations():
 	for signs in itertools.product([-1,1], repeat=len(lsigns)):
 		temp = np.array([a*sign for a,sign in zip(lsigns,signs)])
 		combo_l.append(temp)
-		# print(temp)
-	# print(len(combo_l))
 	return combo_l
 
 # ******************************************************************************
 # Execute main
 def verify_billionspaper():
-
 	"""Starting with {P4} ~ {VM1}
 		According to the draft paper the tetrad order is the following:
 
