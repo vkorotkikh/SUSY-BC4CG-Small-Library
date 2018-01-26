@@ -14,24 +14,24 @@ import re, sys, math, time
 import itertools, logging
 import numpy as np
 
-#>******************************************************************************
-# Function Imports
-import vij_holoraumy_calc
-
 p_switch = 0
 py_ver = ''
-if sys.version_info >= (3, 5):
+if sys.version_info >= (3,5):
 	py_ver = '3.5'
-elif sys.version_info >= (2, 6) and sys.version_info < (2, 7):
+elif sys.version_info >= (2,6) and sys.version_info < (2,7):
 	py_ver = '2.6'
-	print("Python version :", sys.version_info[0:3])
-elif sys.version_info >= (2, 7):
+	\
+elif sys.version_info >= (2,7):
 	py_ver = '2.7'
 	print("Python version :", sys.version_info[0:3])
 else:
 	raise Exception("Minimum Python 2.6 or Python 3.5 are required for this code.")
 logging.basicConfig(level=logging.DEBUG)
 bc4logger = logging.getLogger(__file__)
+
+#>******************************************************************************
+# Function Imports
+import vij_holoraumy_calc
 
 #>******************************************************************************
 def main(pset_str):
@@ -581,36 +581,7 @@ def user_options():
 			option_activator('core')
 		else:
 			pass
-	# Preset loopcount = 0 if no arg supplied for first time.
-	# def option_four(loopcount=0):
-	# 	print("")
-	# 	print(" < 1 >  -  Calculate all P-sets")
-	# 	print(" < 2 >  -  Calculate select P-set from the Small Library")
-	# 	print(" < 3 >  -  Back to main menu")
-	# 	opt_str = input(": ")
-
-	# 	if opt_str.strip() == '1':
-	# 		# for now
-	# 		bc4_validation_organizer('PALL', 'mats', 'boson')
-	# 		pass
-	# 	elif opt_str.strip() == '2':
-	# 		usr_pset = pset_options_std()
-	# 		bc4_validation_organizer(usr_pset, 'mats', 'boson')
-	# 	elif opt_str.strip() == '3':
-	# 		option_activator('core')
-	# 	else:
-	# 		loopcount += 1
-	# 		print("Unrecognized option")
-	# 		if loopcount <= 5:
-	# 			option_four(loopcount)
-	# 		else:
-	# 			print("Returning to core options...")
-	# 			option_activator('core')
-
-	# def option_six():
-	# 	print("NOT ACTIVATED (code not finished)")
-	# 	print("Going back to main menu")
-	# 	option_activator('core')
+			
 
 	# **************************************************************************
 	# Executes options inner functions based on input_str
