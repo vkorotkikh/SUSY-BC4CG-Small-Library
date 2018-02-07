@@ -97,7 +97,8 @@ def calc_holoraumy_mats(main_tetrad_list, pset_arg, holotype):
 		# nicely_print_boson(holo_mats, r_matrices, pset_arg, adink_def)
 		full_nprint_boson(main_tetrad_list, holo_mats, r_matrices, pset_arg, adink_def)
 	elif lholotype.startswith('fermi'):
-		nicely_print_fermi(holo_mats, r_matrices, pset_arg, adink_def)
+		# nicely_print_fermi(holo_mats, r_matrices, pset_arg, adink_def)
+		full_nprint_fermi(main_tetrad_list, holo_mats, r_matrices, pset_arg, adink_def)
 
 
 # ******************************************************************************
@@ -197,6 +198,171 @@ def full_nprint_boson(lmat_list, holo_mats, rmats, pset_arg, adink_def):
 			text_list.append("Boolean Factor: " + boolstr)
 			# text_list.append("Boolean Factor:" + adink_def[zi][0] + " P-set " + adink_def[zi][1])
 		text_list.append("Bosonic Holoraumy Matrices")
+		# print("Adinkra #", zi)
+		# print("Bosonic Holoraumy Matrices")
+		vij_strings	= []
+		for ijtup in ij_ind:
+			ij_temp		= str(ijtup[0] + 1) + str(ijtup[1] + 1)
+			ijstr		= "V_{" + ij_temp + "}"
+			vij_strings.append(ijstr)
+		'''
+		vij_strings = [ "V_{" + (str(ijt[0]+1) + str(ijt[1]+1)) + "}" for ijt in ij_ind]
+		'''
+		# v13strings = " \t" + vij_strings[0] + " \t \t \t" + vij_strings[1] + \
+		# " \t \t \t" + vij_strings[2]
+		v13strings = "\t" + vij_strings[0] + "\t\t   " + vij_strings[1] + \
+		"\t\t   " + vij_strings[2]
+		# v46strings = " \t" + vij_strings[3] + " \t \t \t" + vij_strings[4] + \
+		# " \t \t \t" + vij_strings[5]
+		v46strings = "\t" + vij_strings[3] + "\t\t   " + vij_strings[4] + \
+		"\t\t   " + vij_strings[5]
+
+		""" Convoluted way of printing out numpy matrices	"""
+		mat13 		= temph[0:3]
+		mat13str 	= [np.array_str(y)[1:-1] for y in mat13]
+		tm13		= []
+		for matstr in mat13str:
+			tm13.append([ix.lstrip() for ix in matstr.split('\n')])
+		# print(v13strings)
+		text_list.append(v13strings)
+		for ix in range(0,4):
+			pstr = tm13[0][ix] + " \t" + tm13[1][ix] + " \t" + tm13[2][ix]
+			# print(pstr)
+			text_list.append(pstr)
+
+		mat46		= temph[3:6]
+		mat46str	= [np.array_str(y)[1:-1] for y in mat46]
+		tm46		= []
+		for matstr in mat46str:
+			tm46.append([ix.lstrip() for ix in matstr.split('\n')])
+		# print(v46strings)
+		text_list.append(v46strings)
+		for ix in range(0,4):
+			pstr = tm46[0][ix] + " \t" + tm46[1][ix] + " \t" + tm46[2][ix]
+			# print(pstr)
+			text_list.append(pstr)
+		text_list.append("")
+		# print("")
+		""" Printing L Matrices """
+		text_list.append("L matrices")
+		for ind, lmi in enumerate([templ[:2], templ[2:]]):
+			lm	= [np.asarray(x) for x in lmi]
+			lmtostr = [np.array_str(y)[1:-1] for y in lm]
+			ltm	= []
+			for matstr in lmtostr:
+				ltm.append([ix.lstrip() for ix in matstr.split('\n')])
+			if ind == 0:
+				len1, len2 	= len(ltm[0][0]), len(ltm[1][0])
+				lbl_str	= ""
+				if len2 > len1:
+					lbl_str	= (len1//3)*" " + "L1" + len2*" " + "L2"
+				elif len1 > len2:
+					lbl_str	= (len1//2)*" " + "L1" + len2*" " + " L2"
+				elif len1 == len2:
+					lbl_str = (len1//2)*" " + "L1" + len2*" " + "L2"
+				# print(lbl_str)
+				text_list.append(lbl_str)
+			elif ind == 1:
+				len1, len2 	= len(ltm[0][0]), len(ltm[1][0])
+				lbl_str		= "  L3" + len2*" " + " L4"
+				# print(lbl_str)
+				text_list.append(lbl_str)
+			for ix in range(0,4):
+				pstr = ltm[0][ix] + "\t" + ltm[1][ix]
+				text_list.append(pstr)
+		text_list.append("")
+
+		"""	Printing R matrices """
+		text_list.append("R matrices")
+		for ind, rl in enumerate([ tempr[:2], tempr[2:]]):
+			rltostr = [np.array_str(y)[1:-1] for y in rl]
+			rtm	= []
+			for matstr in rltostr:
+				rtm.append([ix.lstrip() for ix in matstr.split('\n')])
+
+			if ind == 0:
+				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
+				lbl_str	= ""
+				if len2 > len1:
+					lbl_str	= (len1//3)*" " + "R1" + len2*" " + "R2"
+				elif len1 > len2:
+					lbl_str	= (len1//2)*" " + "R1" + len2*" " + " R2"
+				elif len1 == len2:
+					lbl_str = (len1//2)*" " + "R1" + len2*" " + "R2"
+				text_list.append(lbl_str)
+			elif ind == 1:
+				len1, len2 	= len(rtm[0][0]), len(rtm[1][0])
+				# print(len1, len2)
+				lbl_str		= "  R3" + len2*" " + " R4"
+				# print(lbl_str)
+				text_list.append(lbl_str)
+			for ix in range(0,4):
+				pstr = rtm[0][ix] + "\t" + rtm[1][ix]
+				# print(pstr)
+				text_list.append(pstr)
+		text_list.append("")
+
+	pmatsfile = "BC4-CoxeterGroup " + pset_arg + " withLmats.txt"
+	# pmatsfile = "BC4-CG " + pset_arg + "-BosonicHolos.txt"
+	with open(pmatsfile, "w") as wfile:
+		for item in text_list:
+			wfile.write("%s \n" % item)
+
+# ******************************************************************************
+def full_nprint_fermi(lmat_list, holo_mats, rmats, pset_arg, adink_def):
+	"""
+		lmat_list - List of lists w/ each cont. Adinkra 4 L matrices
+		holo_mats - List of lists w/ each containg 6 Bosnic Holoraumy matrices
+		rmats 	  -	List w/ lists, each containing 4 R matrices
+		pset_arg  - String specifying P slices of library, ie P1 or P6
+		adink_def - List contains tuples of boolean factors, matrix slice
+	"""
+
+	# T/F whether to add boolean factor information to the output text file
+	adinkdef_yn	= 0
+	if len(adink_def) > 0:
+		adinkdef_yn = 1
+	holos = [np.asarray(x) for x in holo_mats]
+	text_list	= []
+
+	# print("# ********************************")
+	text_list.append("#********************************")
+	text_list.append("BC4 Coxeter Group Small Library")
+	if adinkdef_yn:
+		text_list.append(pset_arg + " set: " + adink_def[0][1])
+	else:
+		text_list.append(pset_arg + " set")
+	text_list.append("Calculated Fermionic Holoraumy matrices and R matrices")
+	text_list.append("")
+	lenh, lenr = len(holos), len(rmats)
+	print("Length holo_mats: ", lenh)
+	print("Length r_matrices: ", lenr)
+	print("")
+
+	np.set_printoptions(precision=2, suppress=True, linewidth=100)
+	ij_ind	= list(itertools.combinations([0,1,2,3], 2))
+
+	setlen = 0
+	if lenh == lenr:
+		setlen = lenh
+	else:
+		print("LENGTH MISMATCH ERROR")
+
+	for zi in range(0, lenh):
+		temph = holos[zi]
+		tempr = rmats[zi]
+		templ = lmat_list[zi][0]
+		print(templ)
+		text_list.append("#********************************")
+		text_list.append("Adinkra # " + str(zi))
+		if adinkdef_yn:
+			print("Def ", adink_def[zi], " Bool Fct", adink_def[zi][0])
+			boolstr = (",").join(['(' + str(ix) + ')' for ix in adink_def[zi][0]])
+			boolstr = "{" + boolstr + "}"
+			print("Bool String:", boolstr)
+			text_list.append("Boolean Factor: " + boolstr)
+			# text_list.append("Boolean Factor:" + adink_def[zi][0] + " P-set " + adink_def[zi][1])
+		text_list.append("Fermionic Holoraumy Matrices")
 		# print("Adinkra #", zi)
 		# print("Bosonic Holoraumy Matrices")
 		vij_strings	= []
